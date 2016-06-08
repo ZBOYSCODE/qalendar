@@ -1,0 +1,39 @@
+
+<nav class="navbar navbar-default navbar-fixed-top navbar-gradient navbar-styled" role="navigation">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <!-- logo -->
+      <a class="navbar-brand" href="<?php print $this->url->get() ?>"><img alt="" height="20" src="<?php print($this->url->get("img/latam-logo.png"))?>"/></a>     
+    </div>
+    <div class="collapse navbar-collapse animated fadeIn" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav animated fadeIn text15">
+        
+        <li class=""><a href="<?php print($this->url->get('')) ?>"></i> Mi Calendario  </a></li>
+        <li class=""><a href="<?php print($this->url->get('')) ?>"></i> Eventos  </a></li>
+        <li class=""><a href="<?php print($this->url->get('')) ?>"></i> Vistas  </a></li>
+        <li class=""><a href="<?php print($this->url->get('')) ?>"></i> Informes  </a></li>
+        <li class=""><a href="<?php print($this->url->get('')) ?>"></i> Opciones  </a></li>
+        <li class=""><a href="<?php print($this->url->get('')) ?>"></i> buscar  </a></li>
+        <li class=""><a href="<?php print($this->url->get('')) ?>"></i> Ayuda  </a></li>
+
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li class=""><a href=""><i class="gi gi-user"></i> Otro</a> </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="gi gi-user"></i><b> Otro </b> <span class="caret"></span></a>
+            <ul id="login-dp" class="dropdown-menu">
+                <li class=""><a href="<?php print($this->url->get('')) ?>"></i> otro1  </a></li>
+                <li class=""><a href="<?php print($this->url->get('')) ?>"></i> otro2  </a></li>
+                <li class=""><a href="<?php print($this->url->get('logout')) ?>"></i> Salir  </a></li>
+            </ul>
+        </li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
