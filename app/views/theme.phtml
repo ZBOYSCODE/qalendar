@@ -40,10 +40,13 @@
 	<!-- The themes stylesheet of this template (for using specific theme color in individual elements - must included last) -->
     <?php print($this->tag->stylesheetLink("css/themes.css"))?>
 
-    <!-- tema personalizado para imannova -->
+    <!-- tema personalizado -->
 
     <?php print($this->tag->stylesheetLink("css/custom.css"))?>
 	<!-- END Stylesheets -->
+
+	<!-- calendario -->
+	<?php print($this->tag->stylesheetLink("css/custom-timetable.css"))?>
 
 	<?php
 		if(isset($addCss)){
