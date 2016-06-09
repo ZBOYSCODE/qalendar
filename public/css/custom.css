@@ -47,3 +47,8 @@
 .row-disable {
 	margin: 0px !important;
 }
+
+.event-daily a {
+	text-decoration: none;
+	position: inherit !important;
+}

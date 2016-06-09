@@ -1,8 +1,9 @@
 <?php
-
+namespace Gabs\Models;
+use Phalcon\Mvc\Model;
 use Phalcon\Mvc\Model\Validator\Email as Email;
 
-class Persona extends \Phalcon\Mvc\Model
+class Persona extends Model
 {
 
     /**

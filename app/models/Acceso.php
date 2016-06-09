@@ -1,6 +1,8 @@
 <?php
+namespace Gabs\Models;
+use Phalcon\Mvc\Model;
 
-class Acceso extends \Phalcon\Mvc\Model
+class Acceso extends Model
 {
 
     /**
