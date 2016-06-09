@@ -1,0 +1,195 @@
+<div class="base-page">
+    <section class="timetable timetable-daily" style="margin-top: 32px;">
+        <select class="filter">
+            <option value="">Todos</option>
+            <option value="">Instalación</option>
+            <option value="">Interno</option>
+            <option value="">Aprobados</option>
+            <option value="">Cancelados</option>
+        </select>
+
+        <header>
+            <div class="year">2014</div>
+            <div class="month">October</div>
+            <div class="day">
+                <input type="text" value="10/10/13">
+                <a href="#" class="prev fa fa-angle-left"></a>
+                <a href="#" class="next fa fa-angle-right"></a>
+                <a href="#" class="cal fa fa-calendar"></a>
+            </div>
+
+            <div class="switcher">
+                <a href="timetable-month.html"><i class="fa fa-calendar"></i></a>
+                <a href="timetable-week.html"><i class="fa fa-calendar-o"></i></a>
+                <a href="timetable-list.html" class="active"><i class="fa fa-list"></i></a>
+            </div>
+        </header>
+
+        <table class="list-view list-view-alt">
+
+            <tr>
+                <td>
+                    <i class="fa fa-clock-o"></i>08:00 PM<br>10/10/2014
+                </td>
+                <td>
+                    <i class="fa fa-clock-o"></i>09:00 PM<br>10/10/2014
+                </td>
+                <td class="event-container">
+                    <div class="event">
+                        <div class="row row-disable">
+                            <?php for($i=0; $i<18; $i++) {?>
+                                <div class="col-xs-2 event-daily">
+                                    <a  href="<?php print $this->url->get()?>GestionQa/getEventDetail"
+                                        data-action="<?php print $this->url->get()?>GestionQa/getEventDetail"
+                                        data-val="actv=1">
+                                    <div class="event-tit">REP - SUBIDA AMBIENTE</div>
+                                    </a>
+                                </div>
+                            <?php } ?>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <i class="fa fa-clock-o"></i>09:00 PM<br>10/10/2014
+                </td>
+                <td>
+                    <i class="fa fa-clock-o"></i>10:00 PM<br>10/10/2014
+                </td>
+                <td class="event-container">
+                    <div class="event">
+                        <div class="row row-disable">
+                            <?php for($i=0; $i<8; $i++) {?>
+                                <div class="col-xs-2 event-daily">
+                                    <div class="event-tit">REP - SUBIDA AMBIENTE</div>
+                                </div>
+                            <?php } ?>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <i class="fa fa-clock-o"></i>10:00 PM<br>10/10/2014
+                </td>
+                <td>
+                    <i class="fa fa-clock-o"></i>11:00 PM<br>10/10/2014
+                </td>
+                <td class="event-container">
+                    <div class="event">
+                        <div class="row row-disable">
+                            <?php for($i=0; $i<11; $i++) {?>
+                                <div class="col-xs-2 event-daily">
+                                    <div class="event-tit">REP - SUBIDA AMBIENTE</div>
+                                </div>
+                            <?php } ?>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <i class="fa fa-clock-o"></i>13:00 PM<br>10/10/2014
+                </td>
+                <td>
+                    <i class="fa fa-clock-o"></i>14:00 PM<br>10/10/2014
+                </td>
+                <td class="event-container">
+                    <div class="event">
+                        <div class="row row-disable">
+                            <?php for($i=0; $i<2; $i++) {?>
+                                <div class="col-xs-2 event-daily">
+                                    <div class="event-tit">REP - SUBIDA AMBIENTE</div>
+                                </div>
+                            <?php } ?>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <i class="fa fa-clock-o"></i>14:00 PM<br>10/10/2014
+                </td>
+                <td>
+                    <i class="fa fa-clock-o"></i>15:00 PM<br>10/10/2014
+                </td>
+                <td class="event-container">
+                    <div class="event">
+                        <div class="row row-disable">
+                            <?php for($i=0; $i<8; $i++) {?>
+                                <div class="col-xs-2 event-daily">
+                                    <div class="event-tit">REP - SUBIDA AMBIENTE</div>
+                                </div>
+                            <?php } ?>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <i class="fa fa-clock-o"></i>15:00 PM<br>10/10/2014
+                </td>
+                <td>
+                    <i class="fa fa-clock-o"></i>16:00 PM<br>10/10/2014
+                </td>
+                <td class="event-container">
+                    <div class="event">
+                        <div class="row row-disable">
+                            <?php for($i=0; $i<5; $i++) {?>
+                                <div class="col-xs-2 event-daily">
+                                    <div class="event-tit">REP - SUBIDA AMBIENTE</div>
+                                </div>
+                            <?php } ?>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <i class="fa fa-clock-o"></i>16:00 PM<br>10/10/2014
+                </td>
+                <td>
+                    <i class="fa fa-clock-o"></i>17:00 PM<br>10/10/2014
+                </td>
+                <td class="event-container">
+                    <div class="event">
+                        <div class="row row-disable">
+                            <?php for($i=0; $i<5; $i++) {?>
+                                <div class="col-xs-2 event-daily">
+                                    <div class="event-tit">REP - SUBIDA AMBIENTE</div>
+                                </div>
+                            <?php } ?>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </section>
+</div>
+
+<div id="modal-identificacion" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" style="padding-right: 0px !important;">
+    <div class="modal-dialog" style="width: 40%;">
+        <div class="modal-content">
+            <div class="modal-body item" style="min-height:50vh;background-color: #48acd1;text-align: center;">
+                <div class="modal-msg-box">
+                    <div class="header-item">
+                        <strong>Evento # 65556: Revisión de Código</strong>
+                    </div>
+                    <div class="text-item">
+
+                    </div>
+                    <div class="call-to-action-item">
+
+                    </div>
+                </div>
+                <a class="btn btn-bc btn-lg" href="<?php print $this->url->get() ?>planes">Leer más</a><br>
+                <a class="pull-right dismiss-item" href="javascript:void(0)" data-dismiss="modal">Cerrar</a>
+            </div>
+        </div>
+    </div>
+</div>

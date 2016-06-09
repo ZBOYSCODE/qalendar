@@ -2,6 +2,9 @@
 /**/
 /* timetable */
 /**/
+.timetable {
+  background-color: white;
+}
 .timetable .filter {
   float: right;
   width: 270px;
@@ -633,6 +636,7 @@
 }
 .timetable .week-view th {
 	color: #008fd5;
+    text-align: center;
 }
 .timetable .week-view td:first-child i {
 	color: #008fd5;
@@ -680,4 +684,54 @@
   min-height: 45px;
   padding: 15px;
   color: white;
+}
+
+.list-view tr td{
+  padding: 5px;
+}
+
+.event-daily {
+  margin: 0px;
+  border: 1px solid white;
+  padding: 5px;
+  background-color: #656565;
+  color: white !important;
+  max-height: 56px;
+  min-height: 28px;
+  font-size: 9px;
+  font-family: sans-serif;
+}
+
+.event-daily:hover {
+  background-color: #33a5dd;
+}
+
+.timetable-daily .list-view .event-container:hover {
+  background-color: white !important;
+}
+
+.timetable-daily .list-view .event-container {
+  background-color: white;
+}
+
+.timetable-daily .list-view td:last-child {
+  min-height: 103px;
+}
+
+.list-view-alt tr td {
+  padding: 0px !important;
+}
+.list-view-alt tr {
+  border-bottom: 2px solid #008fd5;
+}
+.timetable-daily .list-view .event {
+  padding: 0px !important;
+}
+
+.event .event-descpt {
+  padding:1px;
+}
+
+.event-daily .event-tit{
+  color: white !important;
 }

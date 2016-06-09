@@ -42,3 +42,8 @@
 .navbar-styled .nav>li>a {
     padding: 12px 9px;
 }
+
+
+.row-disable {
+	margin: 0px !important;
+}

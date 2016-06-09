@@ -5,7 +5,7 @@ return new \Phalcon\Config([
         'host' => 'localhost',
         'username' => 'root',
         'password' => ($_SERVER['SERVER_ADDR']=='::1'?'':'z3nta'),
-        'dbname' => 'fw_auth'
+        'dbname' => 'qalendar'
     ],
     'application' => [
         'controllersDir' => APP_DIR . '/controllers/',

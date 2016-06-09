@@ -13,11 +13,28 @@ class GestionQaController extends ControllerBase
     }
 
     public function indexAction()
-    {  
-
+    {
     	$themeArray = $this->_themeArray;
-    	$themeArray['pcView'] = 'webcal/webcal_base_view';
+    	$themeArray['pcView'] = 'webcal/webcal_semanal_view';
 
-    	echo $this->view->render('theme', $themeArray);
+        echo $this->view->render('theme', $themeArray);
+    }
+
+    public function vistaDiariaAction() {
+        $themeArray = $this->_themeArray;
+        $themeArray['pcView'] = 'webcal/webcal_diaria_view';
+
+        echo $this->view->render('theme', $themeArray);
+    }
+
+    public function getEventDetailAction() {
+        if($this->request->isAjax() == true) {
+            print_r("test");die();
+        }
+        else {
+            $response = new \Phalcon\Http\Response();
+            $response->redirect("gestion/dia");
+            $response->send();
+        }
     }
 }

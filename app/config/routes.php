@@ -24,4 +24,14 @@ $router->add('/reset-password/{code}/{email}', array(
     'action' => 'resetPassword'
 ));
 
+$router->add('/calendario', array(
+    'controller' => 'GestionQa',
+    'action' => 'index'
+));
+
+$router->add('/gestion/dia', array(
+    'controller' => 'GestionQa',
+    'action' => 'vistaDiaria'
+));
+
 return $router;
