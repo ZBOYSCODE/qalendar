@@ -1,6 +1,7 @@
 <?php
 namespace Gabs\Dto;
 use Gabs\Models\Disponible;
+use Gabs\Models\Actividad;
 
 class Calendar
 {
@@ -60,31 +61,12 @@ class Calendar
     	return $fechas;
 	}
 
-	public function getMonth($data){
+	public function getDay($data){
 		$horas = $this->getHorasWeek();
-		$fechas = $this->getFechasWeek($data['fecha']);
 
-		$d_model = new Disponible;
+		$a_model = new Actividad;
 
-		$disponibles = $d_model->getDisponiblesWeek($data);
-
-		$dspnArray = $disponibles->toArray();
-
-
-		foreach ($fechas as $fecha) {
-			foreach ($horas as $hora) {
-				if(!isset($week[$fecha][$hora]))
-					$week[$fecha][$hora] = 0;
-			}	
-		}
-
-		foreach ($disponibles as $disponible) {
-			$fecha = date('d-m-Y',strtotime($disponible->dspn_fecha));
-			$hora = date('H:i',strtotime($disponible->dspn_hora));
-			$week[$fecha][$hora] = $disponible;
-		}		
-
-		return $week;
+		$actividades = $a_model->getActividadesDay($data);
 	}	
 
 

@@ -1,6 +1,7 @@
 <?php
 namespace Gabs\Models;
 use Phalcon\Mvc\Model;
+use Phalcon\Mvc\Model\Query;
 
 class Actividad extends Model
 {
@@ -131,5 +132,14 @@ class Actividad extends Model
     {
         return parent::findFirst($parameters);
     }
+
+
+    public function getActividadesDay($data)
+    {
+        $fecha = date('Y-m-d',strtotime($data['fecha']));
+        $query = new Query("SELECT a.actv_id, a.actv_fecha, a.actv_hora FROM Gabs\Models\Actividad a  WHERE a.actv_fecha = {$fecha}", $this->getDI());
+
+        return $query->execute();
+    }    
 
 }

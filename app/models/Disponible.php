@@ -99,4 +99,5 @@ class Disponible extends Model
         return $query->execute();
     }
 
+
 }
