@@ -1,6 +1,8 @@
 <?php
+namespace Gabs\Models;
+use Phalcon\Mvc\Model;
 
-class Actividad extends \Phalcon\Mvc\Model
+class Actividad extends Model
 {
 
     /**

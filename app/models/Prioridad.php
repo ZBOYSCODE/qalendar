@@ -1,6 +1,8 @@
 <?php
+namespace Gabs\Models;
+use Phalcon\Mvc\Model;
 
-class Prioridad extends \Phalcon\Mvc\Model
+class Prioridad extends Model
 {
 
     /**
