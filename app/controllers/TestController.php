@@ -7,8 +7,8 @@ class TestController extends ControllerBase
 {
 	public function indexAction(){
 		$calendar = new Calendar();
-		$data = array('fecha'=>'2016-06-10','user_id'=>1
+		$data = array('fecha'=>'2016-06-15','user_id'=>1
 			);
-		$calendar->getWeek($data);
+		$week = $calendar->getWeek($data);
 	}
 }

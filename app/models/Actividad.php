@@ -72,6 +72,24 @@ class Actividad extends Model
     public $actv_categoria;
 
     /**
+     *
+     * @var string
+     */
+    public $actv_status;    
+
+    /**
+     *
+     * @var string
+     */
+    public $actv_creado_por;    
+
+    /**
+     *
+     * @var string
+     */
+    public $actv_comentarios;    
+
+    /**
      * Initialize method for model.
      */
     public function initialize()

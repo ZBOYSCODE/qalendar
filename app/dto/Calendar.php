@@ -13,28 +13,31 @@ class Calendar
 	public $week = array();
 	public $month = array();
 
-	public $d_model = new Disponible();
-
-    public function initialize()
-    {
-        $this->settings = array(
-            "mySetting" => "value"
-        );
-    }
-
 	public function getWeek($data){
 		$horas = $this->getHorasWeek();
 		$fechas = $this->getFechasWeek($data['fecha']);
 
-		$disponibles = $this->d_model->getDisponibles($data);
+		$d_model = new Disponible;
+
+		$disponibles = $d_model->getDisponiblesWeek($data);
+
+		$dspnArray = $disponibles->toArray();
+
 
 		foreach ($fechas as $fecha) {
 			foreach ($horas as $hora) {
-				$this->week[$fecha][$hora] = 0;
-			}
+				if(!isset($week[$fecha][$hora]))
+					$week[$fecha][$hora] = 0;
+			}	
 		}
 
-		print_r($this->week);
+		foreach ($disponibles as $disponible) {
+			$fecha = date('d-m-Y',strtotime($disponible->dspn_fecha));
+			$hora = date('H:i',strtotime($disponible->dspn_hora));
+			$week[$fecha][$hora] = $disponible;
+		}		
+
+		return $week;
 	}
 
 	private function getHorasWeek(){
@@ -56,6 +59,33 @@ class Calendar
     	}
     	return $fechas;
 	}
+
+	public function getMonth($data){
+		$horas = $this->getHorasWeek();
+		$fechas = $this->getFechasWeek($data['fecha']);
+
+		$d_model = new Disponible;
+
+		$disponibles = $d_model->getDisponiblesWeek($data);
+
+		$dspnArray = $disponibles->toArray();
+
+
+		foreach ($fechas as $fecha) {
+			foreach ($horas as $hora) {
+				if(!isset($week[$fecha][$hora]))
+					$week[$fecha][$hora] = 0;
+			}	
+		}
+
+		foreach ($disponibles as $disponible) {
+			$fecha = date('d-m-Y',strtotime($disponible->dspn_fecha));
+			$hora = date('H:i',strtotime($disponible->dspn_hora));
+			$week[$fecha][$hora] = $disponible;
+		}		
+
+		return $week;
+	}	
 
 
 
