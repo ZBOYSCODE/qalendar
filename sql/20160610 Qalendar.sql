@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 10-06-2016 a las 18:03:37
+-- Tiempo de generación: 10-06-2016 a las 21:04:39
 -- Versión del servidor: 5.6.26
 -- Versión de PHP: 5.5.28
 
@@ -31,7 +31,15 @@ USE `qalendar`;
 CREATE TABLE IF NOT EXISTS `acceso` (
   `accs_id` int(11) NOT NULL,
   `accs_nombre` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `acceso`
+--
+
+INSERT INTO `acceso` (`accs_id`, `accs_nombre`) VALUES
+(1, 'público'),
+(2, 'privado');
 
 -- --------------------------------------------------------
 
@@ -53,7 +61,9 @@ CREATE TABLE IF NOT EXISTS `actividad` (
   `actv_duracion_minutos` int(11) NOT NULL,
   `actv_categoria` varchar(100) NOT NULL,
   `actv_creado_por` varchar(50) NOT NULL,
-  `actv_comentarios` text NOT NULL
+  `actv_comentarios` text NOT NULL,
+  `actv_created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `actv_updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -973,7 +983,7 @@ ALTER TABLE `user_actividad`
 -- AUTO_INCREMENT de la tabla `acceso`
 --
 ALTER TABLE `acceso`
-  MODIFY `accs_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `accs_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT de la tabla `actividad`
 --
