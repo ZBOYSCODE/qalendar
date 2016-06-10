@@ -29,12 +29,29 @@ class GestionQaController extends ControllerBase
 
     public function getEventDetailAction() {
         if($this->request->isAjax() == true) {
-            print_r("test");die();
+            $actv_id = isset($_POST['actv'])?$_POST['actv']:'';
+
+            $view = 'event/event_detalle_modal_view';
+            $dataView = $actv_id;
+
+            //mifaces
+            $toRenderView = $this->view->render($view, $dataView);
+            $this->mifaces->newFaces();
+            $this->mifaces->addToRend('modal-data', $toRenderView);
+            $this->mifaces->addPosRendEval("$('#modal-data').modal()");
+            $this->mifaces->run();
         }
         else {
             $response = new \Phalcon\Http\Response();
             $response->redirect("gestion/dia");
             $response->send();
         }
+    }
+
+    public function crearEventoAction() {
+        $themeArray = $this->_themeArray;
+        $themeArray['pcView'] = 'event/event_nuevo_view';
+
+        echo $this->view->render('theme', $themeArray);
     }
 }

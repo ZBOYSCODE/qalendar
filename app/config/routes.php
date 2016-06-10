@@ -34,4 +34,10 @@ $router->add('/gestion/dia', array(
     'action' => 'vistaDiaria'
 ));
 
+$router->add('/evento/nuevo', array(
+    'controller' => 'GestionQa',
+    'action' => 'crearEvento'
+));
+
+
 return $router;

@@ -735,3 +735,8 @@
 .event-daily .event-tit{
   color: white !important;
 }
+
+.event-daily a {
+  text-decoration: none;
+  position: inherit !important;
+}
