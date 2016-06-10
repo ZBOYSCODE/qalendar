@@ -10,6 +10,7 @@ return new \Phalcon\Config([
     'application' => [
         'controllersDir' => APP_DIR . '/controllers/',
         'servicesDir' => APP_DIR . '/services/',
+        'dtoDir' => APP_DIR . '/dto/',
         'modelsDir' => APP_DIR . '/models/',
         'formsDir' => APP_DIR . '/forms/',
         'viewsDir' => APP_DIR . '/views/',

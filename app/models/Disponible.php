@@ -1,5 +1,7 @@
 <?php
 
+use Phalcon\Mvc\Model\Query;
+
 class Disponible extends \Phalcon\Mvc\Model
 {
 
@@ -86,6 +88,12 @@ class Disponible extends \Phalcon\Mvc\Model
     public static function findFirst($parameters = null)
     {
         return parent::findFirst($parameters);
+    }
+
+    public function getDisponiblesWeek($data)
+    {
+        $query = new Query("SELECT * FROM  Gabs\Models\Users where user_id = ".$id, $this->getDI() );
+        return $query->execute();
     }
 
 }
