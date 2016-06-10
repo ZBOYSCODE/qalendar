@@ -52,6 +52,7 @@ class GestionQaController extends ControllerBase
         $themeArray = $this->_themeArray;
         $themeArray['pcView'] = 'event/event_nuevo_view';
 
+        //$themeArray['addJs'] = array("js/evento_nuevo.js");
         echo $this->view->render('theme', $themeArray);
     }
 }
