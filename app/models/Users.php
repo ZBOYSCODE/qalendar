@@ -3,6 +3,8 @@ namespace Gabs\Models;
 
 use Phalcon\Mvc\Model;
 use Phalcon\Mvc\Model\Validator\Uniqueness;
+use Phalcon\Mvc\Model\Query;
+
 
 /**
  * Vokuro\Models\Users

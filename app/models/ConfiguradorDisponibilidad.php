@@ -9,7 +9,7 @@ class ConfiguradorDisponibilidad extends Model
      *
      * @var integer
      */
-    public $cnfg_cdg;
+    public $cnfg_id;
 
     /**
      *
@@ -46,7 +46,7 @@ class ConfiguradorDisponibilidad extends Model
      */
     public function initialize()
     {
-        $this->hasMany('cnfg_cdg', 'Disponible', 'cnfg_cdg', array('alias' => 'Disponible'));
+        $this->hasMany('cnfg_id', 'Disponible', 'cnfg_id', array('alias' => 'Disponible'));
     }
 
     /**

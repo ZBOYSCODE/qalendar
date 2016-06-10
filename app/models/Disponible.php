@@ -1,6 +1,7 @@
 <?php
 namespace Gabs\Models;
 use Phalcon\Mvc\Model;
+use Phalcon\Mvc\Model\Query;
 
 class Disponible extends Model
 {
@@ -9,7 +10,7 @@ class Disponible extends Model
      *
      * @var integer
      */
-    public $dspn_cdg;
+    public $dspn_id;
 
     /**
      *
@@ -33,7 +34,7 @@ class Disponible extends Model
      *
      * @var integer
      */
-    public $cnfg_cdg;
+    public $cnfg_id;
 
     /**
      *
@@ -53,7 +54,7 @@ class Disponible extends Model
     public function initialize()
     {
         $this->belongsTo('actv_id', 'Actividad', 'actv_id', array('alias' => 'Actividad'));
-        $this->belongsTo('cnfg_cdg', 'ConfiguradorDisponibilidad', 'cnfg_cdg', array('alias' => 'ConfiguradorDisponibilidad'));
+        $this->belongsTo('cnfg_id', 'ConfiguradorDisponibilidad', 'cnfg_id', array('alias' => 'ConfiguradorDisponibilidad'));
         $this->belongsTo('edsp_id', 'EstadoDisponibilidad', 'edsp_id', array('alias' => 'EstadoDisponibilidad'));
         $this->belongsTo('user_id', 'Users', 'id', array('alias' => 'Users'));
     }
@@ -88,6 +89,14 @@ class Disponible extends Model
     public static function findFirst($parameters = null)
     {
         return parent::findFirst($parameters);
+    }
+
+    public function getDisponiblesWeek($data)
+    {
+        $fecha = date('Y-m-d',strtotime($data['fecha']));
+        $query = new Query("SELECT dspn_id,dspn_fecha,dspn_hora,cnfg_id,d.actv_id FROM Gabs\Models\Disponible d  LEFT JOIN Gabs\Models\Actividad a ON a.actv_id = d.actv_id WHERE YEARWEEK('{$fecha}',7) = YEARWEEK(d.dspn_fecha,7) AND d.user_id = {$data['user_id']}", $this->getDI());
+
+        return $query->execute();
     }
 
 }
