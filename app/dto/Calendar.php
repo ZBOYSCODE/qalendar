@@ -22,35 +22,34 @@ class Calendar
 
 		$disponibles = $d_model->getDisponiblesWeek($data);
 
-		$dspnArray = $disponibles->toArray();
-
 
 		foreach ($fechas as $fecha) {
 			foreach ($horas as $hora) {
-				if(!isset($week[$fecha][$hora]))
-					$week[$fecha][$hora] = 0;
+				if(!isset($week[$hora][$fecha]))
+					$week[$hora][$fecha] = 0;
 			}	
 		}
 
 		foreach ($disponibles as $disponible) {
 			$fecha = date('d-m-Y',strtotime($disponible->dspn_fecha));
 			$hora = date('H:i',strtotime($disponible->dspn_hora));
-			$week[$fecha][$hora] = $disponible;
+			$disponible = Disponible::findFirst($disponible->dspn_id);
+			$week[$hora][$fecha] = $disponible;
 		}		
 
 		return $week;
 	}
 
-	private function getHorasWeek(){
+	public function getHorasWeek(){
 		$horaActual=$this->hora_inicio;
-		while ( $horaActual < $this->hora_fin) { 
+		while ( $horaActual <= $this->hora_fin) {
 			$horas[] = date('H:i',strtotime($horaActual));
 			$horaActual = date('H:i',strtotime($horaActual." + {$this->intervalo} hours "));
 		}
 		return $horas;
 	}
 
-	private function getFechasWeek($fecha){
+	public function getFechasWeek($fecha){
 		$week = date('W',strtotime($fecha));
 		$year = date('Y',strtotime($fecha));
 	    $i = 1;

@@ -165,10 +165,10 @@ class Users extends Model
 
         $this->hasMany(
             "id",
-            __NAMESPACE__ ."\UserGrupo",
-            "user_id",
+            __NAMESPACE__ ."\Disponible",
+            "dspn_id",
             array(
-            'alias' => 'userGrupo'));
+            'alias' => 'Disponible'));
 
         $this->hasMany(
             "id",
