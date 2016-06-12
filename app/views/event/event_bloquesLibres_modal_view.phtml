@@ -1,0 +1,24 @@
+<div class="modal-dialog" style="width: 35%;">
+    <div class="modal-content">
+        <form action="<?php print($this->url->get("gestionQa/seleccionarBloque")) ?>" method="POST" data-type="ajax">
+          <div class="modal-body item" style="min-height:80vh;">
+              <h2>Fecha Seleccionada: <?php print(date('d-m-Y',strtotime($pcData['fecha']))) ?></h2>
+              <table class="table table-striped table-hover">
+                <thead>
+                  <th>Hora</th>
+                  <th></th>
+                </thead>
+                <?php foreach ($pcData['disponibles'] as $val) {?>
+                  <tr>
+                    <td><?php print(date('H:i',strtotime($val->dspn_hora))) ?></td>
+                    <td><input type="radio" class="radio" name="horaSeleccionada" value="<?php print(date('H:i',strtotime($val->dspn_hora))) ?>"> </td>
+                  </tr>
+                <?php } ?>
+              </table>
+              <button type="submit" class="btn btn-success pull-right" >Guardar</button>
+              <a class="pull-right dismiss-item btn btn-warning" href="javascript:void(0)" data-dismiss="modal">Cerrar</a>
+              
+          </div>
+        </form>
+    </div>
+</div>

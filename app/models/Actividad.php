@@ -2,6 +2,7 @@
 namespace Gabs\Models;
 use Phalcon\Mvc\Model;
 use Phalcon\Mvc\Model\Query;
+use Gabs\Models\Disponible;
 
 class Actividad extends Model
 {
@@ -141,5 +142,59 @@ class Actividad extends Model
 
         return $query->execute();
     }    
+
+    public function guardarActividad($data){
+
+        $this->accs_id = $_POST['acceso'];
+        $this->prrd_id = $_POST['prioridad'];
+        $this->actv_descripcion_breve = $_POST['dscr-breve'];
+        $this->actv_descripcion_ampliada = $_POST['dscr-ampliada'];
+        $this->actv_location = $_POST['donde'];
+        $this->actv_fecha = $_POST['fecha'];
+        $this->actv_hora = $_POST['hora'];
+        $this->actv_duracion_horas = $_POST['duracion'];
+        $this->actv_duracion_minutos = $_POST['duracion'];
+        $this->actv_categoria = $_POST['categoria'];
+        //$this->actv_status = $_POST['status'];
+        $this->actv_creado_por = $_POST['persona']; 
+        $this->actv_created_at = date('Y-m-d'); 
+        $this->actv_updated_at = date('Y-m-d'); 
+        //$actividad->actv_comentarios = $_POST['comentarios'];
+
+        $disponible = Disponible::findFirst("dspn_fecha = '{$this->actv_fecha}' AND dspn_hora = '{$this->actv_hora}'");
+
+        if($disponible){
+            if($disponible->edsp_id == 1){ //Disponible
+                $disponible->edsp_id = 2;
+            } else{
+                $callback['error'] = 1;
+                $callback['msg'] = 'No hay bloques disponibles en la hora y fecha seleccionadas.';  
+            }
+        } else{
+            $callback['error'] = 1;
+            $callback['msg'] = 'No hay bloques creados en la hora y fecha seleccionadas.';
+        }
+
+        if(isset($callback['error']))
+            return $callback; 
+
+
+        if ($this->save() == false) {
+            /*
+            foreach ($this->getMessages() as $message) {
+                //echo "Message: ", $message->getMessage();
+                //echo "Field: ", $message->getField();
+                //echo "Type: ", $message->getType();
+            }*/
+            $callback['error'] = 1;
+            $callback['msg'] = 'Faltan rellenar campos requeridos.';
+            return $callback;
+        } else{
+            $disponible->actv_id = $this->actv_id;
+            $disponible->update();
+            $callback['msg'] = 'Actividad creada correctamente.';
+            return $callback;
+        }
+    }
 
 }

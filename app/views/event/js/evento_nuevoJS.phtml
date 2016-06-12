@@ -1,0 +1,7 @@
+$('#datepicker').datepicker();
+$('#datepicker').on("changeDate", function() {
+    $('#fecha').val(
+        $('#datepicker').datepicker('getFormattedDate')
+    );
+	$('#btnBloqueLibre').data('val','fecha='+$('#fecha').val());
+});
