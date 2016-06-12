@@ -4,59 +4,64 @@
             <a href="#" class="list-group-item active">Detalle y Participantes</a>
             <a href="#" class="list-group-item">Repetición</a>
         </div>
+
+    </div>
+    <div >
+        <a href="javascript:void(0)"  onclick="$('#evento-form').submit();" class="btn btn-success pull-right">Guardar</a>    
     </div>
     <div class="formulario-section">
-        <form id="evento-form" action="" method="post" data-type="ajax">
+        <form id="evento-form" action="<?php print($this->url->get("gestionQa/guardarEvento")) ?>" method="post" data-type="ajax">
             <div class="row">
                 <div class="col-sm-5">
                     <div class="form-content">
                         <div class="form-group row form-row">
-                            <label class="col-sm-4 control-label" for="dscr-breve">Descripción Breve</label>
+                            <label class="col-sm-4 control-label" for="dscr-breve">Descripción Breve *</label>
                             <div class="col-sm-8">
                                 <input type="text" id="dscr-breve" name="dscr-breve" class="form-control input-sm" placeholder="Descripción Breve">
                             </div>
                         </div>
                         <div class="form-group row form-row">
-                            <label class="col-sm-4 control-label" for="dscr-ampliada">Descripción Ampliada</label>
+                            <label class="col-sm-4 control-label" for="dscr-ampliada">Descripción Ampliada *</label>
                             <div class="col-sm-8">
                                 <textarea id="dscr-ampliada" name="dscr-ampliada" rows="5" class="form-control"></textarea>
                             </div>
                         </div>
                         <div class="form-group row form-row">
-                            <label class="col-sm-4 control-label" for="donde">¿Dónde?</label>
+                            <label class="col-sm-4 control-label" for="donde">¿Dónde? *</label>
                             <div class="col-sm-8">
                                 <input type="text" id="donde" name="donde" class="form-control input-sm" placeholder="Descripción Breve">
                             </div>
                         </div>
                         <div class="form-group row form-row">
-                            <label class="col-sm-4 control-label" for="categoria">Categoría</label>
+                            <label class="col-sm-4 control-label" for="categoria">Categoría *</label>
                             <div class="col-sm-8">
                                 <select id="categoria" name="categoria" class="select-chosen my-chosen" data-placeholder="Elegir Categorías" style="width: 250px;" multiple>
-                                    <option value="United States">Instalación</option>
-                                    <option value="United Kingdom">Revisión</option>
-                                    <option value="Afghanistan">Configurar</option>
-                                    <option value="Aland Islands">Prueba</option>
-                                    <option value="Aland Islands">Prueba Stress</option>
-                                    <option value="Aland Islands">Prueba Integración</option>
-                                    <option value="Aland Islands">Prueba Usabilidad</option>
+                                    <option value="" selected=""></option>
+                                    <option value="Instalación">Instalación</option>
+                                    <option value="Revisión">Revisión</option>
+                                    <option value="Configurar">Configurar</option>
+                                    <option value="Prueba">Prueba</option>
+                                    <option value="Prueba Stress">Prueba Stress</option>
+                                    <option value="Prueba Integración">Prueba Integración</option>
+                                    <option value="Prueba Usabilidad">Prueba Usabilidad</option>
                                 </select>
                             </div>
                         </div>
                         <div class="form-group row form-row">
-                            <label class="col-sm-4 control-label" for="acceso">Acceso</label>
+                            <label class="col-sm-4 control-label" for="acceso">Acceso *</label>
                             <div class="col-sm-8" style="text-align: left;">
                                 <select id="acceso" name="acceso" class="select-chosen my-chosen" data-placeholder="Seleccionar..." style="width: 250px;">
-                                    <option></option>
-                                    <option value="1">privado</option>
-                                    <option value="2">publico</option>
+                                    <option value=""></option>
+                                    <option value="1">Privado</option>
+                                    <option value="2">Publico</option>
                                     <option value="3">Otra</option>
                                 </select>
                             </div>
                         </div>
                         <div class="form-group row form-row my-chosen">
-                            <label class="col-sm-4 control-label" for="acceso">Prioridad</label>
+                            <label class="col-sm-4 control-label" for="prioridad">Prioridad *</label>
                             <div class="col-sm-8" style="text-align: left;">
-                                <select id="acceso" name="acceso" class="select-chosen" data-placeholder="Seleccionar..." style="width: 250px;">
+                                <select id="prioridad" name="prioridad" class="select-chosen" data-placeholder="Seleccionar..." style="width: 250px;">
                                     <option></option>
                                     <option value="1">Bajo-1</option>
                                     <option value="2">Bajo-2</option>
@@ -75,36 +80,34 @@
                 </div>
                 <div class="col-sm-2">
                     <div class="form-group row form-row">
-                        <div class="">
-                            <input type="text" id="fecha" name="fecha" class="form-control hidden input-datepicker" data-date-format="dd/mm/yy" placeholder="dd/mm/yy">
-                            <div id="example-datepicker-inline" class="input-datepicker"></div>
-                        </div>
+                        <div id="datepicker" data-date-format="yyyy-mm-dd" data-date="<?php print(date('Y-m-d')) ?>"></div>
+                        <input type="hidden" id="fecha" name="fecha" value="<?php print(date('Y-m-d')) ?>">
                     </div>
                     <div class="form-group row form-row">
                         <div class="input-group bootstrap-timepicker" style="padding-left: 0px;">
-                            <input style="margin-left:15px;" type="text" id="hora" name="hora" class="form-control input-timepicker24">
+                            <input style="margin-left:15px;" type="text" id="hora" name="hora" class="form-control input-timepicker24" value="13:00">
                             <span class="input-group-btn">
                                 <a href="javascript:void(0)" class="btn btn-primary"><i class="fa fa-clock-o"></i></a>
                             </span>
                         </div>
                     </div>
                     <div class="form-group row form-row">
-                        <label class="col-sm-12 control-label" for="duracion">Duración (Horas)</label>
+                        <label class="col-sm-12 control-label" for="duracion">Duración (Horas) *</label>
                         <div class="col-sm-12">
                             <input type="Number" id="duracion" name="duracion" class="form-control input-sm" placeholder="Duración">
                         </div>
                     </div>
                     <div class="form-group row" style="text-align: center;">
-                        <a href="javascript:void(0)" class="">Encontrar Bloque Libre</a>
+                        <a id="btnBloqueLibre" href="<?php print($this->url->get("gestionQa/encontrarBloque")) ?>" data-action="<?php print($this->url->get("gestionQa/encontrarBloque")) ?>" data-val="fecha=<?php print(date('Y-m-d')) ?>" class="">Encontrar Bloque Libre</a>
                     </div>
                 </div>
                 <div class="col-sm-5">
                     <div class="form-content">
                         <div class="form-group row form-row my-chosen">
-                            <label class="col-sm-12 control-label" for="acceso">Añadir Persona</label>
+                            <label class="col-sm-12 control-label" for="persona">Añadir Persona *</label>
 
                             <div class="col-sm-8" style="text-align: left;">
-                                <select id="acceso" name="acceso" class="select-chosen" data-placeholder="Seleccionar..." style="width: 250px;">
+                                <select id="persona" name="persona" class="select-chosen" data-placeholder="Seleccionar..." style="width: 250px;">
                                     <option></option>
                                     <option value="1">Cociña, Jorge</option>
                                     <option value="2">San Martìn, Orlando</option>
@@ -183,3 +186,5 @@
         </form>
     </div>
 </div>
+
+<div id="modal-bloqueLibre" class="modal fade"></div>

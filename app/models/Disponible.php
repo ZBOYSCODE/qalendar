@@ -99,5 +99,12 @@ class Disponible extends Model
         return $query->execute();
     }
 
+    public function getDisponiblesByFecha($data)
+    {
+
+        $dataQuery = array("dspn_fecha = '".$data['fecha']."' AND edsp_id = 1");        
+        return Disponible::find($dataQuery);
+    }
+
 
 }
