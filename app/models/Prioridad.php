@@ -22,7 +22,7 @@ class Prioridad extends Model
      */
     public function initialize()
     {
-        $this->hasMany('prrd_id', 'Actividad', 'prrd_id', array('alias' => 'Actividad'));
+        $this->hasMany(__NAMESPACE__.'\prrd_id', 'Actividad', 'prrd_id', array('alias' => 'Actividad'));
     }
 
     /**

@@ -96,10 +96,10 @@ class Actividad extends Model
      */
     public function initialize()
     {
-        $this->hasMany('actv_id', 'Disponible', 'actv_id', array('alias' => 'Disponible'));
-        $this->hasMany('actv_id', 'UserActividad', 'actv_id', array('alias' => 'UserActividad'));
-        $this->belongsTo('accs_id', 'Acceso', 'accs_id', array('alias' => 'Acceso'));
-        $this->belongsTo('prrd_id', 'Prioridad', 'prrd_id', array('alias' => 'Prioridad'));
+        $this->hasMany('actv_id', __NAMESPACE__.'\Disponible', 'actv_id', array('alias' => 'Disponible'));
+        $this->hasMany('actv_id', __NAMESPACE__.'\UserActividad', 'actv_id', array('alias' => 'UserActividad'));
+        $this->belongsTo('accs_id', __NAMESPACE__.'\Acceso', 'accs_id', array('alias' => 'Acceso'));
+        $this->belongsTo('prrd_id', __NAMESPACE__.'\Prioridad', 'prrd_id', array('alias' => 'Prioridad'));
     }
 
     /**
@@ -113,7 +113,7 @@ class Actividad extends Model
     }
 
     /**
-     * Allows to query a set of records that match the specified conditions
+     * Allows to querys a set of records that match the specified conditions
      *
      * @param mixed $parameters
      * @return Actividad[]

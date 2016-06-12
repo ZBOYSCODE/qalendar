@@ -4,7 +4,7 @@ namespace Gabs\Controllers;
 use \Gabs\Services\Services as Services;
 use Gabs\Models\Actividad;
 use Gabs\Models\Disponible;
-
+use \Gabs\Dto\Calendar;
 
 class GestionQaController extends ControllerBase
 {
@@ -15,14 +15,36 @@ class GestionQaController extends ControllerBase
     	$this->_themeArray = array('topMenu'=>true, 'menuSel'=>'','pcView'=>'', 'pcData'=>'', 'jsScript'=>'');
     }
 
+    /**
+     * @param $test
+     */
     public function indexAction()
     {
+        /*Constantes dummies*/
+        $DIA_ACTUAL = '2016-06-09';
+        $USER_ACTUAL = 1;
+
+        /* Creamos Calendario Semanal*/
+        $calendar = new Calendar();
+        $data = array('fecha'=>$DIA_ACTUAL,'user_id'=>$USER_ACTUAL);
+        $week = $calendar->getWeek($data);
+        $horas = $calendar->getHorasWeek();
+        $fechas = $calendar->getFechasWeek('2016-06-09');
+
     	$themeArray = $this->_themeArray;
     	$themeArray['pcView'] = 'webcal/webcal_semanal_view';
+        $data['week'] = $week;
+        $data['horas'] = $horas;
+        $data['fechas'] = $fechas;
+
+    	$themeArray['pcData'] = $data;
 
         echo $this->view->render('theme', $themeArray);
     }
 
+    /**
+     *
+     */
     public function vistaDiariaAction() {
         $themeArray = $this->_themeArray;
         $themeArray['pcView'] = 'webcal/webcal_diaria_view';
@@ -30,6 +52,9 @@ class GestionQaController extends ControllerBase
         echo $this->view->render('theme', $themeArray);
     }
 
+    /**
+     *
+     */
     public function getEventDetailAction() {
         if($this->request->isAjax() == true) {
             $actv_id = isset($_POST['actv'])?$_POST['actv']:'';
@@ -51,6 +76,9 @@ class GestionQaController extends ControllerBase
         }
     }
 
+    /**
+     *
+     */
     public function crearEventoAction() {
         $themeArray = $this->_themeArray;
         $themeArray['pcView'] = 'event/event_nuevo_view';

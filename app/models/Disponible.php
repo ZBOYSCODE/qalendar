@@ -53,10 +53,10 @@ class Disponible extends Model
      */
     public function initialize()
     {
-        $this->belongsTo('actv_id', 'Actividad', 'actv_id', array('alias' => 'Actividad'));
-        $this->belongsTo('cnfg_id', 'ConfiguradorDisponibilidad', 'cnfg_id', array('alias' => 'ConfiguradorDisponibilidad'));
-        $this->belongsTo('edsp_id', 'EstadoDisponibilidad', 'edsp_id', array('alias' => 'EstadoDisponibilidad'));
-        $this->belongsTo('user_id', 'Users', 'id', array('alias' => 'Users'));
+        $this->belongsTo('actv_id', __NAMESPACE__.'\Actividad', 'actv_id', array('alias' => 'Actividad'));
+        $this->belongsTo('cnfg_id',  __NAMESPACE__.'\ConfiguradorDisponibilidad', 'cnfg_id', array('alias' => 'ConfiguradorDisponibilidad'));
+        $this->belongsTo('edsp_id',  __NAMESPACE__.'\EstadoDisponibilidad', 'edsp_id', array('alias' => 'EstadoDisponibilidad'));
+        $this->belongsTo('user_id',  __NAMESPACE__.'\Users', 'id', array('alias' => 'Users'));
     }
 
     /**
@@ -94,7 +94,7 @@ class Disponible extends Model
     public function getDisponiblesWeek($data)
     {
         $fecha = date('Y-m-d',strtotime($data['fecha']));
-        $query = new Query("SELECT dspn_id,dspn_fecha,dspn_hora,cnfg_id,d.actv_id FROM Gabs\Models\Disponible d  LEFT JOIN Gabs\Models\Actividad a ON a.actv_id = d.actv_id WHERE YEARWEEK('{$fecha}',7) = YEARWEEK(d.dspn_fecha,7) AND d.user_id = {$data['user_id']}", $this->getDI());
+        $query = new Query("SELECT d.dspn_id,dspn_fecha,dspn_hora FROM Gabs\Models\Disponible d WHERE YEARWEEK('{$fecha}',7) = YEARWEEK(d.dspn_fecha,7) AND d.user_id = {$data['user_id']}", $this->getDI());
 
         return $query->execute();
     }
