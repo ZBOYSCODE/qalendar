@@ -42,4 +42,10 @@ return new \Phalcon\Config([
 	'appName'=>"<strong>QA</strong>Calendar",
 	'appAutor'=>'Zenta',
 	'appAutorLink'=>'http://www.zentagroup.com/',
+	'dateES' => [
+		'dias_full'  => array("Domingo","Lunes","Martes","Miercoles","Jueves","Viernes","Sábado"),
+		'dias_mini'  => array("Dom","Lun","Mar","Mie","Jue","Vie","Sáb"),
+		'meses_full' => array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"),
+		'meses_mini' => array("Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep","Oct","Nov","Dic")
+	],
 ]);

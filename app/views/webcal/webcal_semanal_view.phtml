@@ -26,27 +26,29 @@
 			<tr>
 				<th class="td-time">&nbsp;</th>
 				<?php foreach($pcData['fechas'] as $fecha) { ?>
-					<th><span><?php print $fecha ?> </span>LUNES</th>
+					<th><span><?php print $fecha ?> </span> <?php print $this->config['dateES']['dias_full'][date('w',strtotime($fecha))]; ?> </th>
 				<?php } ?>
 			</tr>
-				<?php foreach($pcData['week'] as $hora) {?>
+				<?php foreach($pcData['week'] as $key => $hora) {?>
 					<tr>
 					<td class="td-time">
-						<i class="fa fa-clock-o"></i>08.00
+						<i class="fa fa-clock-o"></i><?php print date('H:i',strtotime($key)) ?>
 					</td>
 					<?php foreach($hora as $disponible) {?>
 						<?php if(!is_object($disponible) && $disponible==0) {?>
-							<td>&nbsp;</td>
+							<td class="event-container">&nbsp;</td>
 						<?php } else { ?>
+							<?php if(isset($disponible->Actividad) && is_object($disponible->Actividad)) { ?>
 							<td class="event-container">
 								<div class="event">
 									<div class="title"><?php print $disponible->Actividad->actv_descripcion_breve ?></div>
 									<div class="details">
-										08.00 - 09.00
+										<?php print(date('H:i',strtotime($disponible->dspn_hora))." - ".date('H:i',strtotime($disponible->dspn_hora." + 1 hours "))) ?>
 										<div class="popup">
 											<div class="title"><?php print $disponible->Actividad->actv_descripcion_breve ?></div>
 											<p style="text-align: left;"><?php print $disponible->Actividad->actv_descripcion_ampliada ?> <br>
 												<strong>Participantes:</strong> <?php print $disponible->Actividad->actv_creado_por ?> <br>
+												<strong>Cuando:</strong> <?php print $disponible->dspn_fecha." ".$disponible->dspn_hora ?> <br>
 												<strong>Duración:</strong> <?php print $disponible->Actividad->actv_duracion_horas ?> Horas <br>
 												<strong>Prioridad:</strong> <?php print $disponible->Actividad->Prioridad->prrd_nombre ?> <br>
 												<strong>Creado Por:</strong> <?php print $disponible->Actividad->actv_creado_por ?> <br>
@@ -58,6 +60,9 @@
 									<a href="#"><span></span></a>
 								</div>
 							</td>
+							<?php } else { ?>
+								<td class="event-container">&nbsp;</td>
+							<?php } ?>
 						<?php } ?>
 					<?php } ?>
 				</tr>
