@@ -8,8 +8,8 @@ class TestController extends ControllerBase
 {
 
 
-	private $hora_inicio = "09:00:00";
-	private $hora_fin = "18:00:00";
+	private $hora_inicio = "08:00:00";
+	private $hora_fin = "17:00:00";
 	private $intervalo = 1;
 
 
@@ -23,10 +23,10 @@ class TestController extends ControllerBase
 		$this->script();
 	}
 
-	public function script(){
+	public function scriptAction(){
 
 		$horas = $this->getHorasWeek();
-		$fecha = date('Y-m-d');
+		$fecha = '2016-06-08';
 		$text = "";
 		foreach ($horas as $val) {
 			$text = $text."INSERT INTO `qalendar`.`disponible` (`dspn_id`, `actv_id`, `user_id`, `edsp_id`, `cnfg_id`, `dspn_fecha`, `dspn_hora`) VALUES (NULL, NULL, '1', '1', '1', '{$fecha}', '{$val}'); ";
