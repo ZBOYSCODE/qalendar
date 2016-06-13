@@ -108,7 +108,12 @@ class GestionQaController extends ControllerBase
         } else{
             $this->mifaces->addPosRendEval("$.bootstrapGrowl('{$callback['msg']}');");
         }
-        $this->mifaces->run();            
+        if(isset($callback['error']))
+            $this->mifaces->run();            
+        else{
+            $this->mifaces->addPosRendEval("window.location.replace('/qalendar');");
+            $this->mifaces->run();            
+        }
 
     }
 
