@@ -165,3 +165,11 @@
 	background-color: whitesmoke;
 
 }
+
+.btn-save {
+	position: relative;
+	left: -7px;
+	top: -55px;
+	width: 114px;
+	height: 33px
+}

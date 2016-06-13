@@ -1,10 +1,12 @@
 <?php
 
 namespace Gabs\Controllers;
-use \Gabs\Services\Services as Services;
 use Gabs\Models\Actividad;
 use Gabs\Models\Disponible;
 use \Gabs\Dto\Calendar;
+use \Gabs\Models\Persona;
+use \Gabs\Models\Prioridad;
+use \Gabs\Models\Acceso;
 
 class GestionQaController extends ControllerBase
 {
@@ -84,6 +86,12 @@ class GestionQaController extends ControllerBase
         $themeArray = $this->_themeArray;
         $themeArray['pcView'] = 'event/event_nuevo_view';
         $themeArray['jsScript'] = $this->view->render('event/js/evento_nuevoJS');
+
+        $data['users'] = Persona::find();
+        $data['prioridad'] = Prioridad::find();
+        $data['acceso'] = Acceso::find();
+
+        $themeArray['pcData'] = $data;
 
         //$themeArray['addJs'] = array("js/evento_nuevo.js");
         echo $this->view->render('theme', $themeArray);

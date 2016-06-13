@@ -7,7 +7,7 @@
 
     </div>
     <div >
-        <a href="javascript:void(0)"  onclick="$('#evento-form').submit();" class="btn btn-success pull-right">Guardar</a>    
+        <a href="javascript:void(0)"  onclick="$('#evento-form').submit();" class="btn btn-success pull-right btn-save">Guardar</a>
     </div>
     <div class="formulario-section">
         <form id="evento-form" action="<?php print($this->url->get("gestionQa/guardarEvento")) ?>" method="post" data-type="ajax">
@@ -38,12 +38,6 @@
                                 <select id="categoria" name="categoria" class="select-chosen my-chosen" data-placeholder="Elegir Categorías" style="width: 250px;" multiple>
                                     <option value="" selected=""></option>
                                     <option value="Instalación">Instalación</option>
-                                    <option value="Revisión">Revisión</option>
-                                    <option value="Configurar">Configurar</option>
-                                    <option value="Prueba">Prueba</option>
-                                    <option value="Prueba Stress">Prueba Stress</option>
-                                    <option value="Prueba Integración">Prueba Integración</option>
-                                    <option value="Prueba Usabilidad">Prueba Usabilidad</option>
                                 </select>
                             </div>
                         </div>
@@ -52,9 +46,9 @@
                             <div class="col-sm-8" style="text-align: left;">
                                 <select id="acceso" name="acceso" class="select-chosen my-chosen" data-placeholder="Seleccionar..." style="width: 250px;">
                                     <option value=""></option>
-                                    <option value="1">Privado</option>
-                                    <option value="2">Publico</option>
-                                    <option value="3">Otra</option>
+                                    <?php foreach($pcData['acceso'] as $accesoItem ) {?>
+                                        <option value="<?php print $accesoItem->accs_id ?>"><?php print $accesoItem->accs_nombre ?></option>
+                                    <?php } ?>
                                 </select>
                             </div>
                         </div>
@@ -63,16 +57,9 @@
                             <div class="col-sm-8" style="text-align: left;">
                                 <select id="prioridad" name="prioridad" class="select-chosen" data-placeholder="Seleccionar..." style="width: 250px;">
                                     <option></option>
-                                    <option value="1">Bajo-1</option>
-                                    <option value="2">Bajo-2</option>
-                                    <option value="3">Medio-1</option>
-                                    <option value="3">Medio-2</option>
-                                    <option value="3">Alto-1</option>
-                                    <option value="3">Alto-2</option>
-                                    <option value="3">Alto-2</option>
-                                    <option value="3">Alto-2</option>
-                                    <option value="3">Alto-2</option>
-                                    <option value="3">Alto-2</option>
+                                    <?php foreach($pcData['prioridad'] as $prioridadItem ) {?>
+                                        <option value="<?php print $prioridadItem->prrd_id ?>"><?php print $prioridadItem->prrd_nombre ?></option>
+                                    <?php } ?>
                                 </select>
                             </div>
                         </div>
@@ -109,15 +96,9 @@
                             <div class="col-sm-8" style="text-align: left;">
                                 <select id="persona" name="persona" class="select-chosen" data-placeholder="Seleccionar..." style="width: 250px;">
                                     <option></option>
-                                    <option value="1">Cociña, Jorge</option>
-                                    <option value="2">San Martìn, Orlando</option>
-                                    <option value="3">Silva, Jorge</option>
-                                    <option value="3">Silva, Sebastián</option>
-                                    <option value="3">Silva, Sebastián</option>
-                                    <option value="3">Silva, Sebastián</option>
-                                    <option value="3">Silva, Sebastián</option>
-                                    <option value="3">Silva, Sebastián</option>
-                                    <option value="3">Silva, Sebastián</option>
+                                    <?php foreach($pcData['users'] as $persona ) {?>
+                                        <option value="<?php print $persona->user_id ?>"><?php print $persona->apellido_paterno.", ".$persona->nombres ?></option>
+                                    <?php } ?>
                                 </select>
                             </div>
 

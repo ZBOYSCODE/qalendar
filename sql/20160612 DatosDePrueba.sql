@@ -11,6 +11,3 @@ INSERT INTO `disponible` (`dspn_id`, `actv_id`, `user_id`, `edsp_id`, `cnfg_id`,
 (2, 3, 1, 1, 1, '2016-06-10', '17:00:00'),
 (3, 2, 1, 1, 1, '2016-06-06', '08:00:00'),
 (4, NULL, 1, 1, 1, '2016-06-06', '12:00:00');
-
-INSERT INTO `prioridad` (`prrd_id`, `prrd_nombre`) VALUES
-(1, 'bajo-1');

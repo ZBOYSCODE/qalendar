@@ -80,7 +80,7 @@ class Persona extends Model
      */
     public function getSource()
     {
-        return 'persona';
+        return 'personas';
     }
 
     /**
