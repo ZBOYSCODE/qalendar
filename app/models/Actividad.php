@@ -135,14 +135,22 @@ class Actividad extends Model
     }
 
 
+    /**
+     * @param $data
+     * @return mixed
+     */
     public function getActividadesDay($data)
     {
         $fecha = date('Y-m-d',strtotime($data['fecha']));
         $query = new Query("SELECT a.actv_id, a.actv_fecha, a.actv_hora FROM Gabs\Models\Actividad a  WHERE a.actv_fecha = {$fecha}", $this->getDI());
 
         return $query->execute();
-    }    
+    }
 
+    /**
+     * @param $data
+     * @return mixed
+     */
     public function guardarActividad($data){
 
         $this->accs_id = $_POST['acceso'];

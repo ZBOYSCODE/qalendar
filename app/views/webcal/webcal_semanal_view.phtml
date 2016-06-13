@@ -8,10 +8,10 @@
 			<option value="">Cancelados</option>
 		</select>
 		<header>							
-			<div class="year">2016</div>							
-			<div class="month">JUNIO</div>							
+			<div class="year">2016</div>
+			<div class="month">Junio</div>
 			<div class="day">
-				<input type="text" value="07/06/2016">
+				<input type="text" value="<?php print $pcData['today'] ?>">
 				<a href="#" class="prev fa fa-angle-left"></a>
 				<a href="#" class="next fa fa-angle-right"></a>
 				<a href="#" class="cal fa fa-calendar"></a>
@@ -36,7 +36,7 @@
 					</td>
 					<?php foreach($hora as $disponible) {?>
 						<?php if(!is_object($disponible) && $disponible==0) {?>
-							<td class="event-container">&nbsp;</td>
+							<td>&nbsp;</td>
 						<?php } else { ?>
 							<?php if(isset($disponible->Actividad) && is_object($disponible->Actividad)) { ?>
 							<td class="event-container">
@@ -61,7 +61,7 @@
 								</div>
 							</td>
 							<?php } else { ?>
-								<td class="event-container">&nbsp;</td>
+								<td>&nbsp;</td>
 							<?php } ?>
 						<?php } ?>
 					<?php } ?>

@@ -36,6 +36,7 @@ class GestionQaController extends ControllerBase
         $data['week'] = $week;
         $data['horas'] = $horas;
         $data['fechas'] = $fechas;
+        $data['today'] = $DIA_ACTUAL;
 
     	$themeArray['pcData'] = $data;
 
