@@ -47,7 +47,11 @@
 										<div class="popup">
 											<div class="title"><?php print $disponible->Actividad->actv_descripcion_breve ?></div>
 											<p style="text-align: left;"><?php print $disponible->Actividad->actv_descripcion_ampliada ?> <br>
-												<strong>Participantes:</strong> <?php print $disponible->Actividad->UserActividad->Users->$name ?> <br>
+												<strong>Participantes:</strong>
+													<?php foreach($disponible->Actividad->UserActividad as $iter ) {
+														print($iter->Users->name.", ");
+													} ?>
+												<br>
 												<strong>Cuando:</strong> <?php print $disponible->dspn_fecha." ".$disponible->dspn_hora ?> <br>
 												<strong>Duración:</strong> <?php print $disponible->Actividad->actv_duracion_horas ?> Horas <br>
 												<strong>Prioridad:</strong> <?php print $disponible->Actividad->Prioridad->prrd_nombre ?> <br>

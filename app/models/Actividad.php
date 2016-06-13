@@ -205,8 +205,15 @@ class Actividad extends Model
 
             $userActividad = new UserActividad();
             $userActividad->actv_id = $this->actv_id;
-            $userActividad->user_id = $this->$_POST['persona'];
-            $userActividad->save();
+            $userActividad->user_id = $_POST['persona'];
+
+            if($userActividad->save()) {
+                foreach ($this->getMessages() as $message) {
+                    echo "Message: ", $message->getMessage();
+                    echo "Field: ", $message->getField();
+                    echo "Type: ", $message->getType();
+                }
+            }
 
             $callback['msg'] = 'Actividad creada correctamente.';
             return $callback;
