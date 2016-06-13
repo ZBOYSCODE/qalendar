@@ -3,6 +3,7 @@ namespace Gabs\Models;
 use Phalcon\Mvc\Model;
 use Phalcon\Mvc\Model\Query;
 use Gabs\Models\Disponible;
+use Gabs\Models\UserActividad;
 
 class Actividad extends Model
 {
@@ -165,7 +166,7 @@ class Actividad extends Model
         $this->actv_categoria = $_POST['categoria'];
         //$this->actv_status = $_POST['status'];
         $this->actv_status = 'Pendiente Aprobación';
-        $this->actv_creado_por = $_POST['persona'];
+        $this->actv_creado_por = 'admin';
         $this->actv_created_at = date('Y-m-d'); 
         $this->actv_updated_at = date('Y-m-d'); 
         //$actividad->actv_comentarios = $_POST['comentarios'];
@@ -201,6 +202,12 @@ class Actividad extends Model
         } else{
             $disponible->actv_id = $this->actv_id;
             $disponible->update();
+
+            $userActividad = new UserActividad();
+            $userActividad->actv_id = $this->actv_id;
+            $userActividad->user_id = $this->$_POST['persona'];
+            $userActividad->save();
+
             $callback['msg'] = 'Actividad creada correctamente.';
             return $callback;
         }

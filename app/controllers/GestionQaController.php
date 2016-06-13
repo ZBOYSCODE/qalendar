@@ -23,7 +23,7 @@ class GestionQaController extends ControllerBase
     public function indexAction()
     {
         /*Constantes dummies*/
-        $DIA_ACTUAL = '2016-06-09';
+        $DIA_ACTUAL = '2016-06-13';
         $USER_ACTUAL = 1;
 
         /* Creamos Calendario Semanal*/
@@ -31,7 +31,7 @@ class GestionQaController extends ControllerBase
         $data = array('fecha'=>$DIA_ACTUAL,'user_id'=>$USER_ACTUAL);
         $week = $calendar->getWeek($data);
         $horas = $calendar->getHorasWeek();
-        $fechas = $calendar->getFechasWeek('2016-06-09');
+        $fechas = $calendar->getFechasWeek($DIA_ACTUAL);
 
     	$themeArray = $this->_themeArray;
     	$themeArray['pcView'] = 'webcal/webcal_semanal_view';

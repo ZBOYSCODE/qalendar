@@ -172,34 +172,11 @@ class Users extends Model
 
         $this->hasMany(
             "id",
-            __NAMESPACE__ ."\HabilidadUserEvaluacion",
-            "user_evaluado_id",
-            array(
-            'alias' => 'habilidadUserEvaluacion'));
-
-        $this->hasMany(
-            "id",
-            __NAMESPACE__ ."\HabilidadUserEvaluacion",
-            "user_evaluador_id",
-            array(
-            'alias' => 'habilidadUserEvaluacion'));  
-
-        $this->hasMany(
-            "id",
-            __NAMESPACE__ ."\UserHabilidad",
+            __NAMESPACE__ ."\UserActividad",
             "user_id",
             array(
-            'alias' => 'userHabilidad')); 
+            'alias' => 'UserActividad'));
 
-        $this->hasManyToMany(
-            "id",
-             __NAMESPACE__ ."\UserGrupo",
-            "user_id",
-            "grpo_id",
-            __NAMESPACE__ ."\Grupo",
-            "grpo_id",
-            array('alias' => 'grupos')
-        );                         
 
     }
 

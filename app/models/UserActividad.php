@@ -28,8 +28,8 @@ class UserActividad extends Model
      */
     public function initialize()
     {
-        $this->belongsTo('actv_id', 'Actividad', 'actv_id', array('alias' => 'Actividad'));
-        $this->belongsTo('user_id', 'Users', 'id', array('alias' => 'Users'));
+        $this->belongsTo('actv_id',  __NAMESPACE__.'Actividad', 'actv_id', array('alias' => 'Actividad'));
+        $this->belongsTo('user_id',  __NAMESPACE__.'Users', 'id', array('alias' => 'Users'));
     }
 
     /**
