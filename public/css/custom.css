@@ -173,3 +173,26 @@
 	width: 114px;
 	height: 33px
 }
+
+.event-blocked {
+	background-color: whitesmoke;
+}
+
+.event-disp {
+	cursor: pointer;
+	color:#aeb3b9 !important;
+	padding: 5px;
+}
+
+.event-disp a{
+	color:#aeb3b9 !important;
+}
+
+.event-disp a:hover{
+	color:white !important;
+}
+
+.event-disp:hover {
+	background-color: #9de2a4;
+	color:white !important;
+}

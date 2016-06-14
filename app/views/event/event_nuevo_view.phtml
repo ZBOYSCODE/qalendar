@@ -67,12 +67,12 @@
                 </div>
                 <div class="col-sm-2">
                     <div class="form-group row form-row">
-                        <div id="datepicker" data-date-format="yyyy-mm-dd" data-date="<?php print(date('Y-m-d')) ?>"></div>
-                        <input type="hidden" id="fecha" name="fecha" value="<?php print(date('Y-m-d')) ?>">
+                        <div id="datepicker" data-date-format="yyyy-mm-dd" data-date="<?php print(isset($pcData['fechaSelected'])?$pcData['fechaSelected']:date('Y-m-d')) ?>"></div>
+                        <input type="hidden" id="fecha" name="fecha" value="<?php print(isset($pcData['fechaSelected'])?$pcData['fechaSelected']:date('Y-m-d')) ?>">
                     </div>
                     <div class="form-group row form-row">
                         <div class="input-group bootstrap-timepicker" style="padding-left: 0px;">
-                            <input style="margin-left:15px;" type="text" id="hora" name="hora" class="form-control input-timepicker24" value="13:00">
+                            <input style="margin-left:15px;" type="text" id="hora" name="hora" class="form-control input-timepicker24" value="<?php print(isset($pcData['horaSelected'])?$pcData['horaSelected']:"13:00") ?>">
                             <span class="input-group-btn">
                                 <a href="javascript:void(0)" class="btn btn-primary"><i class="fa fa-clock-o"></i></a>
                             </span>
@@ -81,7 +81,7 @@
                     <div class="form-group row form-row">
                         <label class="col-sm-12 control-label" for="duracion">Duración (Horas) *</label>
                         <div class="col-sm-12">
-                            <input type="Number" id="duracion" name="duracion" class="form-control input-sm" placeholder="Duración">
+                            <input type="Number" id="duracion" name="duracion" class="form-control input-sm" value="1" placeholder="Duración">
                         </div>
                     </div>
                     <div class="form-group row" style="text-align: center;">
@@ -94,10 +94,10 @@
                             <label class="col-sm-12 control-label" for="persona">Añadir Persona *</label>
 
                             <div class="col-sm-8" style="text-align: left;">
-                                <select id="persona" name="persona" class="select-chosen" data-placeholder="Seleccionar..." style="width: 250px;">
-                                    <option></option>
+                                <select id="persona" name="persona" class="select-chosen" data-placeholder="Seleccionar..." value="1" style="width: 250px;">
+                                        <option></option>
                                     <?php foreach($pcData['users'] as $persona ) {?>
-                                        <option value="<?php print $persona->user_id ?>"><?php print $persona->apellido_paterno.", ".$persona->nombres ?></option>
+                                        <option <?php print(isset($pcData['userSelected']) && $pcData['userSelected']->id == $persona->user_id?'selected="selected"':'' )?> value="<?php print $persona->user_id ?>"><?php print $persona->apellido_paterno.", ".$persona->nombres ?></option>
                                     <?php } ?>
                                 </select>
                             </div>

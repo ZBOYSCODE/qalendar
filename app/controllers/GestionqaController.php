@@ -83,18 +83,42 @@ class GestionQaController extends ControllerBase
      *
      */
     public function crearEventoAction() {
-        $themeArray = $this->_themeArray;
-        $themeArray['pcView'] = 'event/event_nuevo_view';
-        $themeArray['jsScript'] = $this->view->render('event/js/evento_nuevoJS');
+        $data = array();
 
-        $data['users'] = Persona::find();
-        $data['prioridad'] = Prioridad::find();
-        $data['acceso'] = Acceso::find();
+        if(!$this->request->isAjax() == true) {
+            if(isset($_POST)) {
+                //caso: crear un evento con datos precargados
+                $callData = $_POST;
+                if(isset($callData['dspn'])) {
+                    $dspn_id = $callData['dspn'];
 
-        $themeArray['pcData'] = $data;
+                    $dspn = Disponible::findFirst($dspn_id);
+                    /*... Podemos seguir seteando datos, dependiendo del caso*/
 
-        //$themeArray['addJs'] = array("js/evento_nuevo.js");
-        echo $this->view->render('theme', $themeArray);
+                    $data['fechaSelected'] = $dspn->dspn_fecha;
+                    $data['horaSelected'] = $dspn->dspn_hora;
+                    $data['userSelected'] = $dspn->Users;
+                }
+            }
+
+            $themeArray = $this->_themeArray;
+            $themeArray['pcView'] = 'event/event_nuevo_view';
+            $themeArray['jsScript'] = $this->view->render('event/js/evento_nuevoJS');
+
+            $data['users'] = Persona::find();
+            $data['prioridad'] = Prioridad::find();
+            $data['acceso'] = Acceso::find();
+
+            $themeArray['pcData'] = $data;
+
+            //$themeArray['addJs'] = array("js/evento_nuevo.js");
+            echo $this->view->render('theme', $themeArray);
+        }
+        else {
+            $response = new \Phalcon\Http\Response();
+            $response->redirect("/");
+            $response->send();
+        }
     }
 
 

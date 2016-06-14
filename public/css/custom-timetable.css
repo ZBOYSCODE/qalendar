@@ -677,6 +677,7 @@
 
 .td-time {
   width: 6% !important;
+  padding: 5px;
 }
 
 .event-disabled {
