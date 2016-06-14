@@ -203,7 +203,13 @@ class Actividad extends Model
             $disponible->dspn_hora = $this->actv_hora;
             $disponible->user_id = $persona;
             $disponible->edsp_id = 2; // Ocupado
-            $disponible->save();
+            if($disponible->save() == false){
+                foreach ($this->getMessages() as $message) {
+                    $callback['msg'][] = $message->getMessage();
+                }
+                $callback['error'] = 1;
+                $callback['msg'][] = 'Error creando al usuario.';                 
+            }
 
         }
 
