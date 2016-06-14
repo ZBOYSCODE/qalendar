@@ -2,6 +2,7 @@
 namespace Gabs\Models;
 use Phalcon\Mvc\Model;
 use Phalcon\Mvc\Model\Query;
+use \Gabs\Dto\Calendar;
 
 class Disponible extends Model
 {
@@ -101,9 +102,17 @@ class Disponible extends Model
 
     public function getDisponiblesByFecha($data)
     {
+        $calendar = new Calendar();
+        $horasTotales = $calendar->getHorasWeek();
+        $dataQuery = array("dspn_fecha = '".$data['fecha']."' AND edsp_id != 1 AND user_id = ".$data['persona']);        
+        $noDisponibles = Disponible::find($dataQuery);
+        foreach ($noDisponibles as $val) {
+            $horasNoDisponibles[] = $val->dspn_hora;
+        }
 
-        $dataQuery = array("dspn_fecha = '".$data['fecha']."' AND edsp_id = 1");        
-        return Disponible::find($dataQuery);
+        $horasDisponibles = array_diff($horasTotales, $horasNoDisponibles);
+
+        return $horasDisponibles;
     }
 
 

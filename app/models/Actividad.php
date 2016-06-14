@@ -4,6 +4,7 @@ use Phalcon\Mvc\Model;
 use Phalcon\Mvc\Model\Query;
 use Gabs\Models\Disponible;
 use Gabs\Models\UserActividad;
+use Gabs\Models\CategoriaActividad;
 
 class Actividad extends Model
 {
@@ -155,6 +156,12 @@ class Actividad extends Model
      */
     public function guardarActividad($data){
 
+        if(empty($_POST['persona']) OR empty($_POST['fecha']) OR empty($_POST['hora'])){
+            $callback['error'] = 1;
+            $callback['msg'][] = 'Faltan rellenar campos requeridos.';            
+            return $callback;
+        }
+
         $this->accs_id = $_POST['acceso'];
         $this->prrd_id = $_POST['prioridad'];
         $this->actv_descripcion_breve = $_POST['dscr-breve'];
@@ -183,7 +190,7 @@ class Actividad extends Model
                 $disponible->edsp_id = 2;
             } else{
                 $callback['error'] = 1;
-                $callback['msg'] = 'No hay bloques disponibles en la hora y fecha seleccionadas.';  
+                $callback['msg'][] = 'No hay bloques disponibles en la hora y fecha seleccionadas.';  
             }
         } else{
             /*
@@ -213,7 +220,6 @@ class Actividad extends Model
             }*/
             $callback['error'] = 1;
             $callback['msg'] = 'Faltan rellenar campos requeridos.';
-            return $callback;
         } else{
             $disponible->actv_id = $this->actv_id;
             $disponible->update();
@@ -222,15 +228,21 @@ class Actividad extends Model
             $userActividad->actv_id = $this->actv_id;
             $userActividad->user_id = $_POST['persona'];
 
-            if($userActividad->save()) {
+            $categoriaActividad = new CategoriaActividad();
+            $categoriaActividad->actv_id = $this->actv_id;
+            $categoriaActividad->user_id = $_POST['categoria'];  
+            $categoriaActividad->save();          
+
+            if($userActividad->save() == false) {
                 foreach ($this->getMessages() as $message) {
-                    echo "Message: ", $message->getMessage();
-                    echo "Field: ", $message->getField();
-                    echo "Type: ", $message->getType();
+                    $callback['msg'][] = $message->getMessage();
                 }
+                $callback['error'] = 1;
+                $callback['msg'][] = 'Error creando al usuario.';                
             }
 
-            $callback['msg'] = 'Actividad creada correctamente.';
+            if(!isset($callback['error']))
+                $callback['msg'][] = 'Actividad creada correctamente.';
             return $callback;
         }
     }

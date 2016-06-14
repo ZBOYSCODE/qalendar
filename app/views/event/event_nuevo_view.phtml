@@ -38,7 +38,7 @@
                                 <select id="categoria" name="categoria" class="select-chosen my-chosen" data-placeholder="Elegir Categorías" style="width: 250px;" multiple>
                                     <option value="" selected=""></option>
                                     <?php foreach($pcData['categoria'] as $categoriaItem ) {?>
-                                        <option value="<?php print $categoriaItem->ctgr_nombre ?>"><?php print $categoriaItem->ctgr_nombre ?></option>
+                                        <option value="<?php print $categoriaItem->ctgr_id ?>"><?php print $categoriaItem->ctgr_nombre ?></option>
                                     <?php } ?>
                                 </select>
                             </div>
