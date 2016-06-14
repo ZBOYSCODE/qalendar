@@ -7,6 +7,7 @@ use \Gabs\Dto\Calendar;
 use \Gabs\Models\Persona;
 use \Gabs\Models\Prioridad;
 use \Gabs\Models\Acceso;
+use \Gabs\Models\Categoria;
 
 class GestionQaController extends ControllerBase
 {
@@ -46,6 +47,9 @@ class GestionQaController extends ControllerBase
         echo $this->view->render('theme', $themeArray);
     }
 
+    /**
+     *
+     */
     public function changeCalendarDateAction() {
         if($this->request->isAjax() == true) {
             if(isset($_POST)) {
@@ -152,6 +156,7 @@ class GestionQaController extends ControllerBase
             $data['users'] = Persona::find();
             $data['prioridad'] = Prioridad::find();
             $data['acceso'] = Acceso::find();
+            $data['categoria'] = Categoria::find();
 
             $themeArray['pcData'] = $data;
 

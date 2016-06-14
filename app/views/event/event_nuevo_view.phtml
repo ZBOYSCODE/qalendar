@@ -37,11 +37,9 @@
                             <div class="col-sm-8">
                                 <select id="categoria" name="categoria" class="select-chosen my-chosen" data-placeholder="Elegir Categorías" style="width: 250px;" multiple>
                                     <option value="" selected=""></option>
-                                    <option value="Instalación">Instalación Beta</option>
-                                    <option value="Instalación">Revisión Código</option>
-                                    <option value="Instalación">Servicio Ambiente</option>
-                                    <option value="Instalación">Instalación Producción</option>
-                                    <option value="Instalación">Validación MVC</option>
+                                    <?php foreach($pcData['categoria'] as $categoriaItem ) {?>
+                                        <option value="<?php print $categoriaItem->ctgr_nombre ?>"><?php print $categoriaItem->ctgr_nombre ?></option>
+                                    <?php } ?>
                                 </select>
                             </div>
                         </div>
