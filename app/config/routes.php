@@ -39,5 +39,10 @@ $router->add('/evento/nuevo', array(
     'action' => 'crearEvento'
 ));
 
+$router->add('/calendar/changeWeek', array(
+    'controller' => 'GestionQa',
+    'action' => 'changeCalendarDate'
+));
+
 
 return $router;

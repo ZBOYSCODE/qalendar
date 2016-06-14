@@ -1,0 +1,121 @@
+<select class="filter">
+    <option value="">Todos</option>
+    <option value="">Instalación</option>
+    <option value="">Interno</option>
+    <option value="">Aprobados</option>
+    <option value="">Cancelados</option>
+</select>
+<header>
+    <div class="year"><?php print date('Y',strtotime($pcData['today'])) ?></div>
+    <div class="month"><?php print $this->config['dateES']['meses_full'][(int)date('m',strtotime($pcData['today']))-1] ?></div>
+    <div class="day">
+        <input type="text" value="<?php print $pcData['today'] ?>">
+        <a href="<?php print $this->url->get()?>calendar/changeWeek"
+           data-action="<?php print $this->url->get()?>calendar/changeWeek"
+           data-val="dateChange=<?php print date("Y-m-d", strtotime($pcData['today']."-1 week")); ?>" class="prev fa fa-angle-left"></a>
+        <a href="<?php print $this->url->get()?>calendar/changeWeek"
+           data-action="<?php print $this->url->get()?>calendar/changeWeek"
+           data-val="dateChange=<?php print date("Y-m-d", strtotime($pcData['today']."+1 week")); ?>" class="next fa fa-angle-right"></a>
+        <a href="#" class="cal fa fa-calendar"></a>
+    </div>
+
+    <div class="switcher">
+        <a href="javascript:void(0)" data-toggle="tooltip" title="Vista Mensual"><i class="fa fa-calendar"></i></a>
+        <a href="javascript:void(0)" data-toggle="tooltip" title="Vista Semanal" class="active"><i class="fa fa-calendar-o"></i></a>
+    </div>
+</header>
+<table class="week-view">
+    <tr>
+        <th class="td-time">&nbsp;</th>
+        <?php foreach($pcData['fechas'] as $fecha) { ?>
+            <th><span><?php print $fecha ?> </span> <?php print $this->config['dateES']['dias_full'][date('w',strtotime($fecha))]; ?> </th>
+        <?php } ?>
+    </tr>
+    <?php foreach($pcData['week'] as $key => $hora) {?>
+        <tr>
+            <td class="td-time">
+                <i class="fa fa-clock-o"></i><?php print date('H:i',strtotime($key)) ?>
+            </td>
+            <?php foreach($hora as $disponible) {?>
+                <?php if(!is_object($disponible) && $disponible==0) {?>
+                    <td class="event-blocked">&nbsp;</td>
+                <?php } else { ?>
+                    <?php if(isset($disponible->Actividad) && is_object($disponible->Actividad)) { ?>
+                        <td class="event-container">
+                            <div class="event">
+                                <div class="title"><?php print $disponible->Actividad->actv_descripcion_breve ?></div>
+                                <div class="details">
+                                    <?php print(date('H:i',strtotime($disponible->dspn_hora))." - ".date('H:i',strtotime($disponible->dspn_hora." + 1 hours "))) ?>
+                                    <div class="popup">
+                                        <div class="title"><?php print $disponible->Actividad->actv_descripcion_breve ?></div>
+                                        <p style="text-align: left;"><?php print $disponible->Actividad->actv_descripcion_ampliada ?> <br>
+                                            <strong>Participantes:</strong>
+                                            <?php foreach($disponible->Actividad->UserActividad as $iter ) {
+                                                print($iter->Users->name.", ");
+                                            } ?>
+                                            <br>
+                                            <strong>Cuando:</strong> <?php print $disponible->dspn_fecha." ".$disponible->dspn_hora ?> <br>
+                                            <strong>Duración:</strong> <?php print $disponible->Actividad->actv_duracion_horas ?> Horas <br>
+                                            <strong>Prioridad:</strong> <?php print $disponible->Actividad->Prioridad->prrd_nombre ?> <br>
+                                            <strong>Creado Por:</strong> <?php print $disponible->Actividad->actv_creado_por ?> <br>
+                                            <strong>Estado:</strong> <?php print $disponible->Actividad->actv_status ?> <br>
+                                        </p>
+                                        <a href="#"><span></span></a>
+                                    </div>
+                                </div>
+                                <a href="#"><span></span></a>
+                            </div>
+                        </td>
+                    <?php } else { ?>
+                        <?php if($disponible->EstadoDisponibilidad->edsp_id == 1) { ?>
+                            <td class="event-disp">
+                                <div class="btn-group  pull-right ">
+                                    <a href="javascript:void(0)" data-toggle="dropdown" class="dropdown-toggle">
+                                        <i class="hi hi-collapse"></i>
+                                    </a>
+                                    <ul class="dropdown-menu dropdown-custom text-left" style="min-width: 140px;">
+                                        <li>
+                                            <a href="<?php print $this->url->get()?>evento/nuevo"
+                                               data-action="<?php print $this->url->get()?>evento/nuevo"
+                                               data-val="dspn=<?php print $disponible->dspn_id ?>"
+                                               data-ajax="false">Crear Evento</a>
+
+                                            <a href="javascript:void(0)">Bloquear</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </td>
+                        <?php } else { ?>
+                            <td>&nbsp;</td>
+                        <?php } ?>
+                    <?php } ?>
+                <?php } ?>
+            <?php } ?>
+        </tr>
+    <?php } ?>
+
+</table>
+<div class="mobile-view">
+    <dl>
+        <dt><span>Lunes</span></dt>
+        <dd>
+            <ul>
+                <li><i class="fa fa-clock-o"></i><span>08.00 - 09.00</span>Instalación de V.1</li>
+                <li><i class="fa fa-clock-o"></i><span>07.00 - 08.00</span>Instalación de V.1</li>
+                <li><i class="fa fa-clock-o"></i><span>10.00 - 11.00</span>Instalación de V.1</li>
+                <li><i class="fa fa-clock-o"></i><span>15.00 - 14.00</span>Instalación de V.1</li>
+                <li><i class="fa fa-clock-o"></i><span>16.00 - 27.00</span>Instalación de V.1</li>
+            </ul>
+        </dd>
+        <dt><span>Martes</span></dt>
+        <dd>
+            <ul>
+                <li><i class="fa fa-clock-o"></i><span>08.00 - 09.00</span>Instalación de V.1</li>
+                <li><i class="fa fa-clock-o"></i><span>07.00 - 08.00</span>Instalación de V.1</li>
+                <li><i class="fa fa-clock-o"></i><span>10.00 - 11.00</span>Instalación de V.1</li>
+                <li><i class="fa fa-clock-o"></i><span>15.00 - 14.00</span>Instalación de V.1</li>
+                <li><i class="fa fa-clock-o"></i><span>16.00 - 27.00</span>Instalación de V.1</li>
+            </ul>
+        </dd>
+    </dl>
+</div>

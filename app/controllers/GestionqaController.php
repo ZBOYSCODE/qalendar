@@ -22,7 +22,8 @@ class GestionQaController extends ControllerBase
      */
     public function indexAction()
     {
-        /*Constantes dummiesa*/
+        /*Constantes dummies*/
+        //TODO: Modificar user_actual por el usuario seleccionado en cuestión
         $DIA_ACTUAL = '2016-06-13';
         $USER_ACTUAL = 1;
 
@@ -43,6 +44,49 @@ class GestionQaController extends ControllerBase
     	$themeArray['pcData'] = $data;
 
         echo $this->view->render('theme', $themeArray);
+    }
+
+    public function changeCalendarDateAction() {
+        if($this->request->isAjax() == true) {
+            if(isset($_POST)) {
+                $callData = $_POST;
+                if(isset($_POST['dateChange'])) {
+                    $today = $_POST['dateChange'];
+                }
+                else {
+                    $today = date("Y-m-d");
+                }
+            }
+            //TODO: Modificar user_actual por el usuario seleccionado en cuestión
+            $USER_ACTUAL = 1;
+
+            /* Creamos Calendario Semanal*/
+            $calendar = new Calendar();
+            $data = array('fecha'=>$today,'user_id'=>$USER_ACTUAL);
+            $week = $calendar->getWeek($data);
+            $horas = $calendar->getHorasWeek();
+            $fechas = $calendar->getFechasWeek($today);
+
+            $data['week'] = $week;
+            $data['horas'] = $horas;
+            $data['fechas'] = $fechas;
+            $data['today'] = $today;
+
+            $dataView['pcData'] = $data;
+            $view = 'webcal/webcal_calendar_base_view';
+
+            //mifaces
+            $toRenderView = $this->view->render($view, $dataView);
+            $this->mifaces->newFaces();
+            $this->mifaces->addToRend('calendar', $toRenderView);
+            $this->mifaces->run();
+
+        }
+        else {
+            $response = new \Phalcon\Http\Response();
+            $response->redirect("/");
+            $response->send();
+        }
     }
 
     /**
