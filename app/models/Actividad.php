@@ -171,7 +171,11 @@ class Actividad extends Model
         $this->actv_updated_at = date('Y-m-d'); 
         //$actividad->actv_comentarios = $_POST['comentarios'];
 
-        $disponible = Disponible::findFirst("dspn_fecha = '{$this->actv_fecha}' AND dspn_hora = '{$this->actv_hora}'");
+
+        // Considerando relacion 1 a 1 para actividad - persona
+        $persona = $_POST['persona'];
+
+        $disponible = Disponible::findFirst("dspn_fecha = '{$this->actv_fecha}' AND dspn_hora = '{$this->actv_hora}' AND user_id = {$persona}");
 
         if($disponible){
             if($disponible->edsp_id == 1){ //Disponible
@@ -181,8 +185,18 @@ class Actividad extends Model
                 $callback['msg'] = 'No hay bloques disponibles en la hora y fecha seleccionadas.';  
             }
         } else{
+            /*
             $callback['error'] = 1;
-            $callback['msg'] = 'No hay bloques creados en la hora y fecha seleccionadas.';
+            $callback['msg'] = 'No hay bloques creados en la hora y fecha seleccionadas.';*/
+
+            //Bloques no creados ahora se crean.
+            $disponible = new Disponible();
+            $disponible->dspn_fecha = $this->actv_fecha;
+            $disponible->dspn_hora = $this->actv_hora;
+            $disponible->user_id = $persona;
+            $disponible->edsp_id = 2; // Ocupado
+            $disponible->save();
+
         }
 
         if(isset($callback['error']))
