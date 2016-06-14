@@ -181,10 +181,13 @@ class GestionQaController extends ControllerBase
         $a_model = new Actividad();
         $callback = $a_model->guardarActividad($_POST);
         if(isset($callback['error'])){
-            if($callback['error'] == 1)
-                $this->mifaces->addPosRendEval("$.bootstrapGrowl('{$callback['msg']}',{type:'danger'});");
+            if($callback['error'] == 1){
+                foreach ($callback['msg'] as $val) {
+                    $this->mifaces->addPosRendEval("$.bootstrapGrowl('{$val}',{type:'danger'});");
+                }
+            }
         } else{
-            $this->mifaces->addPosRendEval("$.bootstrapGrowl('{$callback['msg']}');");
+            $this->mifaces->addPosRendEval("$.bootstrapGrowl('{$callback['msg'][0]}');");
         }
         if(isset($callback['error']))
             $this->mifaces->run();            
