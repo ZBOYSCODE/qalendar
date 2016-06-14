@@ -31,14 +31,30 @@
             <th><span><?php print $fecha ?> </span> <?php print $this->config['dateES']['dias_full'][date('w',strtotime($fecha))]; ?> </th>
         <?php } ?>
     </tr>
-    <?php foreach($pcData['week'] as $key => $hora) {?>
+    <?php foreach($pcData['week'] as $keyHora => $hora) {?>
         <tr>
             <td class="td-time">
-                <i class="fa fa-clock-o"></i><?php print date('H:i',strtotime($key)) ?>
+                <i class="fa fa-clock-o"></i><?php print date('H:i',strtotime($keyHora)) ?>
             </td>
-            <?php foreach($hora as $disponible) {?>
+            <?php foreach($hora as $keyFecha => $disponible) {?>
                 <?php if(!is_object($disponible) && $disponible==0) {?>
-                    <td class="event-blocked">&nbsp;</td>
+                    <td class="event-disp">
+                        <div class="btn-group  pull-right ">
+                            <a href="javascript:void(0)" data-toggle="dropdown" class="dropdown-toggle">
+                                <i class="hi hi-collapse"></i>
+                            </a>
+                            <ul class="dropdown-menu dropdown-custom text-left" style="min-width: 140px;">
+                                <li>
+                                    <a href="<?php print $this->url->get()?>evento/nuevo"
+                                       data-action="<?php print $this->url->get()?>evento/nuevo"
+                                       data-val="hora=<?php print $keyHora ?>&fecha=<?php print $keyFecha ?>&calendarUser=<?php print $pcData['calendarUser'] ?>"
+                                       data-ajax="false">Crear Evento</a>
+
+                                    <a href="javascript:void(0)">Bloquear</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </td>
                 <?php } else { ?>
                     <?php if(isset($disponible->Actividad) && is_object($disponible->Actividad)) { ?>
                         <td class="event-container">
@@ -77,7 +93,7 @@
                                         <li>
                                             <a href="<?php print $this->url->get()?>evento/nuevo"
                                                data-action="<?php print $this->url->get()?>evento/nuevo"
-                                               data-val="dspn=<?php print $disponible->dspn_id ?>"
+                                               data-val="hora=<?php print $keyHora ?>&fecha=<?php print $keyFecha ?>&calendarUser=<?php print $pcData['calendarUser'] ?>"
                                                data-ajax="false">Crear Evento</a>
 
                                             <a href="javascript:void(0)">Bloquear</a>
@@ -85,8 +101,8 @@
                                     </ul>
                                 </div>
                             </td>
-                        <?php } else { ?>
-                            <td>&nbsp;</td>
+                        <?php } elseif($disponible->EstadoDisponibilidad->edsp_id == 3) { ?>
+                            <td class="event-blocked">&nbsp;</td>
                         <?php } ?>
                     <?php } ?>
                 <?php } ?>

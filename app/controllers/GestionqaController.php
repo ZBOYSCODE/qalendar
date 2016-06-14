@@ -8,6 +8,7 @@ use \Gabs\Models\Persona;
 use \Gabs\Models\Prioridad;
 use \Gabs\Models\Acceso;
 use \Gabs\Models\Categoria;
+use \Gabs\Models\Users;
 
 class GestionQaController extends ControllerBase
 {
@@ -41,6 +42,7 @@ class GestionQaController extends ControllerBase
         $data['horas'] = $horas;
         $data['fechas'] = $fechas;
         $data['today'] = $DIA_ACTUAL;
+        $data['calendarUser'] = $USER_ACTUAL;
 
     	$themeArray['pcData'] = $data;
 
@@ -75,6 +77,7 @@ class GestionQaController extends ControllerBase
             $data['horas'] = $horas;
             $data['fechas'] = $fechas;
             $data['today'] = $today;
+            $data['calendarUser'] = $USER_ACTUAL;
 
             $dataView['pcData'] = $data;
             $view = 'webcal/webcal_calendar_base_view';
@@ -137,15 +140,17 @@ class GestionQaController extends ControllerBase
             if(isset($_POST)) {
                 //caso: crear un evento con datos precargados
                 $callData = $_POST;
-                if(isset($callData['dspn'])) {
-                    $dspn_id = $callData['dspn'];
+                if(isset($callData['hora']) && isset($callData['fecha']) && isset($callData['calendarUser'])) {
+                    $hora = $callData['hora'];
+                    $fecha = $callData['fecha'];
+                    $owner = $callData['calendarUser'];
+                    $userOwner = Users::findFirst($owner);
 
-                    $dspn = Disponible::findFirst($dspn_id);
                     /*... Podemos seguir seteando datos, dependiendo del caso*/
 
-                    $data['fechaSelected'] = $dspn->dspn_fecha;
-                    $data['horaSelected'] = $dspn->dspn_hora;
-                    $data['userSelected'] = $dspn->Users;
+                    $data['fechaSelected'] = date("Y-m-d", strtotime($fecha));
+                    $data['horaSelected'] = $hora;
+                    $data['userSelected'] = $userOwner;
                 }
             }
 
