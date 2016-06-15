@@ -10,8 +10,8 @@
                 </thead>
                 <?php foreach ($pcData['disponibles'] as $val) {?>
                   <tr>
-                    <td><?php print(date('H:i',strtotime($val->dspn_hora))) ?></td>
-                    <td><input type="radio" class="radio" name="horaSeleccionada" value="<?php print(date('H:i',strtotime($val->dspn_hora))) ?>"> </td>
+                    <td><?php print(date('H:i',strtotime($val))) ?></td>
+                    <td><input type="radio" class="radio" name="horaSeleccionada" value="<?php print(date('H:i',strtotime($val))) ?>" </td>
                   </tr>
                 <?php } ?>
               </table>
