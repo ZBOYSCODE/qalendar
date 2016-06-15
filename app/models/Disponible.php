@@ -106,11 +106,16 @@ class Disponible extends Model
         $horasTotales = $calendar->getHorasWeek();
         $dataQuery = array("dspn_fecha = '".$data['fecha']."' AND edsp_id != 1 AND user_id = ".$data['persona']);        
         $noDisponibles = Disponible::find($dataQuery);
-        foreach ($noDisponibles as $val) {
-            $horasNoDisponibles[] = $val->dspn_hora;
-        }
+        if(count($noDisponibles)>0){
+            foreach ($noDisponibles as $val) {
+                $horasNoDisponibles[] = date('H:i',strtotime($val->dspn_hora));
+            }
+        } else
+            $horasNoDisponibles = array();
 
+        
         $horasDisponibles = array_diff($horasTotales, $horasNoDisponibles);
+        sort($horasNoDisponibles);
 
         return $horasDisponibles;
     }

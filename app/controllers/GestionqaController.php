@@ -26,8 +26,8 @@ class GestionQaController extends ControllerBase
     {
         /*Constantes dummies*/
         //TODO: Modificar user_actual por el usuario seleccionado en cuestión
-        $DIA_ACTUAL = '2016-06-13';
-        $USER_ACTUAL = 1;
+        $DIA_ACTUAL = date('Y-m-d');
+        $USER_ACTUAL = isset($userCalendar)?$userCalendar:$this->auth->getIdentity()['id'];
 
         /* Creamos Calendario Semanal*/
         $calendar = new Calendar();
@@ -64,7 +64,7 @@ class GestionQaController extends ControllerBase
                 }
             }
             //TODO: Modificar user_actual por el usuario seleccionado en cuestión
-            $USER_ACTUAL = 1;
+            $USER_ACTUAL = isset($userCalendar)?$userCalendar:$this->auth->getIdentity()['id'];
 
             /* Creamos Calendario Semanal*/
             $calendar = new Calendar();
@@ -191,7 +191,7 @@ class GestionQaController extends ControllerBase
             $themeArray['pcView'] = 'event/event_nuevo_view';
             $themeArray['jsScript'] = $this->view->render('event/js/evento_nuevoJS');
 
-            $data['users'] = Persona::find();
+            $data['users'] = Users::find();
             $data['prioridad'] = Prioridad::find();
             $data['acceso'] = Acceso::find();
             $data['categoria'] = Categoria::find();

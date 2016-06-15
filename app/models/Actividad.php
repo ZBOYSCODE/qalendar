@@ -204,7 +204,7 @@ class Actividad extends Model
             $disponible->user_id = $persona;
             $disponible->edsp_id = 2; // Ocupado
             if($disponible->save() == false){
-                foreach ($this->getMessages() as $message) {
+                foreach ($disponible->getMessages() as $message) {
                     $callback['msg'][] = $message->getMessage();
                 }
                 $callback['error'] = 1;
@@ -225,7 +225,7 @@ class Actividad extends Model
                 //echo "Type: ", $message->getType();
             }*/
             $callback['error'] = 1;
-            $callback['msg'] = 'Faltan rellenar campos requeridos.';
+            $callback['msg'][] = 'Faltan rellenar campos requeridos.';
         } else{
             $disponible->actv_id = $this->actv_id;
             $disponible->update();
@@ -240,7 +240,7 @@ class Actividad extends Model
             $categoriaActividad->save();          
 
             if($userActividad->save() == false) {
-                foreach ($this->getMessages() as $message) {
+                foreach ($userActividad->getMessages() as $message) {
                     $callback['msg'][] = $message->getMessage();
                 }
                 $callback['error'] = 1;
@@ -249,8 +249,10 @@ class Actividad extends Model
 
             if(!isset($callback['error']))
                 $callback['msg'][] = 'Actividad creada correctamente.';
-            return $callback;
+
+            
         }
+        return $callback;
     }
 
 }
