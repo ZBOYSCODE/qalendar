@@ -99,11 +99,44 @@ class GestionQaController extends ControllerBase
     /**
      *
      */
-    public function vistaDiariaAction() {
+    public function vistaDiariaAction()
+    {
         $themeArray = $this->_themeArray;
         $themeArray['pcView'] = 'webcal/webcal_diaria_view';
 
+        # 
+        $fecha      =   $this->request->getPost("fecha");
+
+        $conditions = "actv_fecha = :fecha:";
+        $params = array("fecha" => $fecha);
+
+        # obtenemos todad las actividades por día especifico
+        $actividades = Actividad::find(array(
+                $conditions,
+                "bind" => $params
+        ));
+
+        $themeArray['pcData']['actividades'] = $this->ordenar($actividades);
+
         echo $this->view->render('theme', $themeArray);
+    }
+
+    private function ordenar($actividades)
+    {
+        $data = array();
+
+        # Iteramos las actividades para ordenarlas
+        foreach ($actividades as $value) {
+            # Obtenemos la hora de inicio de la actividad
+            $hora = explode(':', $value->actv_hora);
+            $hora = (int)$hora[0];
+            # Guardamos el objeto actividad en un array con la hora de inicio como indice
+            $data[$hora][] = $value;
+        }
+
+        # ordenamos por hora de menor a mayor
+        ksort($data);
+        return $data;
     }
 
     /**
