@@ -120,7 +120,16 @@ $di->set('dispatcher', function () {
  * Loading routes from the routes.php file
  */
 $di->set('router', function () {
-    return require __DIR__ . '/routes.php';
+    
+    $user=explode('/',$_SERVER['REQUEST_URI']);
+    $user=end($user);
+    if(filter_var($user, FILTER_VALIDATE_EMAIL)) {
+         return require __DIR__ . '/userRoutes.php';
+    }
+    else {
+        return require __DIR__ . '/routes.php';
+    }
+    
 });
 /**
  * Flash service with custom CSS classes

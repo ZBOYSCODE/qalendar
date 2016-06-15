@@ -56,6 +56,7 @@ class Auth extends Component
         $this->session->set('auth-identity', array(
             'id' => $user->id,
             'name' => $user->name,
+            'email' => $user->email,
         ));
 
     }
@@ -184,7 +185,7 @@ class Auth extends Component
                         $this->session->set('auth-identity', array(
                             'id' => $user->id,
                             'name' => $user->name,
-                            'profile' => $user->profile->name
+                            'email' => $user->email,
                         ));
 
                         // Register the successful login
@@ -278,7 +279,7 @@ class Auth extends Component
         $this->session->set('auth-identity', array(
             'id' => $user->id,
             'name' => $user->name,
-            'profile' => $user->profile->name
+            'email' => $user->email,
         ));
     }
 

@@ -1,0 +1,75 @@
+<div class="base-page lighter">
+
+	<div class="row">
+		<div class="col-xs-12 center-block">		
+			<h1 class="vcenter">
+				Perfil
+				<br>
+				<small>Configuración de cuenta</small>
+			</h1>	
+		</div>
+		<div class="col-xs-8 center-block">
+			<div class="block" style="padding: 0px; ">
+				<div class="headerBox">
+					Edición de Usuario
+				</div>
+				<div class="informe-container">
+					<div id="dataInforme">
+						<form id="editProfileForm" action="<?php print($this->url->get('usuarios/editProfile')) ?>" method="post" enctype="multipart/form-data" class="form-horizontal form-bordered" data-type="ajax">
+					<input type="hidden" id="userId" name="userId" class="form-control" value="<?php print(isset($pcData['userProfile']['id'])?$pcData['userProfile']['id']:'') ?>">		
+						<div class="row">
+							<div class="col-xs-8">
+								<fieldset>
+									<legend>Información básica</legend>
+									<div class="form-group">
+										<label class="col-md-4 control-label">Nombre Completo *</label>
+										<div class="col-md-8">
+											<input type="text" id="userNombre" name="userNombre" class="form-control" value="<?php print(isset($pcData['userProfile']['name'])?$pcData['userProfile']['name']:'') ?>">
+										</div>
+									</div>
+									<div class="form-group">
+							
+										<label class="col-md-4 control-label" for="userEmail">Email *</label>
+										<div class="col-md-8">
+											<input type="email" id="userEmail" name="userEmail" class="form-control" value="<?php print(isset($pcData['userProfile']['email'])?$pcData['userProfile']['email']:'') ?>">
+										</div>
+									</div>
+								</fieldset>
+
+								<fieldset >
+									<legend>Cambia tu password</legend>
+									<div class="form-group">
+										<label class="col-md-4 control-label" for="user-password">Nuevo Password</label>
+										<div class="col-md-8">
+										<input type="password" id="userPassword" name="userPassword" class="form-control" placeholder="****">
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-md-4 control-label" for="user-repassword">Confirma Nuevo Password</label>
+										<div class="col-md-8">
+											<input type="password" id="userConfirmPassword" name="userConfirmPassword" class="form-control" placeholder="****">
+										</div>
+									</div>	
+								</fieldset>	
+								<button onClick="$('#editProfileForm').submit();" type="button" class="btn btn-sm btn-primary pull-right">Guardar cambios</button>	
+							</div>
+						</div>	
+					</form>	
+					</div>
+				</div>
+			</div>
+		</div>
+		
+	</div>
+
+
+</div>
+
+				
+
+
+
+		
+		
+		
+												
