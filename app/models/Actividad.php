@@ -225,7 +225,7 @@ class Actividad extends Model
                 //echo "Type: ", $message->getType();
             }*/
             $callback['error'] = 1;
-            $callback['msg'] = 'Faltan rellenar campos requeridos.';
+            $callback['msg'][] = 'Faltan rellenar campos requeridos.';
         } else{
             $disponible->actv_id = $this->actv_id;
             $disponible->update();
@@ -249,8 +249,10 @@ class Actividad extends Model
 
             if(!isset($callback['error']))
                 $callback['msg'][] = 'Actividad creada correctamente.';
-            return $callback;
+
+            
         }
+        return $callback;
     }
 
 }
