@@ -328,7 +328,7 @@
   text-align: left;
 }
 .timetable .list-view td {
-  width: 15%;
+  width: 6%;
   border: 1px solid #e3e3e3;
   vertical-align: middle;
   font-size: 12px;
@@ -695,7 +695,7 @@
   margin: 0px;
   border: 1px solid white;
   padding: 5px;
-  background-color: #656565;
+  background-color: #84c2ff;
   color: white !important;
   max-height: 56px;
   min-height: 28px;
@@ -719,12 +719,14 @@
   min-height: 103px;
 }
 
+.list-view-alt tr{
+  height: 140px;
+}
+
 .list-view-alt tr td {
   padding: 0px !important;
 }
-.list-view-alt tr {
-  border-bottom: 2px solid #008fd5;
-}
+
 .timetable-daily .list-view .event {
   padding: 0px !important;
 }
@@ -740,4 +742,17 @@
 .event-daily a {
   text-decoration: none;
   position: inherit !important;
+}
+
+.new-event {
+  background-color: #3b727d !important;
+  font-size: 11px;
+  color:#4cae4c;
+  text-align: center;
+}
+
+.icon-daily {
+  display:inline !important;
+  color:white !important;
+  font-size: 11px !important;
 }
