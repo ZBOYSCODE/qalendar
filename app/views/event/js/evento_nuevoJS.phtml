@@ -3,5 +3,18 @@ $('#datepicker').on("changeDate", function() {
     $('#fecha').val(
         $('#datepicker').datepicker('getFormattedDate')
     );
-	$('#btnBloqueLibre').data('val','fecha='+$('#fecha').val());
+    var persona = $('#btnBloqueLibre').data('val').split("&")[1];
+   	var fecha = 'fecha='+$('#fecha').val();
+	$('#btnBloqueLibre').data('val',fecha+'&'+persona);
+	console.log($('#btnBloqueLibre').data('val'));
 });
+
+$('#persona').change(function(event) {
+    var fecha = $('#btnBloqueLibre').data('val').split("&")[0];
+   	var persona = 'persona='+$('#persona').val();
+	$('#btnBloqueLibre').data('val',fecha+'&'+persona);
+	console.log($('#btnBloqueLibre').data('val'));	
+});
+
+
+
