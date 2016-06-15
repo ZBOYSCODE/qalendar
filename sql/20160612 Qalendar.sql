@@ -136,7 +136,8 @@ CREATE TABLE IF NOT EXISTS `estado_disponibilidad` (
 
 INSERT INTO `estado_disponibilidad` (`edsp_id`, `edsp_nombre`) VALUES
 (1, 'Disponible'),
-(2, 'Ocupado');
+(2, 'Ocupado'),
+(3, 'Bloqueado');
 
 -- --------------------------------------------------------
 

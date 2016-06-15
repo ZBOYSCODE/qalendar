@@ -1,0 +1,1 @@
+ALTER TABLE `disponible` CHANGE `cnfg_id` `cnfg_id` INT(11) NULL;

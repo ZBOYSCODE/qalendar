@@ -204,7 +204,7 @@ class Actividad extends Model
             $disponible->user_id = $persona;
             $disponible->edsp_id = 2; // Ocupado
             if($disponible->save() == false){
-                foreach ($this->getMessages() as $message) {
+                foreach ($disponible->getMessages() as $message) {
                     $callback['msg'][] = $message->getMessage();
                 }
                 $callback['error'] = 1;
@@ -240,7 +240,7 @@ class Actividad extends Model
             $categoriaActividad->save();          
 
             if($userActividad->save() == false) {
-                foreach ($this->getMessages() as $message) {
+                foreach ($userActividad->getMessages() as $message) {
                     $callback['msg'][] = $message->getMessage();
                 }
                 $callback['error'] = 1;
