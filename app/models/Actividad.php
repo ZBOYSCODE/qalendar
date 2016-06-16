@@ -1,4 +1,5 @@
 <?php
+
 namespace Gabs\Models;
 use Phalcon\Mvc\Model;
 use Phalcon\Mvc\Model\Query;
@@ -100,7 +101,11 @@ class Actividad extends Model
     {
         $this->hasMany('actv_id', __NAMESPACE__.'\Disponible', 'actv_id', array('alias' => 'Disponible'));
         $this->hasMany('actv_id', __NAMESPACE__.'\UserActividad', 'actv_id', array('alias' => 'UserActividad'));
+        
+
         $this->hasMany('actv_id', __NAMESPACE__.'\CategoriaActividad', 'actv_id', array('alias' => 'CategoriaActividad'));
+        
+
         $this->belongsTo('accs_id', __NAMESPACE__.'\Acceso', 'accs_id', array('alias' => 'Acceso'));
         $this->belongsTo('prrd_id', __NAMESPACE__.'\Prioridad', 'prrd_id', array('alias' => 'Prioridad'));
     }
@@ -183,35 +188,44 @@ class Actividad extends Model
         // Considerando relacion 1 a 1 para actividad - persona
         $persona = $_POST['persona'];
 
-        $disponible = Disponible::findFirst("dspn_fecha = '{$this->actv_fecha}' AND dspn_hora = '{$this->actv_hora}' AND user_id = {$persona}");
 
-        if($disponible){
-            if($disponible->edsp_id == 1){ //Disponible
-                $disponible->edsp_id = 2;
-            } else{
-                $callback['error'] = 1;
-                $callback['msg'][] = 'No hay bloques disponibles en la hora y fecha seleccionadas.';  
-            }
-        } else{
-            /*
-            $callback['error'] = 1;
-            $callback['msg'] = 'No hay bloques creados en la hora y fecha seleccionadas.';*/
+        if(empty($this->actv_id))// se está creando recién
+        {
+            $disponible = Disponible::findFirst("dspn_fecha = '{$this->actv_fecha}' AND dspn_hora = '{$this->actv_hora}' AND user_id = {$persona}");
 
-            //Bloques no creados ahora se crean.
-            $disponible = new Disponible();
-            $disponible->dspn_fecha = $this->actv_fecha;
-            $disponible->dspn_hora = $this->actv_hora;
-            $disponible->user_id = $persona;
-            $disponible->edsp_id = 2; // Ocupado
-            if($disponible->save() == false){
-                foreach ($disponible->getMessages() as $message) {
-                    $callback['msg'][] = $message->getMessage();
+            if($disponible){
+
+
+                if($disponible->edsp_id == 1){ //Disponible
+
+                    $disponible->edsp_id = 2;
+
+                } else{
+                    $callback['error'] = 1;
+                    $callback['msg'][] = 'No hay bloques disponibles en la hora y fecha seleccionadas.';  
                 }
+            } else{
+                /*
                 $callback['error'] = 1;
-                $callback['msg'][] = 'Error creando al usuario.';                 
-            }
+                $callback['msg'] = 'No hay bloques creados en la hora y fecha seleccionadas.';*/
 
+                //Bloques no creados ahora se crean.
+                $disponible = new Disponible();
+                $disponible->dspn_fecha = $this->actv_fecha;
+                $disponible->dspn_hora = $this->actv_hora;
+                $disponible->user_id = $persona;
+                $disponible->edsp_id = 2; // Ocupado
+                if($disponible->save() == false){
+                    foreach ($disponible->getMessages() as $message) {
+                        $callback['msg'][] = $message->getMessage();
+                    }
+                    $callback['error'] = 1;
+                    $callback['msg'][] = 'Error creando al usuario.';                 
+                }
+
+            }
         }
+            
 
         if(isset($callback['error']))
             return $callback; 
@@ -227,17 +241,36 @@ class Actividad extends Model
             $callback['error'] = 1;
             $callback['msg'][] = 'Faltan rellenar campos requeridos.';
         } else{
-            $disponible->actv_id = $this->actv_id;
-            $disponible->update();
 
-            $userActividad = new UserActividad();
-            $userActividad->actv_id = $this->actv_id;
-            $userActividad->user_id = $_POST['persona'];
+            if(empty($this->actv_id))// se está creando recién
+            {
+                $disponible->actv_id = $this->actv_id;
+                $disponible->update();
 
-            $categoriaActividad = new CategoriaActividad();
-            $categoriaActividad->actv_id = $this->actv_id;
-            $categoriaActividad->user_id = $_POST['categoria'];  
-            $categoriaActividad->save();          
+                // creando nueva actividad
+                $userActividad          = new UserActividad();
+                $userActividad->actv_id = $this->actv_id;
+                
+                // creando nueva categoria
+                $categoriaActividad             = new CategoriaActividad();
+                $categoriaActividad->actv_id    = $this->actv_id;
+
+            }else{
+
+                // editando
+                $userActividad      = UserActividad::findFirstByActvId($this->actv_id);
+                $categoriaActividad = CategoriaActividad::findFirstByActvId($this->actv_id);
+            }           
+            
+            $userActividad->user_id         = $_POST['persona'];
+            $categoriaActividad->ctgr_id    = (int)$_POST['categoria'];
+
+            
+            if(!$categoriaActividad->save()){
+                foreach ($categoriaActividad->getMessages() as $message) {
+                    $callback['msg'][] = $message->getMessage();
+                }
+            }
 
             if($userActividad->save() == false) {
                 foreach ($userActividad->getMessages() as $message) {
@@ -255,4 +288,29 @@ class Actividad extends Model
         return $callback;
     }
 
+
+
+    public function getCategorias()
+    {
+
+        $cat = array();
+
+        foreach ($this->CategoriaActividad as $c) {
+            $cat[] = $c->ctgr_id;
+        }
+
+        return $cat;
+    }
+
+    public function getUsuarios()
+    {
+        $usr = array();
+
+        foreach ($this->UserActividad as $u) {
+            //$usr[] = $u->user_id;
+            $usr = $u->user_id;
+        }
+
+        return $usr;
+    }
 }

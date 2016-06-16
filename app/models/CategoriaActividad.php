@@ -24,16 +24,7 @@ class CategoriaActividad extends Model
      * @var integer
      */
     public $actv_id;
-
-    /**
-     * Initialize method for model.
-     */
-    public function initialize()
-    {
-        $this->belongsTo('actv_id',  __NAMESPACE__.'\Actividad', 'actv_id', array('alias' => 'Actividad'));
-        $this->belongsTo('ctgr_id',  __NAMESPACE__.'\Categoria', 'ctgr_id', array('alias' => 'Categoria'));
-    }
-
+    
     /**
      * Returns table name mapped in the model.
      *
@@ -43,6 +34,17 @@ class CategoriaActividad extends Model
     {
         return 'categoria_actividad';
     }
+    
+    /**
+     * Initialize method for model.
+     */
+    public function initialize()
+    {
+        $this->belongsTo('actv_id',  __NAMESPACE__.'\Actividad', 'actv_id', array('alias' => 'Actividad'));
+        $this->belongsTo('ctgr_id',  __NAMESPACE__.'\Categoria', 'ctgr_id', array('alias' => 'Categoria'));
+    }
+
+    
 
     /**
      * Allows to query a set of records that match the specified conditions

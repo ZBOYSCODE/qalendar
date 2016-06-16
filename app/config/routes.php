@@ -49,4 +49,9 @@ $router->add('/calendar/usuario', array(
     'action' => 'changeCalendarDate'
 ));
 
+$router->add('/actividad/editar/{$id}', array(
+    'controller' => 'Actividad',
+    'action' => 'editar'
+));
+
 return $router;
