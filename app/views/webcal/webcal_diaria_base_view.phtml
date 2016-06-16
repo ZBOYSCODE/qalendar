@@ -2,7 +2,23 @@
     <div class="col-lg-12">
         <div class="filter-box row">
             <div class="col-xs-4"></div>
-            <div class="col-xs-4"></div>
+            <div class="col-xs-4">
+                <div class="list-group-container my-group-container">
+                    <div class="list-group list-group-custom list-group-horizontal">
+                        <a href="<?php print($this->url->get('')) ?>gestion/dia" class="list-group-item active">
+                            <div class="circle-calendar">
+                                <i class="fa fa-list"></i>
+                            </div>
+                            Gestión Diaria
+                        </a>
+                        <a href="<?php print($this->url->get('')) ?>calendario" class="list-group-item">
+                            <div class="circle-calendar">
+                                <i class="fa fa-calendar-o"></i>
+                            </div>
+                            Vista Semanal</a>
+                    </div>
+                </div>
+            </div>
             <div class="col-xs-4">
                 <form id="filterCategoriasForm" action="" method="post" >
                     <div class="form-group row form-row my-chosen">

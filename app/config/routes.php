@@ -29,6 +29,16 @@ $router->add('/calendario', array(
     'action' => 'index'
 ));
 
+$router->add('/calendario', array(
+    'controller' => 'GestionQa',
+    'action' => 'vistaSemanal'
+));
+
+$router->add('/gestion/semana', array(
+    'controller' => 'GestionQa',
+    'action' => 'vistaSemanal'
+));
+
 $router->add('/gestion/dia', array(
     'controller' => 'GestionQa',
     'action' => 'vistaDiaria'
@@ -39,9 +49,14 @@ $router->add('/evento/nuevo', array(
     'action' => 'crearEvento'
 ));
 
-$router->add('/calendar/changeWeek', array(
+$router->add('/calendar/changeWeekByDay', array(
     'controller' => 'GestionQa',
     'action' => 'changeCalendarDate'
+));
+
+$router->add('/calendar/changeWeekByUser', array(
+    'controller' => 'GestionQa',
+    'action' => 'changeCalendarUser'
 ));
 
 $router->add('/calendar/changeDay', array(

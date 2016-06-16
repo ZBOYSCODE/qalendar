@@ -254,3 +254,15 @@
 	margin: 0 auto;
 	text-align: center;
 }
+
+.circle-calendar {
+	display: inline;
+}
+
+.my-group-container {
+	padding-top: 13px;
+}
+
+.my-group-container .list-group {
+	margin-bottom: 0px;
+}

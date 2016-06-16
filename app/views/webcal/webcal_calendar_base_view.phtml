@@ -2,9 +2,26 @@
     <div class="col-lg-12">
         <div class="filter-box row">
             <div class="col-xs-4"></div>
-            <div class="col-xs-4"></div>
             <div class="col-xs-4">
-            <form id="filterPersonaForm" action="<?php print($this->url->get("calendar/changeWeek")) ?>" method="post" data-type="ajax">
+                <div class="list-group-container my-group-container">
+                    <div class="list-group list-group-custom list-group-horizontal">
+                        <a href="<?php print($this->url->get('')) ?>gestion/dia" class="list-group-item ">
+                            <div class="circle-calendar">
+                                <i class="fa fa-list"></i>
+                            </div>
+                            Gestión Diaria
+                        </a>
+                        <a href="<?php print($this->url->get('')) ?>calendario"
+                           class="list-group-item active">
+                            <div class="circle-calendar">
+                                <i class="fa fa-calendar-o"></i>
+                            </div>
+                            Vista Semanal</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-4">
+            <form id="filterPersonaForm" action="<?php print($this->url->get("calendar/changeWeekByUser")) ?>" method="post" data-type="ajax">
                 <div class="form-group row form-row my-chosen">
                     <div class="col-sm-12 select-daily" style="text-align: left;">
                         <select data-submit="true" id="persona" name="userCalendar" class="select-chosen" data-placeholder="Cambiar persona..." style="width: 250px;">
@@ -27,11 +44,11 @@
     <div class="month"><?php print $this->config['dateES']['meses_full'][(int)date('m',strtotime($pcData['today']))-1] ?></div>
     <div class="day">
         <input type="text" value="<?php print $pcData['today'] ?>">
-        <a href="<?php print $this->url->get()?>calendar/changeWeek"
-           data-action="<?php print $this->url->get()?>calendar/changeWeek"
+        <a href="<?php print $this->url->get()?>calendar/changeWeekByDay"
+           data-action="<?php print $this->url->get()?>calendar/changeWeekByDay"
            data-val="dateChange=<?php print date("Y-m-d", strtotime($pcData['today']."-1 week")); ?>" class="prev fa fa-angle-left"></a>
-        <a href="<?php print $this->url->get()?>calendar/changeWeek"
-           data-action="<?php print $this->url->get()?>calendar/changeWeek"
+        <a href="<?php print $this->url->get()?>calendar/changeWeekByDay"
+           data-action="<?php print $this->url->get()?>calendar/changeWeekByDay"
            data-val="dateChange=<?php print date("Y-m-d", strtotime($pcData['today']."+1 week")); ?>" class="next fa fa-angle-right"></a>
         <a href="#" class="cal fa fa-calendar"></a>
     </div>
