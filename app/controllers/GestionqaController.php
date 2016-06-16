@@ -20,16 +20,29 @@ class GestionQaController extends ControllerBase
     }
 
     /**
-     * @param $test
+     *
      */
     public function indexAction()
     {
-        /*Constantes dummies*/
-        //TODO: Modificar user_actual por el usuario seleccionado en cuestión
+        // TODO: SACAR LOS ROLES '1' y '2' de una clase tipo configurador
+        $rolUser = isset($this->auth->getIdentity()['rol_id'])? $this->auth->getIdentity()['rol_id']:null;
+
+        if($rolUser == 1) {
+            $this->vistaDiariaAction();
+        } elseif($rolUser == 2) {
+            $this->vistaSemanalAction();
+        }else {
+            $this->vistaSemanalAction();
+        }
+    }
+
+    public function vistaSemanalAction()
+    {
+        #por defenco dejamos seleccionado el día actual del server
         $DIA_ACTUAL = date('Y-m-d');
         $USER_ACTUAL = isset($userCalendar)?$userCalendar:$this->auth->getIdentity()['id'];
 
-        /* Creamos Calendario Semanal*/
+        # Creamos Calendario Semanal
         $calendar = new Calendar();
         $data = array('fecha'=>$DIA_ACTUAL,'user_id'=>$USER_ACTUAL);
         $week = $calendar->getWeek($data);
@@ -38,11 +51,13 @@ class GestionQaController extends ControllerBase
 
     	$themeArray = $this->_themeArray;
     	$themeArray['pcView'] = 'webcal/webcal_semanal_view';
+        #datos para la vista
         $data['week'] = $week;
         $data['horas'] = $horas;
         $data['fechas'] = $fechas;
         $data['today'] = $DIA_ACTUAL;
         $data['calendarUser'] = $USER_ACTUAL;
+        $data['users'] = Users::find();
 
     	$themeArray['pcData'] = $data;
 
@@ -54,6 +69,7 @@ class GestionQaController extends ControllerBase
      */
     public function changeCalendarDateAction() {
         if($this->request->isAjax() == true) {
+            #si vienen datos por postm los seteamos
             if(isset($_POST)) {
                 $callData = $_POST;
                 if(isset($_POST['dateChange'])) {
@@ -62,8 +78,10 @@ class GestionQaController extends ControllerBase
                 else {
                     $today = date("Y-m-d");
                 }
+                if(isset($_POST['userCalendar'])) {
+                    $userCalendar = $_POST['userCalendar'];
+                }
             }
-            //TODO: Modificar user_actual por el usuario seleccionado en cuestión
             $USER_ACTUAL = isset($userCalendar)?$userCalendar:$this->auth->getIdentity()['id'];
 
             /* Creamos Calendario Semanal*/
@@ -78,20 +96,23 @@ class GestionQaController extends ControllerBase
             $data['fechas'] = $fechas;
             $data['today'] = $today;
             $data['calendarUser'] = $USER_ACTUAL;
+            $data['users'] = Users::find();
 
             $dataView['pcData'] = $data;
             $view = 'webcal/webcal_calendar_base_view';
 
             //mifaces
+
             $toRenderView = $this->view->render($view, $dataView);
             $this->mifaces->newFaces();
             $this->mifaces->addToRend('calendar', $toRenderView);
+            $this->mifaces->addPosRendEval('$(\'.select-chosen\').chosen({width: "100%", disable_search_threshold: 7});');
             $this->mifaces->run();
 
         }
         else {
             $response = new \Phalcon\Http\Response();
-            $response->redirect("/");
+            $response->redirect("");
             $response->send();
         }
     }
@@ -104,39 +125,57 @@ class GestionQaController extends ControllerBase
         $themeArray = $this->_themeArray;
         $themeArray['pcView'] = 'webcal/webcal_diaria_view';
 
-        # 
-        $fecha      =   $this->request->getPost("fecha");
+        $DIA_ACTUAL = date('Y-m-d');
 
-        $conditions = "actv_fecha = :fecha:";
-        $params = array("fecha" => $fecha);
+        $calendar = new Calendar();
+        $daily = $calendar->getDay($DIA_ACTUAL);
 
-        # obtenemos todad las actividades por día especifico
-        $actividades = Actividad::find(array(
-                $conditions,
-                "bind" => $params
-        ));
+        $data['actividades'] = $daily;
+        $data['today'] = $DIA_ACTUAL;
+        $data['users'] = Users::find();
+        $data['categorias'] = Categoria::find();
 
-        $themeArray['pcData']['actividades'] = $this->ordenar($actividades);
+        $themeArray['pcData'] = $data;
+        $themeArray['jsScript'] = $this->view->render('webcal/js/vista_diaria.phtml');
 
         echo $this->view->render('theme', $themeArray);
     }
 
-    private function ordenar($actividades)
-    {
-        $data = array();
+    public function changeDailyDateAction() {
+        if($this->request->isAjax() == true) {
+            #si vienen datos por postm los seteamos
+            if (isset($_POST)) {
+                $callData = $_POST;
+                if (isset($_POST['dateChange'])) {
+                    $today = $_POST['dateChange'];
+                } else {
+                    $today = date("Y-m-d");
+                }
+            }
 
-        # Iteramos las actividades para ordenarlas
-        foreach ($actividades as $value) {
-            # Obtenemos la hora de inicio de la actividad
-            $hora = explode(':', $value->actv_hora);
-            $hora = (int)$hora[0];
-            # Guardamos el objeto actividad en un array con la hora de inicio como indice
-            $data[$hora][] = $value;
+            $calendar = new Calendar();
+            $daily = $calendar->getDay($today);
+
+            $data['actividades'] = $daily;
+            $data['today'] = $today;
+            $data['users'] = Users::find();
+            $data['categorias'] = Categoria::find();
+
+            $dataView['pcData'] = $data;
+            $view = 'webcal/webcal_diaria_base_view';
+
+
+            //mifaces
+            $toRenderView = $this->view->render($view, $dataView);
+            $this->mifaces->newFaces();
+            $this->mifaces->addToRend('calendar', $toRenderView);
+            $this->mifaces->run();
         }
-
-        # ordenamos por hora de menor a mayor
-        ksort($data);
-        return $data;
+        else {
+            $response = new \Phalcon\Http\Response();
+            $response->redirect("");
+            $response->send();
+        }
     }
 
     /**
@@ -168,7 +207,6 @@ class GestionQaController extends ControllerBase
      */
     public function crearEventoAction() {
         $data = array();
-
         if(!$this->request->isAjax() == true) {
             if(isset($_POST)) {
                 //caso: crear un evento con datos precargados
@@ -197,13 +235,12 @@ class GestionQaController extends ControllerBase
             $data['categoria'] = Categoria::find();
 
             $themeArray['pcData'] = $data;
-
-            //$themeArray['addJs'] = array("js/evento_nuevo.js");
+            //$themeArray['addJs'] = array("js/evento_nuevoJS.phtml");
             echo $this->view->render('theme', $themeArray);
         }
         else {
             $response = new \Phalcon\Http\Response();
-            $response->redirect("/");
+            $response->redirect("");
             $response->send();
         }
     }

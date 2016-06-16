@@ -14,27 +14,27 @@
     <div class="collapse navbar-collapse animated fadeIn" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav animated fadeIn text15">
         
-        <li class=""><a href="<?php print($this->url->get('')) ?>"></i> Mi Calendario  </a></li>
+        <li class=""><a href="<?php print($this->url->get('')) ?>"> Mi Calendario  </a></li>
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown"><b> Eventos </b> <span class="caret"></span></a>
           <ul id="login-dp" class="dropdown-menu">
-            <li class=""><a href="<?php print($this->url->get('')) ?>evento/nuevo"></i> Nuevo Evento  </a></li>
-            <li class=""><a href="<?php print($this->url->get('')) ?>"></i> Historial de acciones  </a></li>
+            <li class=""><a href="<?php print($this->url->get('')) ?>evento/nuevo"> Nuevo Evento  </a></li>
+            <li class=""><a href="<?php print($this->url->get('')) ?>"> Historial de acciones  </a></li>
           </ul>
         </li>
-        <li class=""><a href="<?php print($this->url->get('')) ?>"></i> Vistas  </a></li>
-        <li class=""><a href="<?php print($this->url->get('')) ?>"></i> Informes  </a></li>
-        <li class=""><a href="<?php print($this->url->get('')) ?>"></i> Opciones  </a></li>
-        <li class=""><a href="<?php print($this->url->get('')) ?>"></i> buscar  </a></li>
-        <li class=""><a href="<?php print($this->url->get('')) ?>"></i> Ayuda  </a></li>
+        <li class=""><a href="<?php print($this->url->get('')) ?>"> Vistas  </a></li>
+        <li class=""><a href="<?php print($this->url->get('')) ?>" data-toggle="tooltip" data-placement="bottom" title="Proximamente"> Informes  </a></li>
+        <li class=""><a href="<?php print($this->url->get('')) ?>"> Opciones  </a></li>
+        <li class=""><a href="<?php print($this->url->get('')) ?>"> buscar  </a></li>
+        <li class=""><a href="<?php print($this->url->get('')) ?>"> Ayuda  </a></li>
 
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="gi gi-user"></i><b> <?php print(utf8_encode($this->auth->getIdentity()['name']))?> </b> <span class="caret"></span></a>
             <ul id="login-dp" class="dropdown-menu">
-                <li class=""><a href="<?php print($this->url->get($this->auth->getIdentity()['email'])) ?>"></i> Perfil  </a></li>
-                <li class=""><a href="<?php print($this->url->get('logout')) ?>"></i> Salir  </a></li>
+                <li class=""><a href="<?php print($this->url->get($this->auth->getIdentity()['email'])) ?>"> Perfil  </a></li>
+                <li class=""><a href="<?php print($this->url->get('logout')) ?>"> Salir  </a></li>
             </ul>
         </li>
       </ul>

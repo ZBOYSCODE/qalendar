@@ -1,10 +1,27 @@
-<select class="filter">
-    <option value="">Todos</option>
-    <option value="">Instalación</option>
-    <option value="">Interno</option>
-    <option value="">Aprobados</option>
-    <option value="">Cancelados</option>
-</select>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="filter-box row">
+            <div class="col-xs-4"></div>
+            <div class="col-xs-4"></div>
+            <div class="col-xs-4">
+            <form id="filterPersonaForm" action="<?php print($this->url->get("calendar/changeWeek")) ?>" method="post" data-type="ajax">
+                <div class="form-group row form-row my-chosen">
+                    <div class="col-sm-12 select-daily" style="text-align: left;">
+                        <select data-submit="true" id="persona" name="userCalendar" class="select-chosen" data-placeholder="Cambiar persona..." style="width: 250px;">
+                            <option></option>
+                            <?php foreach($pcData['users'] as $persona ) {?>
+                                <option <?php print(isset($pcData['calendarUser']) && $pcData['calendarUser'] == $persona->id?'selected="selected"':'' )?> value="<?php print $persona->id ?>"><?php print $persona->name ?></option>
+                            <?php } ?>
+                        </select>
+                    </div>
+                    <input class="hidden" name="dateChange" value="<?php print date("Y-m-d", strtotime($pcData['today'])) ?>" >
+                </div>
+            </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 <header>
     <div class="year"><?php print date('Y',strtotime($pcData['today'])) ?></div>
     <div class="month"><?php print $this->config['dateES']['meses_full'][(int)date('m',strtotime($pcData['today']))-1] ?></div>
@@ -20,8 +37,7 @@
     </div>
 
     <div class="switcher">
-        <a href="javascript:void(0)" data-toggle="tooltip" title="Vista Mensual"><i class="fa fa-calendar"></i></a>
-        <a href="javascript:void(0)" data-toggle="tooltip" title="Vista Semanal" class="active"><i class="fa fa-calendar-o"></i></a>
+        <a href="javascript:void(0)" data-toggle="tooltip" title="Usted está viendo la vista semanal para un usuario" class="active"><i class="fa fa-calendar-o"></i></a>
     </div>
 </header>
 <table class="week-view">

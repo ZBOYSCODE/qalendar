@@ -44,9 +44,15 @@ $router->add('/calendar/changeWeek', array(
     'action' => 'changeCalendarDate'
 ));
 
+$router->add('/calendar/changeDay', array(
+    'controller' => 'GestionQa',
+    'action' => 'changeDailyDate'
+));
+
 $router->add('/calendar/usuario', array(
     'controller' => 'GestionQa',
     'action' => 'changeCalendarDate'
 ));
+
 
 return $router;

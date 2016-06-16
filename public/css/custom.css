@@ -196,3 +196,32 @@
 	background-color: #9de2a4;
 	color:white !important;
 }
+
+.bubble-msg-new-event {
+	box-shadow: 0 1px 3px rgba(0, 0, 0, .2);
+	background-color: #fff;
+	border: 1px solid;
+	border-color: #bbb #bbb #a8a8a8;
+	padding: 16px;
+	position: relative;
+	color: grey !important;
+	z-index: 1201 !important;
+	display: none;
+	top: 13px;
+	left: 0px;
+	width: 300px;
+}
+
+.btn-group-box {
+	margin-top: 15px;
+	text-align: right;
+}
+
+.select-daily .chosen-container .chosen-single span {
+	display: block !important;
+}
+
+.filter-box {
+	padding-left: 15px;
+	padding-right: 15px;
+}

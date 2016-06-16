@@ -71,17 +71,57 @@ class Calendar
     	return $fechas;
 	}
 
+
 	/**
 	 * @param $data
+	 * @return array
      */
-	public function getDay($data){
+	public function getDay($fecha){
+
+		$conditions = "actv_fecha = :fecha:";
+		$params = array("fecha" => $fecha);
+
+		# obtenemos todad las actividades por día especifico
+		$actividades = Actividad::find(array(
+			$conditions,
+			"bind" => $params
+		));
+
+		return $this->ordenar($actividades);
+
+	}
+
+	/**
+	 * @param $actividades
+	 * @return array
+     */
+	private function ordenar($actividades)
+	{
+		$data = array();
+
+		#traemos las horas de la config
 		$horas = $this->getHorasWeek();
+		foreach ($horas as $hora) {
+			$data[$hora] = array();
+		}
 
-		$a_model = new Actividad;
+		# Iteramos las actividades para ordenarlas
+		foreach ($actividades as $value) {
 
-		$actividades = $a_model->getActividadesDay($data);
-	}	
+			# Obtenemos la hora de inicio de la actividad
+			//$hora = explode(':', $value->actv_hora);
+			//$hora = (int)$hora[0];
 
+			#Guardamos hora como key
+			$hora = date('H:i',strtotime($value->actv_hora));
+			# Guardamos el objeto actividad en un array con la hora de inicio como indice
+			$data[$hora][] = $value;
+		}
+
+		# ordenamos por hora de menor a mayor
+		ksort($data);
+		return $data;
+	}
 
 
 

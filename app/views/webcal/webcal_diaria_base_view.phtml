@@ -1,0 +1,98 @@
+<div class="row">
+    <div class="col-lg-12">
+        <div class="filter-box row">
+            <div class="col-xs-4"></div>
+            <div class="col-xs-4"></div>
+            <div class="col-xs-4">
+                <form id="filterCategoriasForm" action="" method="post" >
+                    <div class="form-group row form-row my-chosen">
+                        <div class="col-sm-12 select-daily" style="text-align: left;">
+                            <select id="persona" name="categoriaCalendar" class="select-chosen" data-placeholder="Filtrar Categorías..." style="width: 250px;">
+                                <option></option>
+                                <?php foreach($pcData['categorias'] as $categoria ) {?>
+                                    <option value="<?php print $categoria->ctgr_id ?>"><?php print $categoria->ctgr_nombre ?></option>
+                                <?php } ?>
+                            </select>
+                        </div>
+                        <input class="hidden" name="dateChange" value="<?php print date("Y-m-d", strtotime($pcData['today'])) ?>" >
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<header>
+    <div class="year"><?php print date('Y',strtotime($pcData['today'])) ?></div>
+    <div class="month"><?php print $this->config['dateES']['meses_full'][(int)date('m',strtotime($pcData['today']))-1] ?></div>
+    <div class="day">
+        <input type="text" value="<?php print $pcData['today'] ?>">
+        <a href="<?php print $this->url->get()?>calendar/changeDay"
+           data-action="<?php print $this->url->get()?>calendar/changeDay"
+           data-val="dateChange=<?php print date("Y-m-d", strtotime($pcData['today']."-1 day")); ?>" class="prev fa fa-angle-left"></a>
+        <a href="<?php print $this->url->get()?>calendar/changeDay"
+           data-action="<?php print $this->url->get()?>calendar/changeDay"
+           data-val="dateChange=<?php print date("Y-m-d", strtotime($pcData['today']."+1 day")); ?>" class="next fa fa-angle-right"></a>
+        <a href="#" class="cal fa fa-calendar"></a>
+    </div>
+
+    <div class="switcher">
+        <a href="javascript:void(0)" data-toggle="tooltip" title="Usted está viendo los eventos del <?php print date('Y-m-d',strtotime($pcData['today'])) ?>" class="active"><i class="fa fa-list"></i></a>
+    </div>
+</header>
+
+<table class="list-view list-view-alt">
+    <?php foreach($pcData['actividades'] as $keyHora => $actividadArray) { ?>
+        <tr>
+            <td>
+                <div>
+                    <i class="fa fa-clock-o"></i><?php print date('H:i',strtotime($keyHora)).' - '.date('H:i',strtotime($keyHora." + 1 hours ")) ?>
+                </div>
+            </td>
+            <td class="event-container">
+                <div class="event">
+                    <div class="row row-disable">
+                        <?php foreach($actividadArray as $actividad) { ?>
+                            <div class="col-xs-2 event-daily">
+                                <a  href="<?php print $this->url->get()?>GestionQa/getEventDetail"
+                                    data-action="<?php print $this->url->get()?>GestionQa/getEventDetail"
+                                    data-val="actv=1">
+                                    <div class="event-tit"><?php print $actividad->actv_descripcion_breve ?></div>
+                                </a>
+                            </div>
+                        <?php } ?>
+                    </div>
+                    <div class="row row-disable">
+                        <div class="btn-group  col-xs-2 event-daily new-event">
+                            <a id="newEventBox" href="javascript:void(0)" onclick="openBubleBox('<?php print $keyHora ?>');"  data-toggle="dropdown" class="dropdown-toggle">
+                                <div class="event-tit"><i class="gi gi-plus icon-daily"></i>  Nuevo</div>
+                            </a>
+
+                            <div id="<?php print "b-".$keyHora?>" class="bubble-msg-new-event">
+                                <form id="<?php print "newEvent-".$keyHora?>" action="<?php print($this->url->get("evento/nuevo")) ?>" method="post" >
+                                    <div class="form-group row form-row my-chosen">
+                                        <label class="col-sm-12 control-label" for="persona">Añadir Persona *</label>
+
+                                        <div class="col-sm-12 select-daily" style="text-align: left;">
+                                            <select id="persona" name="calendarUser" class="select-chosen" data-placeholder="Seleccionar..." style="width: 250px;">
+                                                <option></option>
+                                                <?php foreach($pcData['users'] as $persona ) {?>
+                                                    <option value="<?php print $persona->id ?>"><?php print $persona->name ?></option>
+                                                <?php } ?>
+                                            </select>
+                                        </div>
+                                        <input class="hidden" name="hora" value="<?php print $keyHora ?>" />
+                                        <input class="hidden" name="fecha" value="<?php print date("Y-m-d", strtotime($pcData['today'])) ?>" />
+                                        <div class="col-xs-12 btn-group-box">
+                                            <button type="submit" class="btn btn-sm btn-default">Continuar</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </td>
+        </tr>
+    <?php } ?>
+</table>
