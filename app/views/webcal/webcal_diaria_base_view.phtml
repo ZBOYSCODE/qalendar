@@ -70,14 +70,10 @@
                     <div class="row row-disable">
                         <?php foreach($actividadArray as $actividad) { ?>
                             <div class="col-xs-2 event-daily">
-                                <!-- TODO: Mejorar vista modal
+
                                 <a  href="<?php print $this->url->get()?>GestionQa/getEventDetail"
                                     data-action="<?php print $this->url->get()?>GestionQa/getEventDetail"
-                                    data-val="actv=1">
-                                    <div class="event-tit"><?php print $actividad->actv_descripcion_breve ?></div>
-                                </a>
-                                -->
-                                <a  href="javascript:void(0)"
+                                    data-val="actv=<?php print $actividad->actv_id ?>">
                                     <div class="event-tit"><?php print $actividad->actv_descripcion_breve ?></div>
                                 </a>
                             </div>

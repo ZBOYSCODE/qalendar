@@ -245,8 +245,9 @@ class GestionQaController extends ControllerBase
             $actv_id = isset($_POST['actv'])?$_POST['actv']:'';
 
             $view = 'event/event_detalle_modal_view';
-            $dataView = $actv_id;
+            $data['actividad'] = Actividad::findFirst('actv_id = '.$actv_id);
 
+            $dataView['pcData'] = $data;
             //mifaces
             $toRenderView = $this->view->render($view, $dataView);
             $this->mifaces->newFaces();

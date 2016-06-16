@@ -286,7 +286,7 @@
   position: absolute;
   bottom: 100%;
   left: -9999px;
-  width: 400px;
+  width: 300px;
   z-index: 1000;
   color: #fff;
   opacity: 0;
@@ -300,7 +300,7 @@
     position: absolute;
     top: 100%;
     left: 50%;
-    margin-left: -181px;
+    margin-left: -124px;
     border-top: 10px solid transparent;
     border-right: 10px solid transparent;
     border-left: 10px solid transparent;

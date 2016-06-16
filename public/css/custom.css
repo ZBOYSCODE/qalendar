@@ -54,19 +54,33 @@
 
 .header-item {
 	padding: 15px;
-	font-size: 15px;
+	font-size: 18px;
 	font-weight: 600;
+	text-align: center;
+}
 
+.subheader-item {
+	margin-bottom: 30px;
+}
+
+.link-modal {
+	margin-right: 15px;
+}
+
+.links-box {
+	text-align: center;
+	margin-top: 40px;
 }
 
 .title-table {
 	font-size: 13px;
 	color: #75787b;
 	font-weight: 600;
+	width: 150px;
 }
 
 .label-custom {
-	background-color: #aa5500;
+	background-color: #e8a664;
 }
 
 /*menu*/
