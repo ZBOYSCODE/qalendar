@@ -1,6 +1,7 @@
 <?php
 
 namespace Gabs\Models;
+
 use Phalcon\Mvc\Model;
 use Phalcon\Mvc\Model\Query;
 use Gabs\Models\Disponible;
@@ -190,7 +191,8 @@ class Actividad extends Model
 
 
         if(empty($this->actv_id))// se está creando recién
-        {
+        {   
+            $update = false;
             $disponible = Disponible::findFirst("dspn_fecha = '{$this->actv_fecha}' AND dspn_hora = '{$this->actv_hora}' AND user_id = {$persona}");
 
             if($disponible){
@@ -224,6 +226,8 @@ class Actividad extends Model
                 }
 
             }
+        }else{
+            $update = true;
         }
             
 
@@ -242,7 +246,7 @@ class Actividad extends Model
             $callback['msg'][] = 'Faltan rellenar campos requeridos.';
         } else{
 
-            if(empty($this->actv_id))// se está creando recién
+            if(!$update)// se está creando recién
             {
                 $disponible->actv_id = $this->actv_id;
                 $disponible->update();
@@ -261,16 +265,15 @@ class Actividad extends Model
                 $userActividad      = UserActividad::findFirstByActvId($this->actv_id);
                 $categoriaActividad = CategoriaActividad::findFirstByActvId($this->actv_id);
             }           
+
+            //echo $categoriaActividad->ctgr_id;
             
-            $userActividad->user_id         = $_POST['persona'];
+            $userActividad->user_id         = (int)$_POST['persona'];
             $categoriaActividad->ctgr_id    = (int)$_POST['categoria'];
 
             
-            if(!$categoriaActividad->save()){
-                foreach ($categoriaActividad->getMessages() as $message) {
-                    $callback['msg'][] = $message->getMessage();
-                }
-            }
+            $categoriaActividad->save();
+            
 
             if($userActividad->save() == false) {
                 foreach ($userActividad->getMessages() as $message) {
