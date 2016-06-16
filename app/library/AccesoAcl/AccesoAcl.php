@@ -1,0 +1,118 @@
+<?php
+	namespace Gabs\AccesoAcl;
+
+	use Phalcon\Mvc\User\Component;
+	use Phalcon\Mvc\Dispatcher;
+
+	class AccesoAcl extends Component{
+
+		private static $disp;
+
+		static public 	$res =   [	1	=> [ 'acceso' => ['denegado' => 1],
+											'actividad' => [
+                                                    'editarevento'    	=> 1,
+                                                    'editar'    		=> 1
+                                                    ],
+		                                    'gestionqa' => [
+		                                                    'index'                 => 1,
+		                                                    'vistasemanal'          => 1,
+		                                                    'changecalendardate'    => 0,
+		                                                    'vistadiaria'           => 1,
+		                                                    'changedailydate'       => 1,
+		                                                    'geteventdetail'        => 1,
+		                                                    'crearevento'           => 1,
+		                                                    'guardarevento'         => 1,
+		                                                    'encontrarbloque'       => 0,
+		                                                    'seleccionarbloque'     => 0
+		                                                ],
+		                                    'usuarios' => [
+		                                    				'index'			=> 1,
+		                                    				'profile'		=> 1,
+		                                    				'editprofile'	=> 1
+		                                    			]
+		                                ],
+									2   =>  [ 'actividad' => [
+                                                    'editarevento'    	=> 1,
+                                                    'editar'    		=> 1
+                                                    ],
+		                                    'gestionqa' => [
+		                                                    'index'                 => 1,
+		                                                    'vistasemanal'          => 1,
+		                                                    'changecalendardate'    => 0,
+		                                                    'vistadiaria'           => 1,
+		                                                    'changedailydate'       => 1,
+		                                                    'geteventdetail'        => 1,
+		                                                    'crearevento'           => 1,
+		                                                    'guardarevento'         => 1,
+		                                                    'encontrarbloque'       => 0,
+		                                                    'seleccionarbloque'     => 0
+		                                                ],
+		                                    'usuarios' => [
+		                                    				'index'			=> 1,
+		                                    				'profile'		=> 1,
+		                                    				'editprofile'	=> 1
+		                                    			]
+		                                ]
+		                        ];
+		//private $
+
+
+		
+		public static function tieneAcceso()
+		{
+			# instanciamos para poder obtener los datos
+			$acceso 		= new AccesoAcl();
+			$auth 			= $acceso->getRol();
+			$action 		= $acceso->getAction();
+			$controlador 	= $acceso->getControlador();
+
+			# solo si está seteada la variable correspondiente devolvemos si estado
+			if(isset(self::$res[$auth][$controlador][$action])){
+				return self::$res[$auth][$controlador][$action];
+			}
+
+			# si no existe la variable, por defecto no tendrá acceso
+			return false;
+		}
+
+		public static function tienePermiso($action, $controlador = null)
+		{
+			# instanciamos para poder obtener los datos
+			$acceso 	= new AccesoAcl();
+			$auth 		= $acceso->getRol();
+			
+			#obtenemos el action o metodo al que se requiere acceder
+			$action = strtolower($action);
+
+			# seteamos el controlador enviado como parametro
+			if(isset($controlador)){
+				$controlador = strtolower($controlador);
+			}else{
+				$controlador 	= $acceso->getControlador();
+			}
+
+			# solo si está seteada la variable correspondiente devolvemos si estado
+			if(isset(self::$res[$auth][$controlador][$action])){
+				return self::$res[$auth][$controlador][$action];
+			}
+			
+			# si no existe la variable, por defecto no tendrá acceso
+			return false;
+		}
+
+		private function getRol()
+		{
+			return $this->auth->getIdentity()['roleId'];
+		}
+
+		private function getControlador()
+		{
+			return strtolower($this->dispatcher->getControllerName());
+		}
+
+		private function getAction()
+		{
+			return strtolower($this->dispatcher->getActionName());
+		}
+
+	}

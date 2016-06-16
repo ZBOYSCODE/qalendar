@@ -2,7 +2,19 @@
 
     <hr><hr>
     <div >
-        <a href="javascript:void(0)"  onclick="$('#evento-form').submit();" class="btn btn-success pull-right btn-save">Guardar</a>
+
+        <?php
+
+            if($this->AccesoAcl->tienePermiso('guardarevento', 'gestionqa')) { ?>
+                
+                <a  href="javascript:void(0)"  
+                    onclick="$('#evento-form').submit();" 
+                    class="btn btn-success pull-right btn-save">Guardar</a>
+
+        <?php 
+            } 
+        ?>
+        
     </div>
     <div class="formulario-section">
         <form id="evento-form" action="<?php print($this->url->get("actividad/editarEvento")) ?>" method="post" data-type="ajax">
