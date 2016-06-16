@@ -17,6 +17,7 @@ use Gabs\Mifaces\Mifaces;
 use Phalcon\Mvc\Model\Manager as modelsManager;
 //use Vokuro\Acl\Acl;
 use Gabs\Mail\Mail;
+use Gabs\AccesoAcl\AccesoAcl;
 
 /**
  * The FactoryDefault Dependency Injector automatically register the right services providing a full stack framework
@@ -159,6 +160,12 @@ $di->set('mifaces', function () {
 $di->set('mail', function () {
     return new Mail();
 });
+
+$di->set('AccesoAcl', function () {
+    return new AccesoAcl();
+});
+
+
 /**
  * Access Control List
  *
