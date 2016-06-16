@@ -15,6 +15,9 @@ class GestionQaController extends ControllerBase
     
     public $_themeArray;
 
+    /**
+     * Se genera un array para la vista por defecto
+     */
     public function initialize() {
     	$this->_themeArray = array('topMenu'=>true, 'menuSel'=>'','pcView'=>'', 'pcData'=>'', 'jsScript'=>'');
     }
@@ -25,8 +28,7 @@ class GestionQaController extends ControllerBase
     public function indexAction()
     {
         // TODO: SACAR LOS ROLES '1' y '2' de una clase tipo configurador
-        $rolUser = isset($this->auth->getIdentity()['rol_id'])? $this->auth->getIdentity()['rol_id']:null;
-
+        $rolUser = isset($this->auth->getIdentity()['roleId'])? $this->auth->getIdentity()['roleId']:null;
         if($rolUser == 1) {
             $this->vistaDiariaAction();
         } elseif($rolUser == 2) {
@@ -229,7 +231,7 @@ class GestionQaController extends ControllerBase
             $themeArray['pcView'] = 'event/event_nuevo_view';
             $themeArray['jsScript'] = $this->view->render('event/js/evento_nuevoJS');
 
-            $data['users'] = Users::find();
+            $data['users'] = Users::find("rol_id = 2");
             $data['prioridad'] = Prioridad::find();
             $data['acceso'] = Acceso::find();
             $data['categoria'] = Categoria::find();

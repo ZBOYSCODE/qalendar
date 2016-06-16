@@ -55,4 +55,9 @@ $router->add('/calendar/usuario', array(
 ));
 
 
+$router->add('/actividad/editar/{$id}', array(
+    'controller' => 'Actividad',
+    'action' => 'editar'
+));
+
 return $router;

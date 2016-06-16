@@ -3,6 +3,7 @@
 namespace Gabs\Controllers;
 use \Gabs\Dto\Calendar;
 use \Gabs\Models\Disponible;
+use \Gabs\Models\Users;
 
 class TestController extends ControllerBase
 {
@@ -45,4 +46,11 @@ class TestController extends ControllerBase
 		}
 		return $horas;
 	}	
+
+	public function testMigueloAction(){
+
+		$user = Users::findFirstById(1);
+		print_r($user->rol);
+	}
+
 }

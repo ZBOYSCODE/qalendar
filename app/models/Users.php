@@ -70,6 +70,12 @@ class Users extends Model
     public $puntos;
 
     /**
+     *
+     * @var integer
+     */
+    public $rol_id;
+
+    /**
      * Before create the user assign a password
      */
     public function beforeValidationOnCreate()
@@ -135,12 +141,12 @@ class Users extends Model
 
     public function initialize()
     {
-		/*
-        $this->belongsTo('profilesId', __NAMESPACE__ . '\Profiles', 'id', array(
-            'alias' => 'profile',
+		
+        $this->belongsTo('rol_id', __NAMESPACE__ . '\Roles', 'rol_id', array(
+            'alias' => 'rol',
             'reusable' => true
         ));
-		*/
+		
 
         $this->hasMany('id', __NAMESPACE__ . '\SuccessLogins', 'usersId', array(
             'alias' => 'successLogins',

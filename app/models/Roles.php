@@ -1,30 +1,39 @@
 <?php
-
 namespace Gabs\Models;
 use Phalcon\Mvc\Model;
-use Phalcon\Mvc\Model\Query;
 
-class CategoriaActividad extends Model
+class Roles extends Model
 {
 
     /**
      *
      * @var integer
      */
-    public $ctgr_actv_id;
+    public $rol_id;
 
     /**
      *
-     * @var integer
+     * @var string
      */
-    public $ctgr_id;
+    public $descripcion;
 
     /**
-     *
-     * @var integer
+     * Initialize method for model.
      */
-    public $actv_id;
-    
+    public function initialize()
+    {
+        $this->hasMany(__NAMESPACE__.'\rol_id', 'Users', 'rol_id', array('alias' => 'Users'));
+
+        $this->hasMany('rol_id', __NAMESPACE__ . '\Users', 'rol_id', array(
+            'alias' => 'Users',
+            'foreignKey' => array(
+                'message' => 'Rol no puede ser eliminado dado que tiene usuarios relacionados'
+            )
+        ));
+
+
+    }
+
     /**
      * Returns table name mapped in the model.
      *
@@ -32,25 +41,14 @@ class CategoriaActividad extends Model
      */
     public function getSource()
     {
-        return 'categoria_actividad';
+        return 'roles';
     }
-    
-    /**
-     * Initialize method for model.
-     */
-    public function initialize()
-    {
-        $this->belongsTo('actv_id',  __NAMESPACE__.'\Actividad', 'actv_id', array('alias' => 'Actividad'));
-        $this->belongsTo('ctgr_id',  __NAMESPACE__.'\Categoria', 'ctgr_id', array('alias' => 'Categoria'));
-    }
-
-    
 
     /**
      * Allows to query a set of records that match the specified conditions
      *
      * @param mixed $parameters
-     * @return CategoriaActividad[]
+     * @return Prioridad[]
      */
     public static function find($parameters = null)
     {
@@ -61,7 +59,7 @@ class CategoriaActividad extends Model
      * Allows to query the first record that match the specified conditions
      *
      * @param mixed $parameters
-     * @return CategoriaActividad
+     * @return Prioridad
      */
     public static function findFirst($parameters = null)
     {
