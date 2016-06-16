@@ -187,7 +187,7 @@ class Auth extends Component
                             'id' => $user->id,
                             'name' => $user->name,
                             'email' => $user->email,
-                            'roleId' => $user->role_id,
+                            'roleId' => $user->rol_id,
                         ));
 
                         // Register the successful login
@@ -282,7 +282,7 @@ class Auth extends Component
             'id' => $user->id,
             'name' => $user->name,
             'email' => $user->email,
-            'roleId' => $user->role_id,
+            'roleId' => $user->rol_id,
         ));
     }
 

@@ -225,3 +225,32 @@
 	padding-left: 15px;
 	padding-right: 15px;
 }
+
+.header-user-edit {
+	padding: 15px;
+	font-size: 28px;
+	display: inline;
+}
+.header-user-edit small {
+	font-size: 15px;
+}
+
+.form-tittle {
+	font-size: 15px;
+	font-family: sans-serif;
+	border-bottom: 1px solid whitesmoke;
+	color: #7c7c7c;
+}
+
+.my-form .form-group {
+	padding-top: 15px;
+}
+
+.my-form fieldset {
+	margin-bottom: 20px;
+}
+
+.user-profile-box {
+	margin: 0 auto;
+	text-align: center;
+}

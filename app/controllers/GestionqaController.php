@@ -59,7 +59,7 @@ class GestionQaController extends ControllerBase
         $data['fechas'] = $fechas;
         $data['today'] = $DIA_ACTUAL;
         $data['calendarUser'] = $USER_ACTUAL;
-        $data['users'] = Users::find();
+        $data['users'] = Users::find("rol_id = 2");
 
     	$themeArray['pcData'] = $data;
 
@@ -98,7 +98,7 @@ class GestionQaController extends ControllerBase
             $data['fechas'] = $fechas;
             $data['today'] = $today;
             $data['calendarUser'] = $USER_ACTUAL;
-            $data['users'] = Users::find();
+            $data['users'] = Users::find("rol_id = 2");
 
             $dataView['pcData'] = $data;
             $view = 'webcal/webcal_calendar_base_view';
@@ -134,7 +134,7 @@ class GestionQaController extends ControllerBase
 
         $data['actividades'] = $daily;
         $data['today'] = $DIA_ACTUAL;
-        $data['users'] = Users::find();
+        $data['users'] = Users::find("rol_id = 2");
         $data['categorias'] = Categoria::find();
 
         $themeArray['pcData'] = $data;
@@ -160,7 +160,7 @@ class GestionQaController extends ControllerBase
 
             $data['actividades'] = $daily;
             $data['today'] = $today;
-            $data['users'] = Users::find();
+            $data['users'] = Users::find("rol_id = 2");
             $data['categorias'] = Categoria::find();
 
             $dataView['pcData'] = $data;
