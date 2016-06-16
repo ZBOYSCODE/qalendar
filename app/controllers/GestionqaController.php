@@ -191,7 +191,7 @@ class GestionQaController extends ControllerBase
             $themeArray['pcView'] = 'event/event_nuevo_view';
             $themeArray['jsScript'] = $this->view->render('event/js/evento_nuevoJS');
 
-            $data['users'] = Users::find();
+            $data['users'] = Users::find("rol_id = 2");
             $data['prioridad'] = Prioridad::find();
             $data['acceso'] = Acceso::find();
             $data['categoria'] = Categoria::find();
