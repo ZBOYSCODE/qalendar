@@ -152,7 +152,6 @@
 			$themeArray = $this->_themeArray;
 			$themeArray['pcView'] = 'actividad/actividad_perfil_view';
 
-
 			$data['actividades'] = Actividad::findFirst("actv_id = ".$id);
 
 			$themeArray['pcData'] = $data;
