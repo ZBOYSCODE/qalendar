@@ -24,7 +24,7 @@ class ControllerBase extends Controller
 		
 		}
 
-		if(!AccesoAcl::tieneAcceso())
+		if(isset($this->auth->getIdentity()['roleId']) && !AccesoAcl::tieneAcceso())
     	{
     		$response = new \Phalcon\Http\Response();
 			$response->redirect("acceso/denegado");

@@ -265,13 +265,12 @@ class Actividad extends Model
                 $userActividad      = UserActividad::findFirstByActvId($this->actv_id);
                 $categoriaActividad = CategoriaActividad::findFirstByActvId($this->actv_id);
             }           
-
-            //echo $categoriaActividad->ctgr_id;
+            //print_r($categoriaActividad);die();
             
             $userActividad->user_id         = (int)$_POST['persona'];
             $categoriaActividad->ctgr_id    = (int)$_POST['categoria'];
 
-            
+
             $categoriaActividad->save();
             
 
