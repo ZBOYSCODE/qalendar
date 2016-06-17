@@ -91,7 +91,7 @@
                 <?php if(!is_object($disponible) && $disponible==0) {?>
                     <td class="event-disp">
                         <?php
-                            if($this->AccesoAcl->tienePermiso('crearevento', 'gestionqa')) { ?>
+                            if($this->AccesoAcl->tienePermiso('crearevento', 'actividad')) { ?>
 
                                 <div class="btn-group  pull-right ">
                                     <a href="javascript:void(0)" data-toggle="dropdown" class="dropdown-toggle">
@@ -152,7 +152,7 @@
                         <?php if($disponible->EstadoDisponibilidad->edsp_id == 1) { ?>
                             <td class="event-disp">
                                 <?php
-                                    if($this->AccesoAcl->tienePermiso('crearevento', 'gestionqa')) { ?>
+                                    if($this->AccesoAcl->tienePermiso('crearevento', 'actividad')) { ?>
                                         <div class="btn-group  pull-right ">
                                             <a href="javascript:void(0)" data-toggle="dropdown" class="dropdown-toggle">
                                                 <i class="hi hi-collapse"></i>

@@ -11,7 +11,10 @@
 		static public 	$res =   [	1	=> [ 'acceso' => ['denegado' => 1],
 											'actividad' => [
                                                     'editarevento'    	=> 1,
-                                                    'editar'    		=> 1
+                                                    'editar'    		=> 1,
+													'crearevento'		=> 1,
+													'guardarevento'		=> 1,
+													'verperfilevento' => 1
                                                     ],
 		                                    'gestionqa' => [
 		                                                    'index'                 => 1,
@@ -21,8 +24,6 @@
 		                                                    'vistadiaria'           => 1,
 		                                                    'changedailydate'       => 1,
 		                                                    'geteventdetail'        => 1,
-		                                                    'crearevento'           => 1,
-		                                                    'guardarevento'         => 1,
 		                                                    'encontrarbloque'       => 1,
 		                                                    'seleccionarbloque'     => 1
 		                                                ],
@@ -35,7 +36,9 @@
 									2   =>  [ 'acceso' => ['denegado' => 1],
 											'actividad' => [
                                                     'editarevento'    	=> 0,
-                                                    'editar'    		=> 0
+                                                    'editar'    		=> 0,
+													'crearevento'		=> 0,
+													'guardarevento'		=> 0
                                                     ],
 		                                    'gestionqa' => [
 		                                                    'index'                 => 1,
@@ -43,8 +46,6 @@
 		                                                    'vistadiaria'           => 0,
 		                                                    'changedailydate'       => 0,
 		                                                    'geteventdetail'        => 0,
-		                                                    'crearevento'           => 0,
-		                                                    'guardarevento'         => 0,
 															'changecalendaruser'    => 0,
 															'changecalendardate'    => 1,
 		                                                    'encontrarbloque'       => 0,

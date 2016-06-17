@@ -45,7 +45,7 @@ $router->add('/gestion/dia', array(
 ));
 
 $router->add('/evento/nuevo', array(
-    'controller' => 'GestionQa',
+    'controller' => 'Actividad',
     'action' => 'crearEvento'
 ));
 
@@ -73,6 +73,12 @@ $router->add('/calendar/usuario', array(
 $router->add('/actividad/editar/{$id}', array(
     'controller' => 'Actividad',
     'action' => 'editar'
+));
+
+$router->add('/actividad/perfil/:params', array(
+    'controller' => 'Actividad',
+    'action' => 'verPerfilEvento',
+    'params' => 1
 ));
 
 return $router;
