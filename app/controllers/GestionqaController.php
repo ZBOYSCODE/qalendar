@@ -190,7 +190,7 @@ class GestionQaController extends ControllerBase
         $data['subMenuSel'] = "diaria";
 
         $themeArray['pcData'] = $data;
-        $themeArray['jsScript'] = $this->view->render('webcal/js/vista_diaria.phtml');
+        $themeArray['jsScript'] = $this->view->render('webcal/js/vista_diaria');
 
         echo $this->view->render('theme', $themeArray);
     }
