@@ -14,8 +14,13 @@
                                                     'editar'    		=> 1,
 													'crearevento'		=> 1,
 													'guardarevento'		=> 1,
-													'verperfilevento' => 1
+													'verperfilevento' => 1,
+                                                    'crearhito'			=> 1
                                                     ],
+                                            'hito' => [
+                                            		'crearhito' 	=> 1,
+                                            		'deletehito'	=> 1
+                                            		],
 		                                    'gestionqa' => [
 		                                                    'index'                 => 1,
 		                                                    'vistasemanal'          => 1,
@@ -40,6 +45,10 @@
 													'crearevento'		=> 0,
 													'guardarevento'		=> 0
                                                     ],
+                                            'hito' => [
+                                            		'crearhito' => 1,
+                                            		'deletehito'	=> 1
+                                            		],
 		                                    'gestionqa' => [
 		                                                    'index'                 => 1,
 		                                                    'vistasemanal'          => 1,

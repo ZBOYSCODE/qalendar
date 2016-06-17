@@ -21,6 +21,8 @@
     		$themeArray['pcView'] = 'actividad/edit';
     		$themeArray['jsScript'] = $this->view->render('event/js/evento_nuevoJS');
 
+    		$themeArray['addJs'][] 		= "js/hitos.js";
+
 	    	$actividad 				= Actividad::findFirst($id);
 	    	$data['accesos'] 		= Acceso::find();
 	    	$data['prioridades'] 	= Prioridad::find();

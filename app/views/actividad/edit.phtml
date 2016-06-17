@@ -19,6 +19,21 @@
         <?php 
             } 
         ?>
+
+        <?php
+
+            if($this->AccesoAcl->tienePermiso('crearhito')) { ?>
+                
+                <a  href="#"  
+                    class="btn btn-success pull-right btn-save" 
+                    data-toggle="modal" 
+                    data-target="#modal_hito">Hito</a>
+
+        <?php 
+            } 
+        ?>
+        
+
         
     </div>
     <div class="formulario-section">
@@ -226,3 +241,38 @@
 </div>
 
 <div id="modal-bloqueLibre" class="modal fade"></div>
+
+<input type='hidden' id='idactividad' value='<?php echo $pcData['actividad']->actv_id; ?>' />
+
+<div class="modal fade" tabindex="-1" role="dialog" id='modal_hito'>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Agregar Hitos</h4>
+            </div>
+
+            <form class='form-inline' action="<?php print $this->url->get('hito')?>" id='frm'></form>
+
+            <div class="modal-body">
+                <div class="row">
+                    <button class='btn btn-success pull-right add-actividad'>+</button>
+                    <p>lista de hitos</p>  
+                </div>
+
+
+                <div id="message_error"></div>
+
+                <div class="row" id='hitos'>
+
+                </div>
+                
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary">Guardar</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
