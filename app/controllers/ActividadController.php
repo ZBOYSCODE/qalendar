@@ -144,11 +144,17 @@
 
 		}
 
-		public function verPerfilEventoAction() {
-			$themeArray = $this->_themeArray;
-			$themeArray['pcView'] = 'event/event_perfil_view';
+		/**
+		 * Muestra el perfil de un evento
+         */
+		public function verPerfilEventoAction($id) {
 
-			$data = array();
+			$themeArray = $this->_themeArray;
+			$themeArray['pcView'] = 'actividad/actividad_perfil_view';
+
+
+			$data['actividades'] = Actividad::findFirst("actv_id = ".$id);
+
 			$themeArray['pcData'] = $data;
 
 			echo $this->view->render('theme', $themeArray);

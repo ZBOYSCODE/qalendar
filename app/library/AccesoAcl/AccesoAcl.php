@@ -13,7 +13,8 @@
                                                     'editarevento'    	=> 1,
                                                     'editar'    		=> 1,
 													'crearevento'		=> 1,
-													'guardarevento'		=> 1
+													'guardarevento'		=> 1,
+													'verperfilevento' => 1
                                                     ],
 		                                    'gestionqa' => [
 		                                                    'index'                 => 1,

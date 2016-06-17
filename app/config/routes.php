@@ -75,4 +75,10 @@ $router->add('/actividad/editar/{$id}', array(
     'action' => 'editar'
 ));
 
+$router->add('/actividad/perfil/:params', array(
+    'controller' => 'Actividad',
+    'action' => 'verPerfilEvento',
+    'params' => 1
+));
+
 return $router;

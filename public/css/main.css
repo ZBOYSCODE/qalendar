@@ -1457,7 +1457,6 @@ img.full-bg {
 }
 
 @media screen and (max-width: 480px) {
-    // General 
     #login-container{
         width: 90% !important;
         margin-left: 0px;
@@ -3720,7 +3719,7 @@ p, .table, .alert, .carousel {
 }
 
 .style-alt .block-title {
-    background-color: #dbe1e8;
+    background-color: #fbfbfb;
     border-bottom-color: #dbe1e8;
 }
 
