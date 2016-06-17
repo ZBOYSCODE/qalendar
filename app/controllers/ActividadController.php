@@ -68,4 +68,89 @@
 	            $this->mifaces->run();            
 	        }
 	    }
+
+		/**
+		 * Muestra la vista para crear un evento
+		 */
+		public function crearEventoAction() {
+			$data = array();
+			if(!$this->request->isAjax() == true) {
+				if(isset($_POST)) {
+					//caso: crear un evento con datos precargados
+					$callData = $_POST;
+					if(isset($callData['hora']) && isset($callData['fecha']) && isset($callData['calendarUser'])) {
+						$hora = $callData['hora'];
+						$fecha = $callData['fecha'];
+						$owner = $callData['calendarUser'];
+						$userOwner = Users::findFirst($owner);
+
+						/*... Podemos seguir seteando datos, dependiendo del caso*/
+
+						$data['fechaSelected'] = date("Y-m-d", strtotime($fecha));
+						$data['horaSelected'] = $hora;
+						$data['userSelected'] = $userOwner;
+					}
+				}
+
+				$themeArray = $this->_themeArray;
+				$themeArray['pcView'] = 'event/event_nuevo_view';
+				$themeArray['jsScript'] = $this->view->render('event/js/evento_nuevoJS');
+
+				$data['users'] = Users::find("rol_id = 2");
+				$data['prioridad'] = Prioridad::find();
+				$data['acceso'] = Acceso::find();
+				$data['categoria'] = Categoria::find();
+
+				$themeArray['pcData'] = $data;
+				//$themeArray['addJs'] = array("js/evento_nuevoJS.phtml");
+				echo $this->view->render('theme', $themeArray);
+			}
+			else {
+				$response = new \Phalcon\Http\Response();
+				$response->redirect("");
+				$response->send();
+			}
+		}
+
+		/**
+		 * Guarda el evento y redirige al home
+		 */
+		public function guardarEventoAction(){
+			if($this->request->isAjax() == true) {
+				$this->mifaces->newFaces();
+				$a_model = new Actividad();
+
+				if($this->auth->getIdentity()['name']) {
+					$_POST['creado_por'] = $this->auth->getIdentity()['name'];
+				}
+
+				$callback = $a_model->guardarActividad($_POST);
+				if (isset($callback['error'])) {
+					if ($callback['error'] == 1) {
+						foreach ($callback['msg'] as $val) {
+							$this->mifaces->addPosRendEval("$.bootstrapGrowl('{$val}',{type:'danger'});");
+						}
+					}
+				} else {
+					$this->mifaces->addPosRendEval("$.bootstrapGrowl('{$callback['msg'][0]}');");
+				}
+				if (isset($callback['error']))
+					$this->mifaces->run();
+				else {
+					$this->mifaces->addPosRendEval("window.location.replace('/qalendar');");
+					$this->mifaces->run();
+				}
+			}
+
+		}
+
+		public function verPerfilEventoAction() {
+			$themeArray = $this->_themeArray;
+			$themeArray['pcView'] = 'event/event_perfil_view';
+
+			$data = array();
+			$themeArray['pcData'] = $data;
+
+			echo $this->view->render('theme', $themeArray);
+		}
 	}
