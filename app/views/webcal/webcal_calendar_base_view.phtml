@@ -3,25 +3,39 @@
         <div class="filter-box row">
             <div class="col-xs-4"></div>
             <div class="col-xs-4">
-                <div class="list-group-container my-group-container">
-                    <div class="list-group list-group-custom list-group-horizontal">
-                        <a href="<?php print($this->url->get('')) ?>gestion/dia" class="list-group-item ">
-                            <div class="circle-calendar">
-                                <i class="fa fa-list"></i>
+
+                <?php
+
+                    if($this->AccesoAcl->tienePermiso('vistadiaria', 'gestionqa')) { ?>
+                        <div class="list-group-container my-group-container">
+                            <div class="list-group list-group-custom list-group-horizontal">
+                                <a href="<?php print($this->url->get('')) ?>gestion/dia" class="list-group-item ">
+                                    <div class="circle-calendar">
+                                        <i class="fa fa-list"></i>
+                                    </div>
+                                    Gestión Diaria
+                                </a>
+                                <a href="<?php print($this->url->get('')) ?>calendario"
+                                   class="list-group-item active">
+                                    <div class="circle-calendar">
+                                        <i class="fa fa-calendar-o"></i>
+                                    </div>
+                                    Vista Semanal</a>
                             </div>
-                            Gestión Diaria
-                        </a>
-                        <a href="<?php print($this->url->get('')) ?>calendario"
-                           class="list-group-item active">
-                            <div class="circle-calendar">
-                                <i class="fa fa-calendar-o"></i>
-                            </div>
-                            Vista Semanal</a>
-                    </div>
-                </div>
+                        </div>
+
+                <?php
+                }
+                ?>
+
             </div>
             <div class="col-xs-4">
-            <form id="filterPersonaForm" action="<?php print($this->url->get("calendar/changeWeekByUser")) ?>" method="post" data-type="ajax">
+
+                <?php
+
+                     if($this->AccesoAcl->tienePermiso('changecalendaruser', 'gestionqa')) { ?>
+
+                        <form id="filterPersonaForm" action="<?php print($this->url->get("calendar/changeWeekByUser")) ?>" method="post" data-type="ajax">
                 <div class="form-group row form-row my-chosen">
                     <div class="col-sm-12 select-daily" style="text-align: left;">
                         <select data-submit="true" id="persona" name="userCalendar" class="select-chosen" data-placeholder="Cambiar persona..." style="width: 250px;">
@@ -34,6 +48,10 @@
                     <input class="hidden" name="dateChange" value="<?php print date("Y-m-d", strtotime($pcData['today'])) ?>" >
                 </div>
             </form>
+
+                <?php
+                    }
+                ?>
             </div>
         </div>
     </div>
@@ -72,21 +90,27 @@
             <?php foreach($hora as $keyFecha => $disponible) {?>
                 <?php if(!is_object($disponible) && $disponible==0) {?>
                     <td class="event-disp">
-                        <div class="btn-group  pull-right ">
-                            <a href="javascript:void(0)" data-toggle="dropdown" class="dropdown-toggle">
-                                <i class="hi hi-collapse"></i>
-                            </a>
-                            <ul class="dropdown-menu dropdown-custom text-left" style="min-width: 140px;">
-                                <li>
-                                    <a href="<?php print $this->url->get()?>evento/nuevo"
-                                       data-action="<?php print $this->url->get()?>evento/nuevo"
-                                       data-val="hora=<?php print $keyHora ?>&fecha=<?php print $keyFecha ?>&calendarUser=<?php print $pcData['calendarUser'] ?>"
-                                       data-ajax="false">Crear Evento</a>
+                        <?php
+                            if($this->AccesoAcl->tienePermiso('crearevento', 'gestionqa')) { ?>
 
-                                    <a href="javascript:void(0)">Bloquear</a>
-                                </li>
-                            </ul>
-                        </div>
+                                <div class="btn-group  pull-right ">
+                                    <a href="javascript:void(0)" data-toggle="dropdown" class="dropdown-toggle">
+                                        <i class="hi hi-collapse"></i>
+                                    </a>
+                                    <ul class="dropdown-menu dropdown-custom text-left" style="min-width: 140px;">
+                                        <li>
+                                            <a href="<?php print $this->url->get() ?>evento/nuevo"
+                                               data-action="<?php print $this->url->get() ?>evento/nuevo"
+                                               data-val="hora=<?php print $keyHora ?>&fecha=<?php print $keyFecha ?>&calendarUser=<?php print $pcData['calendarUser'] ?>"
+                                               data-ajax="false">Crear Evento</a>
+
+                                            <a href="javascript:void(0)">Bloquear</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                        <?php
+                            }
+                        ?>
                     </td>
                 <?php } else { ?>
                     <?php if(isset($disponible->Actividad) && is_object($disponible->Actividad)) { ?>
@@ -108,31 +132,46 @@
                                             <strong>Prioridad:</strong> <?php print $disponible->Actividad->Prioridad->prrd_nombre ?> <br>
                                             <strong>Creado Por:</strong> <?php print $disponible->Actividad->actv_creado_por ?> <br>
                                             <strong>Estado:</strong> <?php print $disponible->Actividad->actv_status ?> <br>
+
+                                            <?php
+
+                                                if($this->AccesoAcl->tienePermiso('changecalendaruser', 'gestionqa')) { ?>
+                                                    <a href="<?php print $this->url->get("actividad/editar/" . $disponible->Actividad->actv_id) ?>"
+                                                       class="link-lighter"></a>
+
+                                            <?php
+                                                }
+                                            ?>
                                         </p>
-                                        <a href="#"><span></span></a>
+
                                     </div>
                                 </div>
-                                <a href="#"><span></span></a>
                             </div>
                         </td>
                     <?php } else { ?>
                         <?php if($disponible->EstadoDisponibilidad->edsp_id == 1) { ?>
                             <td class="event-disp">
-                                <div class="btn-group  pull-right ">
-                                    <a href="javascript:void(0)" data-toggle="dropdown" class="dropdown-toggle">
-                                        <i class="hi hi-collapse"></i>
-                                    </a>
-                                    <ul class="dropdown-menu dropdown-custom text-left" style="min-width: 140px;">
-                                        <li>
-                                            <a href="<?php print $this->url->get()?>evento/nuevo"
-                                               data-action="<?php print $this->url->get()?>evento/nuevo"
-                                               data-val="hora=<?php print $keyHora ?>&fecha=<?php print $keyFecha ?>&calendarUser=<?php print $pcData['calendarUser'] ?>"
-                                               data-ajax="false">Crear Evento</a>
+                                <?php
+                                    if($this->AccesoAcl->tienePermiso('crearevento', 'gestionqa')) { ?>
+                                        <div class="btn-group  pull-right ">
+                                            <a href="javascript:void(0)" data-toggle="dropdown" class="dropdown-toggle">
+                                                <i class="hi hi-collapse"></i>
+                                            </a>
+                                            <ul class="dropdown-menu dropdown-custom text-left"
+                                                style="min-width: 140px;">
+                                                <li>
+                                                    <a href="<?php print $this->url->get() ?>evento/nuevo"
+                                                       data-action="<?php print $this->url->get() ?>evento/nuevo"
+                                                       data-val="hora=<?php print $keyHora ?>&fecha=<?php print $keyFecha ?>&calendarUser=<?php print $pcData['calendarUser'] ?>"
+                                                       data-ajax="false">Crear Evento</a>
 
-                                            <a href="javascript:void(0)">Bloquear</a>
-                                        </li>
-                                    </ul>
-                                </div>
+                                                    <a href="javascript:void(0)">Bloquear</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                <?php
+                                    }
+                                ?>
                             </td>
                         <?php } elseif($disponible->EstadoDisponibilidad->edsp_id == 3) { ?>
                             <td class="event-blocked">&nbsp;</td>

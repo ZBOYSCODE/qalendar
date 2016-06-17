@@ -309,23 +309,25 @@ class GestionQaController extends ControllerBase
      * Guarda el evento y redirige al home
      */
     public function guardarEventoAction(){
-        $this->mifaces->newFaces();
-        $a_model = new Actividad();
-        $callback = $a_model->guardarActividad($_POST);
-        if(isset($callback['error'])){
-            if($callback['error'] == 1){
-                foreach ($callback['msg'] as $val) {
-                    $this->mifaces->addPosRendEval("$.bootstrapGrowl('{$val}',{type:'danger'});");
+        if($this->request->isAjax() == true) {
+            $this->mifaces->newFaces();
+            $a_model = new Actividad();
+            $callback = $a_model->guardarActividad($_POST);
+            if (isset($callback['error'])) {
+                if ($callback['error'] == 1) {
+                    foreach ($callback['msg'] as $val) {
+                        $this->mifaces->addPosRendEval("$.bootstrapGrowl('{$val}',{type:'danger'});");
+                    }
                 }
+            } else {
+                $this->mifaces->addPosRendEval("$.bootstrapGrowl('{$callback['msg'][0]}');");
             }
-        } else{
-            $this->mifaces->addPosRendEval("$.bootstrapGrowl('{$callback['msg'][0]}');");
-        }
-        if(isset($callback['error']))
-            $this->mifaces->run();            
-        else{
-            $this->mifaces->addPosRendEval("window.location.replace('/qalendar');");
-            $this->mifaces->run();            
+            if (isset($callback['error']))
+                $this->mifaces->run();
+            else {
+                $this->mifaces->addPosRendEval("window.location.replace('/qalendar');");
+                $this->mifaces->run();
+            }
         }
 
     }
@@ -334,33 +336,46 @@ class GestionQaController extends ControllerBase
      * Trae los bloques libres con una fecha y un usuario y muestra modal con ajax
      */
     public function encontrarBloqueAction(){
-        $d_model = new Disponible();
-        $themeArray['pcData']['fecha'] = $_POST['fecha'];
-        $themeArray['pcData']['disponibles'] = $d_model->getDisponiblesByFecha($_POST);
+        if($this->request->isAjax() == true) {
+            #Si viene la persona seleccionada procedemos
+            if(isset($_POST['persona']) && $_POST['persona'] != '') {
+                $d_model = new Disponible();
+                $themeArray['pcData']['fecha'] = $_POST['fecha'];
+                $themeArray['pcData']['disponibles'] = $d_model->getDisponiblesByFecha($_POST);
 
-        $this->mifaces->newFaces();
-        if(count($themeArray['pcData']['disponibles'])){
-            $toRend = $this->view->render('event/event_bloquesLibres_modal_view',$themeArray);
-            $this->mifaces->addPreRendEval("$('#modal-bloqueLibre').modal()");            
-            $this->mifaces->addToRend('modal-bloqueLibre',$toRend);
-        }else{
-            $this->mifaces->addPosRendEval("$.bootstrapGrowl('No hay bloques disponibles para la fecha seleccionada',{type:'warning'});");
+                $this->mifaces->newFaces();
+                if (count($themeArray['pcData']['disponibles'])) {
+                    $toRend = $this->view->render('event/event_bloquesLibres_modal_view', $themeArray);
+                    $this->mifaces->addPreRendEval("$('#modal-bloqueLibre').modal()");
+                    $this->mifaces->addToRend('modal-bloqueLibre', $toRend);
+                } else {
+                    $this->mifaces->addPosRendEval("$.bootstrapGrowl('No hay bloques disponibles para la fecha seleccionada',{type:'warning'});");
+                }
+                $this->mifaces->run();
+            }
+            else{
+                #si no viene seleccionada enviamos mensaje
+                $this->mifaces->newFaces();
+                $this->mifaces->addPosRendEval("$.bootstrapGrowl('Debes seleccionar una persona, antes de encontrar bloques libres.',{type:'warning'});");
+                $this->mifaces->run();
+            }
         }
-        $this->mifaces->run();
     }
 
     /**
      * Selecciona bloque libre y actualiza la hora en formulario con ajax
      */
     public function seleccionarBloqueAction(){
-        $this->mifaces->newFaces();
-        if(isset($_POST['horaSeleccionada'])){
-            $hora = $_POST['horaSeleccionada'];
-            $this->mifaces->addPreRendEval('$("#hora").val("'.$hora.'");');
-            $this->mifaces->addPosRendEval('$("#modal-bloqueLibre").modal("hide");');
-        } else{
-            $this->mifaces->addPosRendEval("$.bootstrapGrowl('Debe seleccionar al menos un bloque.',{type:'warning'});");   
+        if($this->request->isAjax() == true) {
+            $this->mifaces->newFaces();
+            if (isset($_POST['horaSeleccionada'])) {
+                $hora = $_POST['horaSeleccionada'];
+                $this->mifaces->addPreRendEval('$("#hora").val("' . $hora . '");');
+                $this->mifaces->addPosRendEval('$("#modal-bloqueLibre").modal("hide");');
+            } else {
+                $this->mifaces->addPosRendEval("$.bootstrapGrowl('Debe seleccionar al menos un bloque.',{type:'warning'});");
+            }
+            $this->mifaces->run();
         }
-        $this->mifaces->run();
     }
 }

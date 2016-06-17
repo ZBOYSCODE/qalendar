@@ -2,7 +2,7 @@
     <div class="list-group-container">
         <div class="list-group list-group-custom list-group-horizontal">
             <a href="#" class="list-group-item active">Detalle y Participantes</a>
-            <a href="#" class="list-group-item">Repetición</a>
+            <a href="javascript:void(0)" class="list-group-item" data-toggle="tooltip" data-placement="bottom" title="Proximamente">Repetición</a>
         </div>
 
     </div>
@@ -34,8 +34,8 @@
                         </div>
                         <div class="form-group row form-row">
                             <label class="col-sm-4 control-label" for="categoria">Categoría *</label>
-                            <div class="col-sm-8">
-                                <select id="categoria" name="categoria" class="select-chosen my-chosen" data-placeholder="Elegir Categorías" style="width: 250px;" multiple>
+                            <div class="col-sm-8" style="text-align: left;">
+                                <select id="categoria" name="categoria" class="select-chosen my-chosen" data-placeholder="Elegir Categorías" style="width: 250px;">
                                     <option value="" selected=""></option>
                                     <?php foreach($pcData['categoria'] as $categoriaItem ) {?>
                                         <option value="<?php print $categoriaItem->ctgr_id ?>"><?php print $categoriaItem->ctgr_nombre ?></option>
@@ -87,7 +87,14 @@
                         </div>
                     </div>
                     <div class="form-group row" style="text-align: center;">
-                        <a id="btnBloqueLibre" href="<?php print($this->url->get("gestionQa/encontrarBloque")) ?>" data-action="<?php print($this->url->get("gestionQa/encontrarBloque")) ?>" data-val="fecha=<?php print(date('Y-m-d')) ?>&persona=<?php print($pcData['userSelected']->id) ?>"    >Encontrar Bloque Libre</a>
+                        <?php
+                            if(isset($pcData['userSelected']->id)) {
+                                $userBloque = $pcData['userSelected']->id;
+                            }else {
+                                $userBloque = '';
+                            }
+                        ?>
+                        <a id="btnBloqueLibre" href="<?php print($this->url->get("gestionQa/encontrarBloque")) ?>" data-action="<?php print($this->url->get("gestionQa/encontrarBloque")) ?>" data-val="fecha=<?php print(date('Y-m-d')) ?>&persona=<?php print $userBloque ?>">Encontrar Bloque Libre</a>
                     </div>
                 </div>
                 <div class="col-sm-5">
@@ -103,7 +110,7 @@
                                     <?php } ?>
                                 </select>
                             </div>
-
+                            <!--
                             <div class="col-sm-4">
                                 <a href="javascript:void(0)" class="btn btn-sm btn-default pull-left">Añadir</a>
                             </div>
@@ -161,7 +168,7 @@
                                         <p>Todos pueden</p>
                                     </div>
                                 </div>
-                            </div>
+                            </div>-->
                         </div>
                     </div>
                 </div>

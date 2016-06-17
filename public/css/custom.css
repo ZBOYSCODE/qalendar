@@ -280,3 +280,9 @@
 .my-group-container .list-group {
 	margin-bottom: 0px;
 }
+
+.link-lighter {
+	color: whitesmoke !important;
+	font-size: 16px;
+	font-family: sans-serif;
+}
