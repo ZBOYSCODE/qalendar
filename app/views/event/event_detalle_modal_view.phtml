@@ -1,14 +1,15 @@
 <div class="modal-dialog" style="width: 40%;">
     <div class="modal-content">
-        <div class="modal-body item" style="min-height:60vh;">
+        <div class="modal-body item" style="min-height:40vh; padding: 0px;">
             <div class="modal-msg-box">
                 <div class="header-item">
                     <strong>Evento: <?php print($pcData['actividad']->actv_descripcion_breve); ?></strong>
                 </div>
                 <div class="subheader-item">
                     <div class="row">
-                        <div class="col-xs-12 title-table">Cuándo</div>
-                        <div class="col-xs-12"><?php print($pcData['actividad']->actv_fecha); ?>, <?php print(date('H:i',strtotime($pcData['actividad']->actv_hora))." - ".date('H:i',strtotime($pcData['actividad']->actv_hora." + 1 hours"))); ?></div>
+                        <div class="col-xs-12" style="padding: 4px;padding-right: 28px;">
+                            <?php print($pcData['actividad']->actv_fecha); ?>, <?php print(date('H:i',strtotime($pcData['actividad']->actv_hora))." - ".date('H:i',strtotime($pcData['actividad']->actv_hora." + 1 hours"))); ?>
+                        </div>
                     </div>
                 </div>
                 <div class="data-item">
@@ -42,14 +43,49 @@
                                <td class="title-table">Categoría</td>
                                <td>
                                    <span class="label label-custom">
-                                       Instalación
+                                       <?php foreach($pcData['actividad']->CategoriaActividad as $iter ) {
+                                           print($iter->Categoria->ctgr_nombre." ");
+                                       } ?>
                                    </span>
+                               </td>
+                           </tr>
+                           <tr>
+                               <td>&nbsp;</td>
+                               <td>&nbsp;</td>
+                           </tr>
+                           <tr>
+                               <td class="title-table">Participantes</td>
+                               <td>
+
+                               <?php
+
+                                    foreach($pcData['actividad']->UserActividad as $iter ) { ?>
+                                        <i class="gi gi-user"></i> <?php print($iter->Users->name." "); ?><br>
+
+                                <?php
+                                    }
+                               ?>
+                               </td>
+                           </tr>
+
+                           <tr>
+                               <td>&nbsp;</td>
+                               <td>&nbsp;</td>
+                           </tr>
+                           <tr>
+                               <td class="title-table">Creador</td>
+                               <td>
+                                   <i class="gi gi-user"></i> <?php print($pcData['actividad']->actv_creado_por); ?><br>
                                </td>
                            </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
+
+        </div>
+
+        <div class="modal-footer" style="font-size: 15px; font-family: Sans-Serif;">
             <div class="links-box">
                 <a class="dismiss-item link-modal" href="<?php print $this->url->get("actividad/editar/".$pcData['actividad']->actv_id)?>" >Editar</a>
                 <a class="dismiss-item link-modal" href="javascript:void(0)" data-dismiss="modal">Cerrar</a>

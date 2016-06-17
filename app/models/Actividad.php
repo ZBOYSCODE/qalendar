@@ -168,6 +168,8 @@ class Actividad extends Model
             return $callback;
         }
 
+
+
         $this->accs_id = $_POST['acceso'];
         $this->prrd_id = $_POST['prioridad'];
         $this->actv_descripcion_breve = $_POST['dscr-breve'];
@@ -180,7 +182,7 @@ class Actividad extends Model
         $this->actv_categoria = $_POST['categoria'];
         //$this->actv_status = $_POST['status'];
         $this->actv_status = 'Pendiente Aprobación';
-        $this->actv_creado_por = 'admin';
+        $this->actv_creado_por = isset($_POST['creado_por'])?$_POST['creado_por']:'Admin';
         $this->actv_created_at = date('Y-m-d'); 
         $this->actv_updated_at = date('Y-m-d'); 
         //$actividad->actv_comentarios = $_POST['comentarios'];

@@ -312,6 +312,11 @@ class GestionQaController extends ControllerBase
         if($this->request->isAjax() == true) {
             $this->mifaces->newFaces();
             $a_model = new Actividad();
+
+            if($this->auth->getIdentity()['name']) {
+                $_POST['creado_por'] = $this->auth->getIdentity()['name'];
+            }
+
             $callback = $a_model->guardarActividad($_POST);
             if (isset($callback['error'])) {
                 if ($callback['error'] == 1) {

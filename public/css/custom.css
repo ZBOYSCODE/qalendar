@@ -57,10 +57,18 @@
 	font-size: 18px;
 	font-weight: 600;
 	text-align: center;
+	background-color: #17badc;
+	color: white;
 }
 
 .subheader-item {
-	margin-bottom: 30px;
+	background-color: #94938f;
+	color: white;
+	text-align: right;
+}
+
+.data-item {
+	padding: 34px;
 }
 
 .link-modal {
@@ -69,7 +77,6 @@
 
 .links-box {
 	text-align: center;
-	margin-top: 40px;
 }
 
 .title-table {
