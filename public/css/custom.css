@@ -293,3 +293,29 @@
 	font-size: 16px;
 	font-family: sans-serif;
 }
+
+.header-container .header-perfil {
+
+	font-size: 20px;
+	font-family: sans-serif;
+	color: white;
+}
+
+.header-container {
+	padding: 15px;
+}
+
+.header-color {
+	background-color: #17badc;
+	margin:0px;
+}
+
+.header-container .header-bajada {
+	font-size: 12px;
+	font-family: sans-serif;
+	color: white;
+}
+
+.my-block {
+	min-height: 400px;
+}
