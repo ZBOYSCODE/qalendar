@@ -1,0 +1,416 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project activeEnvironment="Default" name="advanceFc-API" soapui-version="5.0.0" abortOnError="false" runType="SEQUENTIAL" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" wsaVersion="NONE" name="DocumentoTributarioServiceSoapBinding" type="wsdl" bindingName="{http://ws.raggApi.bicorp.cl/}DocumentoTributarioServiceSoapBinding" soapVersion="1_1" anonymous="optional" definition="http://64.79.70.107:8080/raggApi/DocumentoTributario?wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="http://64.79.70.107:8080/raggApi/DocumentoTributario?wsdl"><con:part><con:url>http://64.79.70.107:8080/raggApi/DocumentoTributario?wsdl</con:url><con:content><![CDATA[<wsdl:definitions name="DocumentoTributarioService" targetNamespace="http://ws.raggApi.bicorp.cl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://ws.raggApi.bicorp.cl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http">
+  <wsdl:types>
+    <xs:schema attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://ws.raggApi.bicorp.cl/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:element name="TestHello" type="tns:TestHello"/>
+      <xs:element name="TestHelloResponse" type="tns:TestHelloResponse"/>
+      <xs:element name="cargarDTE" type="tns:cargarDTE"/>
+      <xs:element name="cargarDTEResponse" type="tns:cargarDTEResponse"/>
+      <xs:element name="getDataByDay" type="tns:getDataByDay"/>
+      <xs:element name="getDataByDayResponse" type="tns:getDataByDayResponse"/>
+      <xs:element name="getDataByMonth" type="tns:getDataByMonth"/>
+      <xs:element name="getDataByMonthResponse" type="tns:getDataByMonthResponse"/>
+      <xs:element name="getDataByYear" type="tns:getDataByYear"/>
+      <xs:element name="getDataByYearResponse" type="tns:getDataByYearResponse"/>
+      <xs:complexType name="getDataByDay">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="tipoIndicador" type="xs:string"/>
+          <xs:element minOccurs="0" name="rutEmpresa" type="xs:string"/>
+          <xs:element minOccurs="0" name="rutCliente" type="xs:string"/>
+          <xs:element minOccurs="0" name="nombreComuna" type="xs:string"/>
+          <xs:element minOccurs="0" name="nombreRegion" type="xs:string"/>
+          <xs:element minOccurs="0" name="desde" type="xs:string"/>
+          <xs:element minOccurs="0" name="hasta" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="getDataByDayResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="getDataByMonth">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="tipoIndicador" type="xs:string"/>
+          <xs:element minOccurs="0" name="rutEmpresa" type="xs:string"/>
+          <xs:element minOccurs="0" name="rutCliente" type="xs:string"/>
+          <xs:element minOccurs="0" name="nombreComuna" type="xs:string"/>
+          <xs:element minOccurs="0" name="nombreRegion" type="xs:string"/>
+          <xs:element minOccurs="0" name="desde" type="xs:string"/>
+          <xs:element minOccurs="0" name="hasta" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="getDataByMonthResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="cargarDTE">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="RUT" type="xs:string"/>
+          <xs:element minOccurs="0" name="NombreArchivo" type="xs:string"/>
+          <xs:element minOccurs="0" name="StringXML" type="xs:string"/>
+          <xs:element minOccurs="0" name="SecurityToken" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="cargarDTEResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="TestHello">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="arg0" type="xs:string"/>
+          <xs:element minOccurs="0" name="arg1" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="TestHelloResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="getDataByYear">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="tipoIndicador" type="xs:string"/>
+          <xs:element minOccurs="0" name="rutEmpresa" type="xs:string"/>
+          <xs:element minOccurs="0" name="rutCliente" type="xs:string"/>
+          <xs:element minOccurs="0" name="nombreComuna" type="xs:string"/>
+          <xs:element minOccurs="0" name="nombreRegion" type="xs:string"/>
+          <xs:element minOccurs="0" name="desde" type="xs:string"/>
+          <xs:element minOccurs="0" name="hasta" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="getDataByYearResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="Exception" type="tns:Exception"/>
+      <xs:complexType name="Exception">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="message" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+    </xs:schema>
+  </wsdl:types>
+  <wsdl:message name="cargarDTE">
+    <wsdl:part element="tns:cargarDTE" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getDataByMonthResponse">
+    <wsdl:part element="tns:getDataByMonthResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getDataByMonth">
+    <wsdl:part element="tns:getDataByMonth" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getDataByDayResponse">
+    <wsdl:part element="tns:getDataByDayResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getDataByYear">
+    <wsdl:part element="tns:getDataByYear" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getDataByYearResponse">
+    <wsdl:part element="tns:getDataByYearResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="cargarDTEResponse">
+    <wsdl:part element="tns:cargarDTEResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="TestHello">
+    <wsdl:part element="tns:TestHello" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="TestHelloResponse">
+    <wsdl:part element="tns:TestHelloResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getDataByDay">
+    <wsdl:part element="tns:getDataByDay" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="Exception">
+    <wsdl:part element="tns:Exception" name="Exception"></wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="DocumentoTributario">
+    <wsdl:operation name="getDataByDay">
+      <wsdl:input message="tns:getDataByDay" name="getDataByDay"></wsdl:input>
+      <wsdl:output message="tns:getDataByDayResponse" name="getDataByDayResponse"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getDataByMonth">
+      <wsdl:input message="tns:getDataByMonth" name="getDataByMonth"></wsdl:input>
+      <wsdl:output message="tns:getDataByMonthResponse" name="getDataByMonthResponse"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="cargarDTE">
+      <wsdl:input message="tns:cargarDTE" name="cargarDTE"></wsdl:input>
+      <wsdl:output message="tns:cargarDTEResponse" name="cargarDTEResponse"></wsdl:output>
+      <wsdl:fault message="tns:Exception" name="Exception"></wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="TestHello">
+      <wsdl:input message="tns:TestHello" name="TestHello"></wsdl:input>
+      <wsdl:output message="tns:TestHelloResponse" name="TestHelloResponse"></wsdl:output>
+      <wsdl:fault message="tns:Exception" name="Exception"></wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getDataByYear">
+      <wsdl:input message="tns:getDataByYear" name="getDataByYear"></wsdl:input>
+      <wsdl:output message="tns:getDataByYearResponse" name="getDataByYearResponse"></wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="DocumentoTributarioServiceSoapBinding" type="tns:DocumentoTributario">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="getDataByDay">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getDataByDay">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getDataByDayResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="TestHello">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="TestHello">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="TestHelloResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="Exception">
+        <soap:fault name="Exception" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="cargarDTE">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="cargarDTE">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="cargarDTEResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="Exception">
+        <soap:fault name="Exception" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getDataByMonth">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getDataByMonth">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getDataByMonthResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getDataByYear">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getDataByYear">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getDataByYearResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="DocumentoTributarioService">
+    <wsdl:port binding="tns:DocumentoTributarioServiceSoapBinding" name="DocumentoTributarioPort">
+      <soap:address location="http://localhost:8080/raggApi/DocumentoTributario"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://localhost:8080/raggApi/DocumentoTributario</con:endpoint></con:endpoints><con:operation isOneWay="false" action="" name="cargarDTE" bindingOperationName="cargarDTE" type="Request-Response" outputName="cargarDTEResponse" inputName="cargarDTE" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://64.79.70.107:8080/raggApi/DocumentoTributario</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.raggApi.bicorp.cl/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <ws:cargarDTE>
+         <!--Optional:-->
+         <RUT>13636275-5</RUT>
+         <!--Optional:-->
+         <NombreArchivo>?</NombreArchivo>
+         <!--Optional:-->
+         <StringXML><![CDATA[<?xml version="1.0" encoding="ISO-8859-1"?>
+<DTE version="1.0">
+<Documento ID="DTE-33-10451-13636275-5">
+<Encabezado>
+<IdDoc>
+<TipoDTE>33</TipoDTE>
+<Folio>10451</Folio>
+<FchEmis>2013-11-05</FchEmis>
+<FmaPago>1</FmaPago>
+<FchVenc>2013-11-05</FchVenc>
+</IdDoc>
+<Emisor>
+<RUTEmisor>13636275-5</RUTEmisor>
+<RznSoc>MIGUELO TEST</RznSoc>
+<GiroEmis>IMP. Y COM. ARTICULOS INFORMATICOS - CAPACITACION</GiroEmis>
+<Acteco>523930</Acteco>
+<Acteco>741400</Acteco>
+<Sucursal>CASA MATRIZ</Sucursal>
+<DirOrigen>Av. 11 de Septiembre 1881 Of.819</DirOrigen>
+<CmnaOrigen>PROVIDENCIA</CmnaOrigen>
+<CiudadOrigen>SANTIAGO</CiudadOrigen>
+<CdgVendedor>Cinthia Echazu</CdgVendedor>
+</Emisor>
+<Receptor>
+<RUTRecep>76744120-7</RUTRecep>
+<RznSocRecep>Innovex Tecnologías Ltda.</RznSocRecep>
+<GiroRecep>Fabricación de maquinarias</GiroRecep>
+<DirRecep>San Cristobal 549</DirRecep>
+<CmnaRecep>Puerto Montt</CmnaRecep>
+<CiudadRecep>Puerto Montt</CiudadRecep>
+</Receptor>
+<Transporte/>
+<Totales>
+<MntNeto>204000</MntNeto>
+<MntExe>0</MntExe>
+<TasaIVA>19</TasaIVA>
+<IVA>38760</IVA>
+<MntTotal>242760</MntTotal>
+</Totales>
+</Encabezado>
+<Detalle>
+<NroLinDet>1</NroLinDet>
+<CdgItem>
+<TpoCodigo>COD</TpoCodigo>
+<VlrCodigo>NSM5</VlrCodigo>
+</CdgItem>
+<NmbItem>NANOSTATION M5 - UBIQUITI</NmbItem>
+<QtyItem>4</QtyItem>
+<PrcItem>51000</PrcItem>
+<MontoItem>204000</MontoItem>
+</Detalle>
+<TED version="1.0"><DD><RE>13636275-5</RE><TD>33</TD><F>10451</F><FE>2013-11-05</FE><RR>76744120-7</RR><RSR>Innovex Tecnologías Ltda.</RSR><MNT>242760</MNT><IT1>NANOSTATION M5 - UBIQUITI</IT1><CAF version="1.0"><DA>
+<RE>13636275-5</RE>
+<RS>MIGUELO TEST</RS>
+<TD>33</TD>
+<RNG><D>10000</D><H>19999</H></RNG>
+<FA>2012-09-04</FA>
+<RSAPK><M>zgeWEVkVYFKYF1y6wmW/wZ+8UwqOC4impuLuwxtmCZ47DTtrS7yVqTLrTulA0o8BJhzW1lZhDTsa5+REG6tdAQ==</M><E>Aw==</E></RSAPK>
+<IDK>300</IDK>
+</DA><FRMA algoritmo="SHA1withRSA">FJBSdF1Q0D7trH/ww9LwnYA5jkN26SRB/xne05vvuXAiJvtn95DvIxNG1/vvm+9aUTnLiBs3Lwu2m9im92txPA==</FRMA></CAF><TSTED>2013-11-05T16:58:14</TSTED></DD><FRMT algoritmo="SHA1withRSA">Af359B13vq8365uetf03AjlbWRvwm9srfYSGojecC3vSd0tZCMdvju85bs48QoeTUc8VOSfhIFu3vOJI7LhbHQ==</FRMT></TED><TmstFirma>2013-11-05T16:58:14</TmstFirma></Documento>
+<Signature xmlns="http://www.w3.org/2000/09/xmldsig#">
+<SignedInfo>
+<CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/>
+<SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/>
+<Reference URI="#DTE-33-10451-13636275-5">
+<Transforms>
+<Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/>
+</Transforms>
+<DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/>
+<DigestValue>ZAwfxGtCEgQCRqzcpFMQ3K9fMxM=</DigestValue>
+</Reference>
+</SignedInfo>
+<SignatureValue>
+WLsW273UW2Esw0XwPIGF+U793b1WMi1bg3ll/12tkRyyirP48BXgzxT2EjcP6PTLJvj88IUC2C+z
+iYUGxLuQCvfEjE2mzP+kFSRYMwWJCWFaWPNWROJvu5JlplahGKA30en/WQ2FbFbARD14bhuma0zU
+VBoi+QIlA3/jUHmADXs=
+</SignatureValue>
+<KeyInfo>
+<KeyValue>
+<RSAKeyValue>
+<Modulus>
+t2dWB5njmQgcRHo+fDFztfPN4MqbZWuZTtb7NErjnQK6hd3+s2Iw1c0bGRd0MGMvwYn8eGRaZYzF
+Oh+0KLnM0tlVC+2r6aqzfGk+tVu67SIYqP0/PzwTltYbDvCDEF5h3PsxDFlzxQikVEZGlAi4D5m/
+oYnzJNeJht6KOAWwCzs=
+</Modulus>
+<Exponent>AQAB</Exponent>
+</RSAKeyValue>
+</KeyValue>
+<X509Data>
+<X509Certificate>
+MIIGADCCBOigAwIBAgIKf1+nlQAAAAAV7zANBgkqhkiG9w0BAQUFADCB0jELMAkGA1UEBhMCQ0wx
+HTAbBgNVBAgTFFJlZ2lvbiBNZXRyb3BvbGl0YW5hMREwDwYDVQQHEwhTYW50aWFnbzEUMBIGA1UE
+ChMLRS1DRVJUQ0hJTEUxIDAeBgNVBAsTF0F1dG9yaWRhZCBDZXJ0aWZpY2Fkb3JhMTAwLgYDVQQD
+EydFLUNFUlRDSElMRSBDQSBGSVJNQSBFTEVDVFJPTklDQSBTSU1QTEUxJzAlBgkqhkiG9w0BCQEW
+GHNjbGllbnRlc0BlLWNlcnRjaGlsZS5jbDAeFw0xMjAyMjgyMTAzNTZaFw0xNTAyMjcyMTAzNTZa
+MIG/MQswCQYDVQQGEwJDTDELMAkGA1UECBMCUk0xETAPBgNVBAcTCFNhbnRpYWdvMS4wLAYDVQQK
+DCVGYWN0dXJhIEVsZWN0cm9uaWNhIEludGVncmFjacOzbiBTLkEuMRUwEwYDVQQLDAxGYWN0dXJh
+Y2nDs24xJjAkBgNVBAMMHUp1YW4gQ2FybG9zIFPDoW5jaGV6IEJvbGHDsW9zMSEwHwYJKoZIhvcN
+AQkBFhJqc2FuY2hlekBmYWNlbGUuY2wwgZ8wDQYJKoZIhvcNAQEBBQADgY0AMIGJAoGBALdnVgeZ
+45kIHER6Pnwxc7XzzeDKm2VrmU7W+zRK450CuoXd/rNiMNXNGxkXdDBjL8GJ/HhkWmWMxToftCi5
+zNLZVQvtq+mqs3xpPrVbuu0iGKj9Pz88E5bWGw7wgxBeYdz7MQxZc8UIpFRGRpQIuA+Zv6GJ8yTX
+iYbeijgFsAs7AgMBAAGjggJrMIICZzALBgNVHQ8EBAMCBPAwHQYDVR0OBBYEFHLFVDaaIjcq8BV0
+eQOE/IvL70TGMB8GA1UdIwQYMBaAFHjhPp/SErN6PI3NMA5Ts0MpB7NVMD4GA1UdHwQ3MDUwM6Ax
+oC+GLWh0dHA6Ly9jcmwuZS1jZXJ0Y2hpbGUuY2wvZWNlcnRjaGlsZWNhRkVTLmNybDA9BgkrBgEE
+AYI3FQcEMDAuBiYrBgEEAYI3FQiC3IMvhZOMZoXVnReC4twnge/sPGGBmucVhq/gFQIBZAIBAzAj
+BgNVHREEHDAaoBgGCCsGAQQBwQEBoAwWCjIxODMzNjAyLTcwIwYDVR0SBBwwGqAYBggrBgEEAcEB
+AqAMFgo5NjkyODE4MC01MIIBTQYDVR0gBIIBRDCCAUAwggE8BggrBgEEAcNSBTCCAS4wLQYIKwYB
+BQUHAgEWIWh0dHA6Ly93d3cuZS1jZXJ0Y2hpbGUuY2wvQ1BTLmh0bTCB/AYIKwYBBQUHAgIwge8e
+gewAQwBlAHIAdABpAGYAaQBjAGEAZABvACAARgBpAHIAbQBhACAAUwBpAG0AcABsAGUALgAgAEgA
+YQAgAHMAaQBkAG8AIAB2AGEAbABpAGQAYQBkAG8AIABlAG4AIABmAG8AcgBtAGEAIABwAHIAZQBz
+AGUAbgBjAGkAYQBsACwAIABxAHUAZQBkAGEAbgBkAG8AIABoAGEAYgBpAGwAaQB0AGEAZABvACAA
+ZQBsACAAQwBlAHIAdABpAGYAaQBjAGEAZABvACAAcABhAHIAYQAgAHUAcwBvACAAdAByAGkAYgB1
+AHQAYQByAGkAbzANBgkqhkiG9w0BAQUFAAOCAQEAuzjNHmn0q8x26TALbIpuWz9aSVkxqSwfBPU/
+Wv3/kRshQcBJwRk6CPB1eoSUOVSag1P1xrODaQaQIy/2ASqsxBf8o5FdVwDxLpmYTzPYwzasRBzJ
+FnLPteSfhz9EJw3SeRaMqX9UeKfDDvuk3pUebOpZetwJ37LElM3n7TtzQdXjukWh2IBgO/fb4spN
+xZuruO4zQYjJzeJ/lDoDqB3+gw43zClUHrssQE+aJ45OtCnzJ5yEnuX8UqAWzSGE2YY8v9kDMeJE
+wEbhHHkwh0JQ+qt7f7fzFfMO5FnbgAJnTCyc6JrH//YaCN25qa9BJ1V7Rs85Ss+z1uDGcmdFyN0I
+Gg==
+</X509Certificate>
+</X509Data>
+</KeyInfo>
+</Signature></DTE>]]]]>><![CDATA[</StringXML>
+         <!--Optional:-->
+         <SecurityToken>Y39Dueq38Aq</SecurityToken>
+      </ws:cargarDTE>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://ws.raggApi.bicorp.cl/DocumentoTributario/cargarDTE"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation isOneWay="false" action="" name="getDataByDay" bindingOperationName="getDataByDay" type="Request-Response" outputName="getDataByDayResponse" inputName="getDataByDay" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://64.79.70.107:8080/raggApi/DocumentoTributario</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.raggApi.bicorp.cl/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <ws:getDataByDay>
+         <!--Optional:-->
+         <tipoIndicador>frecuencia33</tipoIndicador>
+         <!--Optional:-->
+         <rutEmpresa>76079831-2</rutEmpresa>
+         <!--Optional:-->
+         <rutCliente>-1</rutCliente>
+         <!--Optional:-->
+         <nombreComuna>-1</nombreComuna>
+         <!--Optional:-->
+         <nombreRegion>-1</nombreRegion>
+         <!--Optional:-->
+         <desde>-1</desde>
+         <!--Optional:-->
+         <hasta>-1</hasta>
+      </ws:getDataByDay>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://ws.raggApi.bicorp.cl/DocumentoTributario/getDataByDay"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation isOneWay="false" action="" name="getDataByMonth" bindingOperationName="getDataByMonth" type="Request-Response" outputName="getDataByMonthResponse" inputName="getDataByMonth" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/raggApi/DocumentoTributario</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.raggApi.bicorp.cl/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <ws:getDataByMonth>
+         <!--Optional:-->
+         <tipoIndicador>?</tipoIndicador>
+         <!--Optional:-->
+         <rutEmpresa>?</rutEmpresa>
+         <!--Optional:-->
+         <rutCliente>?</rutCliente>
+         <!--Optional:-->
+         <nombreComuna>?</nombreComuna>
+         <!--Optional:-->
+         <nombreRegion>?</nombreRegion>
+         <!--Optional:-->
+         <desde>?</desde>
+         <!--Optional:-->
+         <hasta>?</hasta>
+      </ws:getDataByMonth>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://ws.raggApi.bicorp.cl/DocumentoTributario/getDataByMonth"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation isOneWay="false" action="" name="getDataByYear" bindingOperationName="getDataByYear" type="Request-Response" outputName="getDataByYearResponse" inputName="getDataByYear" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/raggApi/DocumentoTributario</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.raggApi.bicorp.cl/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <ws:getDataByYear>
+         <!--Optional:-->
+         <tipoIndicador>?</tipoIndicador>
+         <!--Optional:-->
+         <rutEmpresa>?</rutEmpresa>
+         <!--Optional:-->
+         <rutCliente>?</rutCliente>
+         <!--Optional:-->
+         <nombreComuna>?</nombreComuna>
+         <!--Optional:-->
+         <nombreRegion>?</nombreRegion>
+         <!--Optional:-->
+         <desde>?</desde>
+         <!--Optional:-->
+         <hasta>?</hasta>
+      </ws:getDataByYear>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://ws.raggApi.bicorp.cl/DocumentoTributario/getDataByYear"/></con:call></con:operation><con:operation isOneWay="false" action="" name="TestHello" bindingOperationName="TestHello" type="Request-Response" outputName="TestHelloResponse" inputName="TestHello" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/raggApi/DocumentoTributario</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.raggApi.bicorp.cl/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <ws:TestHello>
+         <!--Optional:-->
+         <arg0>?</arg0>
+         <!--Optional:-->
+         <arg1>?</arg1>
+      </ws:TestHello>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://ws.raggApi.bicorp.cl/DocumentoTributario/TestHello"/></con:call></con:operation></con:interface><con:properties/><con:wssContainer/><con:oAuth2ProfileContainer/><con:sensitiveInformation/></con:soapui-project>

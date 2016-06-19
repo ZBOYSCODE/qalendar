@@ -19,6 +19,8 @@ return new \Phalcon\Config([
         'cacheDir' => APP_DIR . '/cache/',
         'baseUri' => '/qalendar/',
         'publicUrl' => '/qalendar',
+        'publicDir' => BASE_DIR . '\public\\',
+        'filesDir' => BASE_DIR . '\public\files\\',
         'cryptSalt' => 'eEAfR|_&G&f,+vU]:jFr!!A&+71w1Ms9~8_4L!<@[N@DyaIP_2My|:+.u>/6m,$D'
     ],
     'mail' => [

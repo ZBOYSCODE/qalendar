@@ -1,0 +1,17 @@
+<?php
+            foreach ($pcData['actividades']->getArchivos(array("order"=>"arch_created_at DESC")) as $key => $value) {
+?>
+        <tr>
+            <td class="text-center"><i class="fi fi-<?php print($value->arch_tipo)?> fa-3x text-info"></i></td>
+            <td><a href="<?php print($this->url->get("actividad/downloadFile/".$value->arch_id)) ?>"><?php print($value->arch_nombre.'.'.$value->arch_tipo)?></a></td>
+            <td class="hidden-xs"><?php print($value->arch_created_at)?></td>
+            <td class="hidden-sm hidden-xs"><a href="javascript:void(0)"><?php print($value->Usuario->name)?></a></td>
+            <td class="text-center">
+                <div class="btn-group btn-group-xs">
+                    <a href="javascript:void(0)" data-toggle="tooltip" title="Delete" class="btn btn-danger"><i class="fa fa-times"></i></a>
+                </div>
+            </td>
+        </tr>
+<?php
+            }
+?>                                        
