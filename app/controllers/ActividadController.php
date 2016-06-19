@@ -27,7 +27,7 @@
 	    	$data['accesos'] 		= Acceso::find();
 	    	$data['prioridades'] 	= Prioridad::find();
 	    	$data['categorias'] 	= Categoria::find();
-	    	$data['users']			= Users::find();
+	    	$data['users']			= Users::find("rol_id = 2");
 
 	    	$data['actividad'] 		= $actividad;
 	    	$data['catAct'] 		= $actividad->getCategorias();

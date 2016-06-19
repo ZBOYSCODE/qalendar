@@ -14,7 +14,7 @@
                                                     'editar'    		=> 1,
 													'crearevento'		=> 1,
 													'guardarevento'		=> 1,
-													'verperfilevento' => 1,
+													'verperfilevento'  	=> 1,
                                                     'crearhito'			=> 1
                                                     ],
                                             'hito' => [
@@ -43,6 +43,7 @@
                                                     'editarevento'    	=> 0,
                                                     'editar'    		=> 0,
 													'crearevento'		=> 0,
+													'verperfilevento'	=> 1,
 													'guardarevento'		=> 0
                                                     ],
                                             'hito' => [

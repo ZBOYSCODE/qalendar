@@ -3,22 +3,29 @@
         <div class="col-md-12 col-lg-12">
             <div class="header-container">
                 <div class="header-perfil">
+                    <i class="gi gi-bookmark"></i>
+
                     <?php
 
                     print($pcData['actividades']->actv_descripcion_breve);
 
                     ?>
+
                 </div>
 
                 <div class="header-bajada">
+
                     <?php
-                    print($pcData['actividades']->actv_fecha);
+
+                        print($pcData['actividades']->actv_fecha);
                     ?>,
                     <?php
-                    print(date('H:i',strtotime($pcData['actividades']->actv_hora)).
-                        " - ".
-                        date('H:i',strtotime($pcData['actividades']->actv_hora." + 1 hours")));
+
+                        print(date('H:i',strtotime($pcData['actividades']->actv_hora)).
+                            " - ".
+                            date('H:i',strtotime($pcData['actividades']->actv_hora." + 1 hours")));
                     ?>
+
                 </div>
             </div>
         </div>
@@ -316,7 +323,130 @@
 
             <!-- Most Viewed Courses Block -->
             <div class="my-block">
-                <div> Datos Relevantes </div>
+                <div class="item">
+                    <div class="title">
+                        Datos Relevantes
+                    </div>
+                    <hr>
+                    <p class="descrp-evento">
+                        <?php print($pcData['actividades']->actv_descripcion_ampliada); ?>
+                    </p>
+                    <table>
+                        <tbody>
+                        <tr>
+                            <td class="title-table">Estado</td>
+                            <td class="title-table"><?php print($pcData['actividades']->actv_status); ?></td>
+                        </tr>
+                        <tr>
+                            <td class="title-table">Lugar</td>
+                            <td class="title-table"><?php print($pcData['actividades']->actv_location); ?></td>
+                        </tr>
+                        <tr>
+                            <td class="title-table">Duración</td>
+                            <td class="title-table">1 hr</td>
+                        </tr>
+                        <tr>
+                            <td class="title-table">Prioridad</td>
+                            <td class="title-table"><?php print($pcData['actividades']->Prioridad->prrd_nombre); ?></td>
+                        </tr>
+                        <tr>
+                            <td class="title-table">Acceso</td>
+                            <td class="title-table"><?php print($pcData['actividades']->Acceso->accs_nombre); ?></td>
+                        </tr>
+                        <tr>
+                            <td class="title-table">Categoría</td>
+                            <td class="title-table">
+                                   <span class="label label-custom">
+                                       <?php foreach($pcData['actividades']->CategoriaActividad as $iter ) {
+                                           print($iter->Categoria->ctgr_nombre." ");
+                                       } ?>
+                                   </span>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="item">
+                    <div class="title">
+                        Participantes
+                    </div>
+                    <hr>
+                    <ul class="user-list">
+
+                        <li>
+                            <div class="row">
+                                <div class="col-xs-4 user">
+                                    <div class="avatar-circle">
+                                        <?php
+
+                                            $user_owner = $pcData['actividades']->actv_creado_por;
+                                            $iniciales = explode(" ", $user_owner);
+                                            $frst = isset($iniciales[0])?str_split($iniciales[0])[0]:'';
+                                            $scnd =  isset($iniciales[1])?str_split($iniciales[1])[0]:'';
+
+
+                                        ?>
+                                        <span class="initials"><?php print $frst.$scnd ?></span>
+                                    </div>
+
+                                            <?php
+                                                if(isset($iniciales[0]) && isset($iniciales[1])) {
+                                                    print($iniciales[0] . " " . $iniciales[1]);
+                                                }
+                                                else {
+                                                    print $iniciales[0];
+                                                }
+                                            ?>
+
+                                    <br>
+                                    Creador Evento
+                                </div>
+
+                                <?php
+
+                                    foreach($pcData['actividades']->UserActividad as $iter ) { ?>
+                                        <div class="col-xs-4 user">
+
+                                            <?php
+
+                                                if(isset($iter->Users->avatar)) {
+
+                                            ?>
+                                                    <a href="javascript:void(0)" id="chat-user1" class="chat-user-online themed-color-night" style="text-decoration:none;">
+                                                        <img src="<?php print($this->url->get($iter->Users->avatar))?>" alt="avatar" class="img-circle" width="64" height="64">
+                                                    </a>
+                                                    <br>
+                                                    <?php print $iter->Users->name ?> <br>
+                                                    <?php print $iter->Users->rol->descripcion ?>
+                                            <?php
+
+                                                } else {
+
+                                                    $iniciales = explode(" ", $iter->Users->name);
+                                                    $frst = str_split($iniciales[0])[0];
+                                                    $scnd = str_split($iniciales[1])[0];
+                                            ?>
+
+                                                <div class="avatar-circle">
+                                                    <span class="initials"><?php print $frst.$scnd ?></span>
+                                                </div>
+                                                <?php print $iter->Users->name ?> <br>
+                                                <?php print $iter->Users->rol->descripcion ?>
+
+                                            <?php
+
+                                                }
+                                            ?>
+
+                                        </div>
+                                <?php
+                                    }
+                                ?>
+
+                            </div>
+                        </li>
+                    </ul>
+                </div>
             </div>
             <!-- END Most Viewed Courses Block -->
 

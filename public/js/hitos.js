@@ -124,8 +124,10 @@ $(document).ready(function(){
 
 
 
-	function ajax(datos, metodo, async = true)
+	function ajax(datos, metodo, async)
 	{
+		//valor por omisión
+		async = async || 'true';
 		return $.ajax({
             async	: async,
             type 	: 'POST',
