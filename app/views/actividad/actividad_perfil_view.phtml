@@ -264,8 +264,8 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <!-- Modal Header -->
-            <div class="modal-header text-center">
-                <h2 class="modal-title"><i class="fa fa-plus"></i> Nueva Actividad</h2>
+            <div class="header-item">
+                <strong><i class="fa fa-plus"></i> Nueva Actividad</strong>
             </div>
             <!-- END Modal Header -->
 
@@ -300,13 +300,15 @@
                             </div>
                         </div>
                     </div>
-                    <div class="form-group row form-actions">
-                        <div class="col-xs-12 text-right">
-                            <button id="modal-new-actividad-dismiss" type="button" class="btn btn-sm btn-default" data-dismiss="modal">Cerrar</button>
-                            <button id="modal-new-actividad-submit" type="submit" class="btn btn-sm btn-primary">Crear</button>
-                        </div>
-                    </div>
                 </form>
+
+
+            </div>
+            <div class="modal-footer" style="font-size: 15px; font-family: Sans-Serif;">
+                <div class="links-box">
+                    <a id="modal-new-actividad-submit" onclick="$('#modal-new-actividad-form').submit()" class="btn btn-sm btn-primary">Crear</a>
+                    <a id="modal-new-actividad-dismiss" type="button" class="btn btn-sm btn-default" data-dismiss="modal">Cerrar</a>
+                </div>
             </div>
             <!-- END Modal Body -->
         </div>
