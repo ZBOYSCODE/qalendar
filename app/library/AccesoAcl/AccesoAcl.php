@@ -14,6 +14,8 @@
                                                     'editar'    		=> 1,
 													'crearevento'		=> 1,
 													'guardarevento'		=> 1,
+													'verperfilevento'	=> 1,
+                                                    'crearhito'			=> 1,
                                                     'uploadarchivo'		=> 1,
                                                     'downloadfile'		=> 1,
                                                     'listaarchivos'		=> 1
