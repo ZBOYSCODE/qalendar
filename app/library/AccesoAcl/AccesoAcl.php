@@ -39,7 +39,11 @@
 		                                    				'index'			=> 1,
 		                                    				'profile'		=> 1,
 		                                    				'editprofile'	=> 1
-		                                    			]
+		                                    			],
+
+											'test' => [
+												'testdir' 	=> 1
+											],
 		                                ],
 									2   =>  [ 'acceso' => ['denegado' => 1],
 											'actividad' => [

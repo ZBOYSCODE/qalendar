@@ -62,4 +62,9 @@ class TestController extends ControllerBase
 		//print_r($user->rol);
 	}
 
+	public function testDirAction() {
+		$rand = rand(1,300);
+		print $this->config->application->filesDir.$rand.'/'; die();
+	}
+
 }
