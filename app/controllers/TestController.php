@@ -1,6 +1,7 @@
 <?php
 
 namespace Gabs\Controllers;
+use Gabs\Models\Actividad;
 use \Gabs\Dto\Calendar;
 use \Gabs\Models\Disponible;
 use \Gabs\Models\Users;
@@ -48,9 +49,17 @@ class TestController extends ControllerBase
 	}	
 
 	public function testMigueloAction(){
+		$a = Actividad::findFirst("actv_id = 1");
+		
+		print_r($a->Archivos->toArray());die();
 
-		$user = Users::findFirstById(1);
-		print_r($user->rol);
+		foreach ($a->Archivos as $key => $value) {
+			print_r($value);
+		}
+
+
+		//$user = Users::findFirstById(1);
+		//print_r($user->rol);
 	}
 
 }

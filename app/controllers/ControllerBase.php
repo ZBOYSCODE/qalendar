@@ -23,7 +23,6 @@ class ControllerBase extends Controller
 			}			
 		
 		}
-
 		if(isset($this->auth->getIdentity()['roleId']) && !AccesoAcl::tieneAcceso())
     	{
     		$response = new \Phalcon\Http\Response();

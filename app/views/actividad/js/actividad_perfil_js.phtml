@@ -1,0 +1,29 @@
+$(function(){
+    Dropzone.options.filedrop = {
+      init: function () {
+        this.on("complete", function (file,response) {
+            eval(response);
+        });
+      }
+    };
+    
+    Dropzone.autoDiscover = false;
+
+    var dropzone = new Dropzone (".dropzone",{
+        addRemoveLinks: false, // Don't show remove links on dropzone itself.
+        uploadMultiple: false
+    }); 
+
+    
+    dropzone.on("success", function(file,response) {
+        eval(response);
+    })  
+    
+    dropzone.on("error", function(file,response){if (!file.accepted) this.removeFile(file);$.bootstrapGrowl("Error en el Archivo.", { type: 'danger' });});
+    
+    dropzone.on("complete", function (file,response) {
+      if (this.getUploadingFiles().length === 0 && this.getQueuedFiles().length === 0 && file.status!="error") {
+        eval(response);
+      }
+    });
+});            

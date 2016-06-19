@@ -3,6 +3,7 @@
 	namespace Gabs\Controllers;
 
 	use Gabs\Models\Actividad;
+	use Gabs\Models\Archivos;
 	use Gabs\Models\Acceso;
 	use Gabs\Models\Prioridad;
 	use Gabs\Models\Categoria;
@@ -143,7 +144,6 @@
 					$this->mifaces->run();
 				}
 			}
-
 		}
 
 		/**
@@ -152,12 +152,103 @@
 		public function verPerfilEventoAction($id) {
 
 			$themeArray = $this->_themeArray;
+			
 			$themeArray['pcView'] = 'actividad/actividad_perfil_view';
-
+			
+			$themeArray['jsScript'] = $this->view->render('actividad/js/actividad_perfil_js');
+			
 			$data['actividades'] = Actividad::findFirst("actv_id = ".$id);
 
 			$themeArray['pcData'] = $data;
 
 			echo $this->view->render('theme', $themeArray);
 		}
+
+		public function uploadArchivoAction(){
+			
+			$uploads = $_FILES;
+			if(count($_FILES)>0){
+				$isUploaded = false;
+				
+				foreach($_FILES as $k=>$upload){
+
+					$modelArchivos = new Archivos();
+
+					$modelArchivos->actv_id = $_POST["actividad"];
+					$modelArchivos->user_id = $this->auth->getIdentity()['id'];
+					$arch=explode('.',$_FILES[$k]["name"]);
+					$arch= array_reverse($arch);
+					$modelArchivos->arch_nombre = $arch[1];
+					$modelArchivos->arch_tipo = $arch[0];
+					$modelArchivos->arch_ruta = $this->directorioDinamico().md5(uniqid(rand(), true)).'-'.strtolower($_FILES[$k]["name"]);
+					$modelArchivos->arch_created_at 	= date('Y-m-d H:i:s');
+					$modelArchivos->arch_updated_at 	= date('Y-m-d H:i:s');
+					if (move_uploaded_file($_FILES[$k]["tmp_name"],$modelArchivos->arch_ruta)) {
+						if ($modelArchivos->save() == false) {
+						    foreach ($modelArchivos->getMessages() as $message) {
+						        print('$.bootstrapGrowl("'.$message.'", { type: "danger" });');
+						    }
+						} else {
+							print('$.bootstrapGrowl("Archivo OK.'.$modelArchivos->arch_id.'", { type: "success" });
+									var dataIn	= new FormData();
+						        	dataIn.append("actividad", "'.$modelArchivos->actv_id.'");
+						        	callAjax(dataIn,"'.$this->url->get("actividad/listaArchivos").'",this);');
+						}
+												
+					}else{
+						print('$.bootstrapGrowl("Error en el Archivo.", { type: "danger" });');
+					}
+					print('this.removeFile(file);$("#modal-cargar").modal("hide");');
+				}
+			}
+		}
+
+
+		public function listaArchivosAction() {
+			
+			$data['actividades'] = Actividad::findFirst("actv_id = ".$_POST['actividad']);
+
+	        $this->mifaces->newFaces();
+	        $this->mifaces->addToRend('archivos_tr', $this->view->render('actividad/archivos_tr', array('pcData'=>$data)));
+	        $this->mifaces->run();
+
+		}
+
+	    private function directorioDinamico(){
+	        $rand = rand(1,300);
+	        if(!is_dir($this->config->application->filesDir))
+	        {
+	            mkdir($this->config->application->filesDir, 0777);
+	        }
+
+	        if(!is_dir($this->config->application->filesDir.$rand))
+	            if(mkdir($this->config->application->filesDir.$rand, 0777))
+	                return $this->config->application->filesDir.$rand.'/';
+	        return $this->config->application->filesDir.$rand.'/';
+	    }
+
+		public function downloadFileAction($id) {
+
+			$file=Archivos::findFirst("arch_id = ".$id);
+
+
+	        if(file_exists($file->arch_ruta)) {
+	            header('Content-Description: File Transfer');
+	            header('Content-Type: application/octet-stream');
+	            header('Content-Disposition: attachment; filename='.basename($file->arch_nombre.'.'.$file->arch_tipo));
+	            header('Content-Transfer-Encoding: binary');
+	            header('Expires: 0');
+	            header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+	            header('Pragma: public');
+	            header('Content-Length: ' . filesize($file->arch_ruta));
+	            ob_clean();
+	            flush();
+	            readfile($file->arch_ruta);
+	            exit;
+	        }
+
+	    }
+
+
+
 	}

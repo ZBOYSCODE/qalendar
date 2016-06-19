@@ -98,32 +98,23 @@
                             </div>
                             <div class="tab-pane" id="docTab" style="position: relative;">
                                 <div class="widget-options" style="top: -10px;z-index: 1;">
-                                    <button href="#" id="triggerUploadFlie" class="enable-tooltip btn btn-xs btn-success" title="Cargar Documento"><i class="gi gi-cloud_plus"></i></button>
+                                    <a href="#modal-cargar" data-toggle="modal"class="enable-tooltip btn btn-xs btn-success" title="Cargar Documento">
+                                        <i class="gi gi-cloud_plus"></i>
+                                    </a>
                                 </div>
 
                                 <table class="table table-vcenter table-striped">
                                     <thead>
-                                    <tr>
-                                        <th class="text-center"><i class="fa fa-folder-open-o"></i></th>
-                                        <th>Nombre</th>
-                                        <th class="hidden-xs">Actividad</th>
-                                        <th class="hidden-sm hidden-xs">Usuario</th>
-                                        <th class="text-center">Actions</th>
-                                    </tr>
+                                        <tr>
+                                            <th class="text-center"><i class="fa fa-folder-open-o"></i></th>
+                                            <th>Nombre</th>
+                                            <th class="hidden-xs">Fecha</th>
+                                            <th class="hidden-sm hidden-xs">Usuario</th>
+                                            <th class="text-center">Actions</th>
+                                        </tr>
                                     </thead>
-                                    <tbody>
-                                    <tr>
-                                        <td class="text-center"><i class="fi fi-pdf fa-3x text-info"></i></td>
-                                        <td><a href="page_ready_user_profile.html">Prueba 1.pdf</a></td>
-                                        <td class="hidden-xs"></td>
-                                        <td class="hidden-sm hidden-xs"><a href="javascript:void(0)">Barbara Allendes</a></td>
-                                        <td class="text-center">
-                                            <div class="btn-group btn-group-xs">
-                                                <a href="javascript:void(0)" data-toggle="tooltip" title="Edit" class="btn btn-default"><i class="fa fa-pencil"></i></a>
-                                                <a href="javascript:void(0)" data-toggle="tooltip" title="Delete" class="btn btn-danger"><i class="fa fa-times"></i></a>
-                                            </div>
-                                        </td>
-                                    </tr>
+                                    <tbody id="archivos_tr">
+                                        <?php echo $this->view->render('actividad/archivos_tr', array('pcData'=>$pcData));?>
                                     </tbody>
                                 </table>
 
@@ -324,3 +315,29 @@
     </div>
 
 </div>
+
+
+        <div id="modal-cargar" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <!-- Modal Header -->
+                    <div class="modal-header text-center">
+                        <h2 class="modal-title"><i class="fa fa-plus"></i> CARGAR</h2>
+                    </div>
+                    <!-- END Modal Header -->
+
+                    <!-- Modal Body -->
+                    <div class="modal-body">                    
+                        <form action="<?php print($this->url->get("actividad/uploadArchivo")) ?>" class="dropzone" id="dropId">
+                            <div id="dropzonePreview" class="dz-default dz-message">
+                            <span>Haga Click o <br/>Arrastre los Archivos para ser cargados</span>
+                            </div>
+                            <input type="hidden" name="actividad" value="<?php print($pcData['actividades']->actv_id)?>"
+                        </form>
+                    </div>
+                    <!-- END Modal Body -->
+                </div>
+            </div>
+        </div>
+                    
+    

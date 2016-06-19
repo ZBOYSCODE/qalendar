@@ -130,14 +130,14 @@ $(function(){
 	
 	
 	
-	var callAjax = function(dataIn, action, parent) {
+	callAjax = function(dataIn, action, parent) {
         var objRet;
 		if (typeof NProgress !== "undefined" && NProgress != null)
 			NProgress.start();
 		$.ajax({
 			type		: 'POST',
 			url			: action,
-			data		: dataIn,			
+			data		: dataIn,
       		processData	: false,
       		contentType	: false,		
 			dataType	: 'json',
@@ -191,13 +191,15 @@ $(function(){
 
 					if(result.type=='render'){
 						$.each(result.renders, function(index, value) {
-							console.log(parent.data('scroll'));
-							if(parent.prop('tagName')=='FORM' && parent.data('scroll')!==undefined && parent.data('scroll')=='append'){
-								$('#'+index).append(value);
+							if(parent.prop!==undefined){
+								if(parent.prop('tagName')=='FORM' && parent.data('scroll')!==undefined && parent.data('scroll')=='append'){
+									$('#'+index).append(value);
+								}else{
+									$('#'+index).html(value);
+								}
 							}else{
 								$('#'+index).html(value);
 							}
-						
 							
 							//console.log(index +' '+ value);
 						});
