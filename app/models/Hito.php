@@ -10,6 +10,7 @@ class Hito extends Model
 
     public $hito_nombre;
     public $hito_descripcion;
+    public $hito_tipo;
 
     public $created_at;
     public $updated_at;

@@ -6,3 +6,5 @@ CREATE TABLE `hitos` (
   `hito_nombre` VARCHAR(45) NOT NULL COMMENT '',
   `hito_descripcion` VARCHAR(250) NOT NULL COMMENT '',
   PRIMARY KEY (`hito_id`)  COMMENT '');
+ALTER TABLE `qalendar`.`hitos`
+  ADD COLUMN `hito_tipo` varchar(20) NULL DEFAULT NULL;

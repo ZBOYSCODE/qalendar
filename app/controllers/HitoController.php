@@ -7,8 +7,43 @@
 	class HitoController extends ControllerBase
 	{
 
+        public function crearHitoAction()
+        {
+            if ($this->request->isPost()) {
 
-		public function crearHitoAction()
+	    		$hito = new Hito();
+	    		$hito->actv_id			= $this->request->getPost("idActividad");
+	    		$hito->created_at 		= date('Y-m-d H:i:s');
+	    		$hito->updated_at 		= date('Y-m-d H:i:s');
+	    		$hito->hito_nombre 		= $this->request->getPost("hitoNombre");
+	    		$hito->hito_descripcion	= $this->request->getPost("hitoDescripcion");
+	    		$hito->hito_tipo 		= $this->request->getPost("hitoTipo");
+
+
+                if ($hito->save() == false) {
+					$this->mifaces->newFaces();
+					$txt="";
+				    foreach ($hito->getMessages() as $message) {
+				        $txt.=('$.bootstrapGrowl("'.$message.'", { type: "danger" });');
+				    }					
+					$this->mifaces->addPosRendEval('$.bootstrapGrowl("Error al crear el Hito.", { type: "danger" });'.$txt);
+					$this->mifaces->run();
+
+                } else {
+					//mi faces render
+					$this->mifaces->newFaces();
+					//TODO, Recargar lista 
+					//$modalView = $this->view->render('empresa/empresa_identificacion_modal_view',$themeArray);
+					//$this->mifaces->addToRend('modal-identificacion', $modalView);
+					$this->mifaces->addPosRendEval('$.bootstrapGrowl("Hito Creado Con Exito.'.$hito->hito_id.'", { type: "success" });'."$('#modal-new-actividad').modal('hide')");
+
+					// Se renderiza mifaces.
+					$this->mifaces->run();                	
+                }
+            }
+        }
+
+		public function _crearHitoAction()
 		{
 
 			$data['estado'] = true;
