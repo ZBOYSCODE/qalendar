@@ -135,8 +135,8 @@
 
                                             <?php
 
-                                                if($this->AccesoAcl->tienePermiso('changecalendaruser', 'gestionqa')) { ?>
-                                                    <a href="<?php print $this->url->get("actividad/editar/" . $disponible->Actividad->actv_id) ?>"
+                                                if($this->AccesoAcl->tienePermiso('verperfilevento', 'actividad')) { ?>
+                                                    <a href="<?php print $this->url->get("actividad/perfil/" . $disponible->Actividad->actv_id) ?>"
                                                        class="link-lighter"></a>
 
                                             <?php

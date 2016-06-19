@@ -103,7 +103,15 @@
                 <div class="item">
                     <div class="title">
                         Datos Relevantes
-                        <a href="<?php print $this->url->get("actividad/editar/".$pcData['actividades']->actv_id) ?>" class="link-modal pull-right" style="font-size: 15px;"><i class="fa fa-cog"></i> Editar</a>
+
+                        <?php
+
+                        if($this->AccesoAcl->tienePermiso('editarevento', 'actividad')) { ?>
+                            <a href="<?php print $this->url->get("actividad/editar/".$pcData['actividades']->actv_id) ?>" class="link-modal pull-right" style="font-size: 15px;"><i class="fa fa-cog"></i> Editar</a>
+
+                            <?php
+                        }
+                        ?>
                     </div>
                     <hr>
                     <p class="descrp-evento">

@@ -47,7 +47,10 @@
                                                     'editar'    		=> 0,
 													'crearevento'		=> 0,
 													'verperfilevento'	=> 1,
-													'guardarevento'		=> 0
+													'guardarevento'		=> 0,
+													'uploadarchivo'		=> 1,
+													'downloadfile'		=> 1,
+													'listaarchivos'		=> 1
                                                     ],
                                             'hito' => [
                                             		'crearhito' => 1,

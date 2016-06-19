@@ -1,8 +1,11 @@
 <div class="modal-dialog" style="width: 35%;">
     <div class="modal-content">
-        <form action="<?php print($this->url->get("gestionQa/seleccionarBloque")) ?>" method="POST" data-type="ajax">
+        <div class="header-item">
+            <strong><h4>Fecha Seleccionada: <?php print(date('d-m-Y',strtotime($pcData['fecha']))) ?></h4></strong>
+        </div>
+        <form id="bloqueForm" action="<?php print($this->url->get("gestionQa/seleccionarBloque")) ?>" method="POST" data-type="ajax">
           <div class="modal-body item" style="min-height:50vh;">
-              <h2>Fecha Seleccionada: <?php print(date('d-m-Y',strtotime($pcData['fecha']))) ?></h2>
+
               <table class="table table-striped table-hover">
                 <thead>
                   <th>Hora</th>
@@ -15,11 +18,14 @@
                   </tr>
                 <?php } ?>
               </table>
-              <div style=";text-align: center;">
-                    <button type="submit" class="btn btn-success" >Guardar</button>
-                    <a class=" btn btn-default dismiss-item " href="javascript:void(0)" data-dismiss="modal">Cerrar</a>
-              </div>
           </div>
         </form>
+
+        <div class="modal-footer" style="font-size: 15px; font-family: Sans-Serif;">
+            <div class="links-box">
+                <a onclick="$('#bloqueForm').submit()" class="btn btn-success" >Guardar</a>
+                <a class=" btn btn-default dismiss-item " href="javascript:void(0)" data-dismiss="modal">Cerrar</a>
+            </div>
+        </div>
     </div>
 </div>
