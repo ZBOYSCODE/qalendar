@@ -251,7 +251,8 @@ class Actividad extends Model
             $callback['error'] = 1;
             $callback['msg'][] = 'Faltan rellenar campos requeridos.';
         } else{
-
+            
+            $categoriaActividad             = new CategoriaActividad();
             if(!$update)// se está creando recién
             {
                 $disponible->actv_id = $this->actv_id;
@@ -262,19 +263,18 @@ class Actividad extends Model
                 $userActividad->actv_id = $this->actv_id;
                 
                 // creando nueva categoria
-                $categoriaActividad             = new CategoriaActividad();
+
                 $categoriaActividad->actv_id    = $this->actv_id;
 
             }else{
 
                 // editando
                 $userActividad      = UserActividad::findFirstByActvId($this->actv_id);
-                $categoriaActividad = CategoriaActividad::findFirstByActvId($this->actv_id);
-            }           
-            //print_r($categoriaActividad);die();
+                $categoriaActividad->actv_id    = $this->actv_id;
+            }
             
-            $userActividad->user_id         = (int)$_POST['persona'];
-            $categoriaActividad->ctgr_id    = (int)$_POST['categoria'];
+            $userActividad->user_id         = $_POST['persona'];
+            $categoriaActividad->ctgr_id    = $_POST['categoria'];
 
 
             $categoriaActividad->save();
