@@ -55,48 +55,11 @@
                                     <button href="#modal-new-actividad" data-toggle="modal" class="enable-tooltip btn btn-xs btn-success" title="Nueva Actividad"><i class="fa fa-plus"></i></button>
                                 </div>
                                 <!-- Timeline Content -->
-                                <div class="timeline">
-                                    <ul class="timeline-list" id="actList">
-                                        <li class="active">
-                                            <div class="timeline-icon"><i class="fa fa-users"></i></div>
-                                            <div class="timeline-time"><small>29 Ago,2012</small></div>
-                                            <div class="timeline-content">
-                                                <p class="push-bit">
-                                                    <a href="page_ready_user_profile.html">
-                                                        <strong>Firma Avenimiento</strong>
-                                                    </a>
-                                                </p>
-                                                El cual fue presentado en el 3º juzgado civil de Valparaíso. He dicho avenimiento .. <a href="page_ready_user_profile.html">ver todo..</a>
-                                            </div>
-                                        </li>
-                                        <li class="">
-                                            <div class="timeline-icon"><i class="fa fa-2x fa-mobile"></i></div>
-                                            <div class="timeline-time"><small>12 Ago,2012</small></div>
-                                            <div class="timeline-content">
-                                                <p class="push-bit"><a href="page_ready_user_profile.html"><strong>Comunicación, Corporación de Asistencia Judicial</strong></a></p>
-                                                <strong>Programación Reunion</strong> 29 Agosto 2012 - 9:00 <strong>am</strong> : Llegada a Avenimiento
-                                            </div>
-                                        </li>
-                                        <li class="">
-                                            <div class="timeline-icon"><i class="fa fa-pencil"></i></div>
-                                            <div class="timeline-time"><small>12 Jul,2012</small></div>
-                                            <div class="timeline-content">
-                                                <p class="push-bit"><a href="page_ready_user_profile.html"><strong>Se Objeta Liquidación</strong></a></p>
-                                                <p class="push-bit">Señalando que en dicha liquidación se incluyen las costas procesales y personales, siendo que, el representado goza de privilegio de pobreza.</p>
-                                            </div>
-                                        </li>
-                                        <li class="">
-                                            <div class="timeline-icon"><i class="fa fa-dollar"></i></div>
-                                            <div class="timeline-time"><small>20 Jun,2012</small></div>
-                                            <div class="timeline-content">
-                                                <p class="push-bit"><a href="page_ready_user_profile.html"><strong>Corporación solicita Tasación y Liquidacón</strong></a></p>
-                                                <p class="push-bit">Dicha liquidación del crédito al 6 de julio asciende a $672.309.... <a href="page_ready_user_profile.html">ver todo..</a></p>
-                                            </div>
-                                        </li>
-                                        <li class="text-center">
-                                            <a href="javascript:void(0)" class="btn btn-xs btn-default">View more..</a>
-                                        </li>
-                                    </ul>
+                                <div id="timeline" class="timeline">
+
+                                    <?php echo $this->view->render('actividad/actividad_hitos_view',array('pcData'=>$pcData))?>
+
+
                                 </div>
                                 <!-- END Timeline Content -->
 
@@ -297,55 +260,55 @@
     </div>
 </div>
                     
-        <div id="modal-new-actividad" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <!-- Modal Header -->
-                    <div class="modal-header text-center">
-                        <h2 class="modal-title"><i class="fa fa-plus"></i> Nueva Actividad</h2>
-                    </div>
-                    <!-- END Modal Header -->
-
-                    <!-- Modal Body -->
-                    <div class="modal-body">
-                        <form action="<?php print($this->url->get("hito/crearHito")) ?>" id="modal-new-actividad-form" method="POST" class="form-horizontal form-bordered" data-type="ajax">
-                            <input type="hidden" name="idActividad" value="<?php print($pcData['actividades']->actv_id)?>">
-                            <div class="form-content">
-                                <div class="form-group row form-row">
-                                    <label class="col-sm-4 control-label" for="hitoTipo">Tipo *</label>
-                                    <div class="col-sm-8">
-                                        <select id="hitoTipo" name="hitoTipo" class="form-control" data-placeholder="Ingrese o Seleccione un Tipo" style="width: 250px;">
-                                            <option value="fa fa-cogs">Procedimiento</option>
-                                            <option value="fa fa-file-text">Nota Libre</option>
-                                            <option value="fa fa-pencil">Gestión</option>
-                                            <option value="fa fa-users">Reunión</option>
-                                            <option value="fa fa-2x fa-mobile">Comunicación</option>
-                                            <option value="fa fa-commenting-o">Comentario</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-group row form-row">
-                                    <label class="col-sm-4 control-label" for="hitoNombre">Nombre *</label>
-                                    <div class="col-sm-8">
-                                        <input type="text" id="hitoNombre" name="hitoNombre" class="form-control input-sm" placeholder="Nombre">
-                                    </div>
-                                </div>
-                                <div class="form-group row form-row">
-                                    <label class="col-sm-4 control-label" for="hitoDescripcion">Descripción *</label>
-                                    <div class="col-sm-8">
-                                        <textarea id="hitoDescripcion" name="hitoDescripcion" rows="5" class="form-control"></textarea>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group row form-actions">
-                                <div class="col-xs-12 text-right">
-                                    <button id="modal-new-actividad-dismiss" type="button" class="btn btn-sm btn-default" data-dismiss="modal">Cerrar</button>
-                                    <button id="modal-new-actividad-submit" type="submit" class="btn btn-sm btn-primary">Crear</button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                    <!-- END Modal Body -->
-                </div>
+<div id="modal-new-actividad" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header text-center">
+                <h2 class="modal-title"><i class="fa fa-plus"></i> Nueva Actividad</h2>
             </div>
-        </div>  
+            <!-- END Modal Header -->
+
+            <!-- Modal Body -->
+            <div class="modal-body">
+                <form action="<?php print($this->url->get("hito/crearHito")) ?>" id="modal-new-actividad-form" method="POST" class="form-horizontal form-bordered" data-type="ajax">
+                    <input type="hidden" name="idActividad" value="<?php print($pcData['actividades']->actv_id)?>">
+                    <div class="form-content">
+                        <div class="form-group row form-row">
+                            <label class="col-sm-4 control-label" for="hitoTipo">Tipo *</label>
+                            <div class="col-sm-8">
+                                <select id="hitoTipo" name="hitoTipo" class="form-control" data-placeholder="Ingrese o Seleccione un Tipo" style="width: 250px;">
+                                    <option value="fa fa-cogs">Procedimiento</option>
+                                    <option value="fa fa-file-text">Nota Libre</option>
+                                    <option value="fa fa-pencil">Gestión</option>
+                                    <option value="fa fa-users">Reunión</option>
+                                    <option value="fa fa-2x fa-mobile">Comunicación</option>
+                                    <option value="fa fa-commenting-o">Comentario</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row form-row">
+                            <label class="col-sm-4 control-label" for="hitoNombre">Nombre *</label>
+                            <div class="col-sm-8">
+                                <input type="text" id="hitoNombre" name="hitoNombre" class="form-control input-sm" placeholder="Nombre">
+                            </div>
+                        </div>
+                        <div class="form-group row form-row">
+                            <label class="col-sm-4 control-label" for="hitoDescripcion">Descripción *</label>
+                            <div class="col-sm-8">
+                                <textarea id="hitoDescripcion" name="hitoDescripcion" rows="5" class="form-control"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row form-actions">
+                        <div class="col-xs-12 text-right">
+                            <button id="modal-new-actividad-dismiss" type="button" class="btn btn-sm btn-default" data-dismiss="modal">Cerrar</button>
+                            <button id="modal-new-actividad-submit" type="submit" class="btn btn-sm btn-primary">Crear</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <!-- END Modal Body -->
+        </div>
+    </div>
+</div>

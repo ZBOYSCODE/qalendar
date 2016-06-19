@@ -3,6 +3,7 @@
 	namespace Gabs\Controllers;
 
 	use Gabs\Models\Hito;
+	use Gabs\Models\Actividad;
 
 	class HitoController extends ControllerBase
 	{
@@ -30,14 +31,14 @@
 					$this->mifaces->run();
 
                 } else {
+					//traemos la data actualizada
+					$data['actividades'] = Actividad::findFirst("actv_id = ".$hito->actv_id);
+
 					//mi faces render
 					$this->mifaces->newFaces();
-					//TODO, Recargar lista 
-					//$modalView = $this->view->render('empresa/empresa_identificacion_modal_view',$themeArray);
-					//$this->mifaces->addToRend('modal-identificacion', $modalView);
+					$view = $this->view->render('actividad/actividad_hitos_view', array('pcData'=>$data));
+					$this->mifaces->addToRend('timeline', $view);
 					$this->mifaces->addPosRendEval('$.bootstrapGrowl("Hito Creado Con Exito.'.$hito->hito_id.'", { type: "success" });'."$('#modal-new-actividad').modal('hide')");
-
-					// Se renderiza mifaces.
 					$this->mifaces->run();                	
                 }
             }

@@ -203,7 +203,6 @@
 			}
 		}
 
-
 		public function listaArchivosAction() {
 			
 			$data['actividades'] = Actividad::findFirst("actv_id = ".$_POST['actividad']);
