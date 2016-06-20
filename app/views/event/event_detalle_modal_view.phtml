@@ -21,7 +21,7 @@
                            </tr>
                            <tr>
                                <td class="title-table">Estado</td>
-                               <td><?php print($pcData['actividad']->actv_status); ?></td>
+                               <td><?php print($pcData['actividad']->estado->nombre); ?></td>
                            </tr>
                            <tr>
                                <td class="title-table">Lugar</td>
@@ -75,7 +75,7 @@
                            <tr>
                                <td class="title-table">Creador</td>
                                <td>
-                                   <i class="gi gi-user"></i> <?php print($pcData['actividad']->actv_creado_por); ?><br>
+                                   <i class="gi gi-user"></i> <?php print($pcData['actividad']->creadopor->name); ?><br>
                                </td>
                            </tr>
                         </tbody>

@@ -128,8 +128,8 @@
 				$this->mifaces->newFaces();
 				$a_model = new Actividad();
 
-				if($this->auth->getIdentity()['name']) {
-					$_POST['creado_por'] = $this->auth->getIdentity()['name'];
+				if($this->auth->getIdentity()['id']) {
+					$_POST['creado_por'] = $this->auth->getIdentity()['id'];
 				}
 
 				$callback = $a_model->guardarActividad($_POST);

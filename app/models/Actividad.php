@@ -105,6 +105,7 @@ class Actividad extends Model
         $this->hasMany('actv_id', __NAMESPACE__.'\UserActividad', 'actv_id', array('alias' => 'UserActividad'));
 
         $this->belongsTo("actv_status", __NAMESPACE__ . "\TipoEstado", "id", array('alias' => 'estado'));
+        $this->belongsTo("actv_creado_por", __NAMESPACE__ . "\Users", "id", array('alias' => 'creadopor'));
         
 
         $this->hasMany('actv_id', __NAMESPACE__.'\CategoriaActividad', 'actv_id', array('alias' => 'CategoriaActividad'));

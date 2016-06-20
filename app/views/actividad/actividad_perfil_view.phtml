@@ -175,7 +175,7 @@
                                     <div class="avatar-circle">
                                         <?php
 
-                                            $user_owner = $pcData['actividades']->actv_creado_por;
+                                            $user_owner = $pcData['actividades']->creadopor->name;
                                             $iniciales = explode(" ", $user_owner);
                                             $frst = isset($iniciales[0])?str_split($iniciales[0])[0]:'';
                                             $scnd =  isset($iniciales[1])?str_split($iniciales[1])[0]:'';
