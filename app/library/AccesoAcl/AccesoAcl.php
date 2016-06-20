@@ -43,7 +43,9 @@
 		                                    			],
 
 											'test' => [
-												'testdir' 	=> 1
+												'testdir' 	=> 1,
+												'testform' 	=> 1,
+												'myformsave' 	=> 1
 											],
 		                                ],
 									2   =>  [ 'acceso' => ['denegado' => 1],
