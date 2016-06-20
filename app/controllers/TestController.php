@@ -5,14 +5,22 @@ use Gabs\Models\Actividad;
 use \Gabs\Dto\Calendar;
 use \Gabs\Models\Disponible;
 use \Gabs\Models\Users;
+use  \Gabs\Forms\MyForm;
 
 class TestController extends ControllerBase
 {
-
-
+	public $_themeArray;
 	private $hora_inicio = "08:00:00";
 	private $hora_fin = "17:00:00";
 	private $intervalo = 1;
+
+
+	/**
+	 * Se genera un array para la vista por defecto
+	 */
+	public function initialize() {
+		$this->_themeArray = array('topMenu'=>true, 'menuSel'=>'','pcView'=>'', 'pcData'=>'', 'jsScript'=>'');
+	}
 
 
 	public function indexAction(){
@@ -65,6 +73,30 @@ class TestController extends ControllerBase
 	public function testDirAction() {
 		$rand = rand(1,300);
 		print $this->config->application->filesDir.$rand.'/'; die();
+	}
+
+	public function  testFormAction() {
+		$themeArray = $this->_themeArray;
+
+		$myform = new MyForm();
+		$data['myform'] = $myform;
+
+		$themeArray['pcView'] = '_test/form';
+		$themeArray['pcData'] = $data;
+
+		echo $this->view->render('theme', $themeArray);
+	}
+
+	public function myFormSaveAction() {
+		if($this->request->isAjax()){
+			$myform = new MyForm();
+			$myform->isValid($_POST);
+			foreach ($myform->getMessages() as $message) {
+				echo $message, '<br>';
+			}
+		}else {
+			#none
+		}
 	}
 
 }
