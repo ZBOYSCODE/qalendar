@@ -8,6 +8,7 @@
 	use Gabs\Models\Prioridad;
 	use Gabs\Models\Categoria;
 	use Gabs\Models\Users;
+	use Gabs\Models\TipoEstado;
 
 	class actividadController extends ControllerBase
 	{
@@ -165,6 +166,10 @@
 
 			$themeArray['pcData'] = $data;
 
+			$themeArray['pcData']['estados'] = TipoEstado::find();
+
+			$themeArray['addJs'][] 		= "js/actividad.js";
+
 			echo $this->view->render('theme', $themeArray);
 		}
 
@@ -267,6 +272,30 @@
 
 			$this->mifaces->run();
 
+		}
+
+		public function updEstadoAction()
+		{
+			$act = Actividad::findFirstByActvId($this->request->getPost("actividad", 'int'));
+			$act->actv_status = $this->request->getPost("estado", 'string');
+
+			if(!$act->save()){
+
+                foreach ($act->getMessages() as $message) {
+                    $data['detalle'][] = $message->getMessage();
+                }
+
+                $data['estado'] = false;
+                $data['msg'] = 'Error al cambiar estado.';                 
+            }else{
+            	$data['estado'] = true;
+            	$data['nombre']	= $act->estado->nombre;
+                $data['msg'] = 'Estado actualizado con exito.'; 
+            }
+
+
+
+			echo json_encode($data, JSON_PRETTY_PRINT);
 		}
 
 	}

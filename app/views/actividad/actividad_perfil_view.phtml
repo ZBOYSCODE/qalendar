@@ -121,7 +121,7 @@
                         <tbody>
                         <tr>
                             <td class="title-table">Estado</td>
-                            <td class="title-table"><?php print($pcData['actividades']->actv_status); ?></td>
+                            <td class="title-table" id='nombre_estado'><span id='nombre_estado'><?php print($pcData['actividades']->estado->nombre); ?></span> <span class='editar_estado pull-right'><a href="" data-toggle="modal" data-target="#modal_edit_estado">editar</a></span></td>
                         </tr>
                         <tr>
                             <td class="title-table">Lugar</td>
@@ -289,7 +289,7 @@
             <!-- Modal Body -->
             <div class="modal-body">
                 <form action="<?php print($this->url->get("hito/crearHito")) ?>" id="modal-new-actividad-form" method="POST" class="form-horizontal form-bordered" data-type="ajax">
-                    <input type="hidden" name="idActividad" value="<?php print($pcData['actividades']->actv_id)?>">
+                    <input type="hidden" name="idActividad" id='idActividad' value="<?php print($pcData['actividades']->actv_id)?>">
                     <div class="form-content">
                         <div class="form-group row form-row">
                             <label class="col-sm-4 control-label" for="hitoTipo">Tipo *</label>
@@ -331,3 +331,45 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade" tabindex="-1" role="dialog" id='modal_edit_estado'>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Editar estado</h4>
+            </div>
+
+            <form action="<?php print($this->url->get("actividad")) ?>" id='frmajax'></form>
+
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="tipoestado">Estado</label>
+
+                    <div id="message_error"></div>
+                    <select name="tipoestado" id="tipoestado" class='form-control'>
+                        <option value="0">Seleccione</option>
+
+                        <?php
+                            foreach ($pcData['estados'] as $estado) {
+
+                                if($estado->id == $pcData['actividades']->actv_status){
+                                    $selected = 'selected';
+                                }else{
+                                    $selected = '';
+                                }
+
+                                echo "<option value='".$estado->id."' $selected >".$estado->nombre."</option>";
+                            }
+                        ?>
+                    </select>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" id='upd_estado_actividad'>Guardar</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
