@@ -21,8 +21,8 @@ $(document).ready(function(){
 			'estado'		: estado
 		}
 	
-		ajax = ajax(datos, 'updEstado');
-		ajax.success(function (data)
+		fun = ajax(datos, 'updEstado');
+		fun.success(function (data)
 		{
 			if(data.estado)
 			{
