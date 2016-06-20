@@ -19,7 +19,8 @@
                                                     'uploadarchivo'		=> 1,
                                                     'downloadfile'		=> 1,
                                                     'eliminararchivo'	=> 1,
-                                                    'listaarchivos'		=> 1
+                                                    'listaarchivos'		=> 1,
+                                                    'updestado'			=> 1
                                                     ],
                                             'hito' => [
                                             		'crearhito' 	=> 1,
@@ -58,7 +59,8 @@
 													'uploadarchivo'		=> 1,
 													'eliminararchivo'	=> 1,
 													'downloadfile'		=> 1,
-													'listaarchivos'		=> 1
+													'listaarchivos'		=> 1,
+													'updestado'			=> 1
                                                     ],
                                             'hito' => [
                                             		'crearhito' => 1,
