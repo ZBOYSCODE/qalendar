@@ -142,11 +142,20 @@
                         <tr>
                             <td class="title-table">Categoría</td>
                             <td class="title-table">
-                                   <span class="label label-custom">
-                                       <?php foreach($pcData['actividades']->CategoriaActividad as $iter ) {
-                                           print($iter->Categoria->ctgr_nombre." ");
-                                       } ?>
-                                   </span>
+
+                               <?php
+                                       foreach($pcData['actividades']->CategoriaActividad as $iter ) {
+                                   ?>
+
+                                    <span class="label label-custom">
+                                    <?php
+                                        print($iter->Categoria->ctgr_nombre." ");
+                                    ?>
+                                    </span>
+                               <?php
+                                       }
+                                    ?>
+
                             </td>
                         </tr>
                         </tbody>
