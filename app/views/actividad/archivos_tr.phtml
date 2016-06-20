@@ -8,7 +8,9 @@
             <td class="hidden-sm hidden-xs"><a href="javascript:void(0)"><?php print($value->Usuario->name)?></a></td>
             <td class="text-center">
                 <div class="btn-group btn-group-xs">
-                    <a href="javascript:void(0)" data-toggle="tooltip" title="Delete" class="btn btn-danger"><i class="fa fa-times"></i></a>
+                    <a href="<?php print($this->url->get("actividad/eliminarArchivo")) ?>" 
+                       data-action="<?php print($this->url->get("actividad/eliminarArchivo")) ?>" 
+                       data-val="archivo=<?php print($value->arch_id) ?>&actividad=<?php print($value->actv_id) ?>" data-toggle="tooltip" title="Delete" class="btn btn-danger"><i class="fa fa-times"></i></a>
                 </div>
             </td>
         </tr>

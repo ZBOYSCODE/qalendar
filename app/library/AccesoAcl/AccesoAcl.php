@@ -18,6 +18,7 @@
                                                     'crearhito'			=> 1,
                                                     'uploadarchivo'		=> 1,
                                                     'downloadfile'		=> 1,
+                                                    'eliminararchivo'	=> 1,
                                                     'listaarchivos'		=> 1
                                                     ],
                                             'hito' => [
@@ -53,6 +54,7 @@
 													'verperfilevento'	=> 1,
 													'guardarevento'		=> 0,
 													'uploadarchivo'		=> 1,
+													'eliminararchivo'	=> 1,
 													'downloadfile'		=> 1,
 													'listaarchivos'		=> 1
                                                     ],

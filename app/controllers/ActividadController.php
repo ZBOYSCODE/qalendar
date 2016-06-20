@@ -252,6 +252,21 @@
 
 	    }
 
+		public function eliminarArchivoAction(){
 
+			$file=Archivos::findFirst("arch_id = ".$_POST['archivo']);
+
+		    if ($file->delete() == false) {
+		    	null;
+		    } else {
+				$this->mifaces->addPosRendEval('$.bootstrapGrowl("Archivo Eliminado.", { type: "success" });
+						var dataIn	= new FormData();
+			        	dataIn.append("actividad", "'.$_POST['actividad'].'");
+			        	callAjax(dataIn,"'.$this->url->get("actividad/listaArchivos").'",this);');
+		    }
+
+			$this->mifaces->run();
+
+		}
 
 	}
