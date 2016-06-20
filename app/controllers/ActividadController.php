@@ -184,7 +184,7 @@
 					$arch= array_reverse($arch);
 					$modelArchivos->arch_nombre = $arch[1];
 					$modelArchivos->arch_tipo = $arch[0];
-					$modelArchivos->arch_ruta = $this->directorioDinamico().md5(uniqid(rand(), true)).'-'.strtolower($_FILES[$k]["name"]);
+					$modelArchivos->arch_ruta = $this->directorioDinamico().$modelArchivos->user_id.'-'.$modelArchivos->actv_id.'-'.md5(uniqid(rand(), true)).'-'.strtolower($_FILES[$k]["name"]);
 					$modelArchivos->arch_created_at 	= date('Y-m-d H:i:s');
 					$modelArchivos->arch_updated_at 	= date('Y-m-d H:i:s');
 					if (move_uploaded_file($_FILES[$k]["tmp_name"],$modelArchivos->arch_ruta)) {
