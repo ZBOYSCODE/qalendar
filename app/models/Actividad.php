@@ -113,7 +113,7 @@ class Actividad extends Model
 
         
 
-        $this->belongsTo('accs_id', __NAMESPACE__.' \Acceso', 'accs_id', array('alias' => 'Acceso'));
+        $this->belongsTo('accs_id', __NAMESPACE__.'\Acceso', 'accs_id', array('alias' => 'Acceso'));
         $this->belongsTo('prrd_id', __NAMESPACE__.'\Prioridad', 'prrd_id', array('alias' => 'Prioridad'));
     }
 
