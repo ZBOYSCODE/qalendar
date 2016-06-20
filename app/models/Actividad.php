@@ -187,7 +187,7 @@ class Actividad extends Model
         $this->actv_duracion_minutos = $_POST['duracion'];
         $this->actv_categoria = $_POST['categoria'];
         //$this->actv_status = $_POST['status'];
-        $this->actv_status = 'Pendiente Aprobación';
+        $this->actv_status = 2;
         $this->actv_creado_por = isset($_POST['creado_por'])?$_POST['creado_por']:'Admin';
         $this->actv_created_at = date('Y-m-d'); 
         $this->actv_updated_at = date('Y-m-d'); 
