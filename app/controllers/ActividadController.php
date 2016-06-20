@@ -53,6 +53,10 @@
 
 	        $a_model = Actividad::findFirst($id);
 
+			if($this->auth->getIdentity()['name']) {
+				$_POST['creado_por'] = $this->auth->getIdentity()['name'];
+			}
+			
 	        $callback = $a_model->guardarActividad($_POST);
 	        
 	        if(isset($callback['error'])){
