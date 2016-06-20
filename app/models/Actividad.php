@@ -173,7 +173,6 @@ class Actividad extends Model
         }
 
 
-
         $this->accs_id = $_POST['acceso'];
         $this->prrd_id = $_POST['prioridad'];
         $this->actv_descripcion_breve = $_POST['dscr-breve'];
@@ -223,13 +222,6 @@ class Actividad extends Model
                 $disponible->dspn_hora = $this->actv_hora;
                 $disponible->user_id = $persona;
                 $disponible->edsp_id = 2; // Ocupado
-                if($disponible->save() == false){
-                    foreach ($disponible->getMessages() as $message) {
-                        $callback['msg'][] = $message->getMessage();
-                    }
-                    $callback['error'] = 1;
-                    $callback['msg'][] = 'Error creando al usuario.';                 
-                }
 
             }
         }else{
@@ -251,31 +243,44 @@ class Actividad extends Model
             $callback['error'] = 1;
             $callback['msg'][] = 'Faltan rellenar campos requeridos.';
         } else{
-            
-            $categoriaActividad             = new CategoriaActividad();
+
             if(!$update)// se está creando recién
             {
+
                 $disponible->actv_id = $this->actv_id;
-                $disponible->update();
+                if($disponible->save() == false){
+                    foreach ($disponible->getMessages() as $message) {
+                        $callback['msg'][] = $message->getMessage();
+                    }
+                    $callback['error'] = 1;
+                    $callback['msg'][] = 'Error creando al usuario.';                 
+                }
 
                 // creando nueva actividad
                 $userActividad          = new UserActividad();
                 $userActividad->actv_id = $this->actv_id;
                 
                 // creando nueva categoria
-
+                $categoriaActividad             = new CategoriaActividad();
                 $categoriaActividad->actv_id    = $this->actv_id;
 
             }else{
 
                 // editando
-                $userActividad      = UserActividad::findFirstByActvId($this->actv_id);
-                $categoriaActividad->actv_id    = $this->actv_id;
-            }
-            
-            $userActividad->user_id         = $_POST['persona'];
-            $categoriaActividad->ctgr_id    = $_POST['categoria'];
 
+                $userActividad      = UserActividad::findFirstByActvId($this->actv_id);
+                $disponible = Disponible::findFirst("dspn_fecha = '{$this->actv_fecha}' AND dspn_hora = '{$this->actv_hora}' AND user_id = {$userActividad->user_id}");
+
+                $disponible->user_id = (int)$_POST['persona'];
+
+                $disponible->update();
+
+                $categoriaActividad = CategoriaActividad::findFirstByActvId($this->actv_id);
+            }           
+            //print_r($categoriaActividad);die();
+            
+            $userActividad->user_id         = (int)$_POST['persona'];
+            $categoriaActividad->ctgr_id    = (int)$_POST['categoria'];
 
             $categoriaActividad->save();
             

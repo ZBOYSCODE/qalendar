@@ -38,6 +38,7 @@
     </div>
     <div class="formulario-section">
         <form id="evento-form" action="<?php print($this->url->get("actividad/editarEvento")) ?>" method="post" data-type="ajax">
+            <input type='hidden' name='id' value='<?php echo $pcData['actividad']->actv_id; ?>' />
             <div class="row">
                 <div class="col-sm-5">
                     <div class="form-content">
