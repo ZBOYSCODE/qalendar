@@ -9,6 +9,9 @@
 	use Gabs\Models\Categoria;
 	use Gabs\Models\Users;
 	use Gabs\Models\TipoEstado;
+	
+	use Phalcon\Mvc\Model\Criteria;
+	use Phalcon\Paginator\Adapter\Model as PaginatorModel;
 
 	class actividadController extends ControllerBase
 	{
@@ -296,6 +299,120 @@
 
 
 			echo json_encode($data, JSON_PRETTY_PRINT);
+		}
+
+
+		public function buscarAction()
+	    {
+	    	$themeArray = $this->_themeArray;
+    		$themeArray['pcView'] = 'actividad/buscar';
+
+    		$data = array();
+			$model = new Actividad();
+
+			
+
+			//if($this->request->isPost()){
+
+				$search 		= $this->request->get("search", 'string');
+				$user 			= $this->request->get("user", 'int');
+				$currentPage	= $this->request->get("page", 'int');
+
+				if(empty($currentPage)){
+					$currentPage = 1;
+				}
+
+				$buscar = array();
+
+				if(!empty($search))
+				{
+					$buscar['actv_descripcion_ampliada']	= $search;
+					$buscar['actv_descripcion_breve'] 		= $search;
+					$buscar['actv_location']				= $search;
+					$buscar['actv_comentarios']				= $search;
+				}
+
+				if(!empty($user))
+				{
+					$buscar['actv_creado_por']				= $user;
+				}
+					
+
+				$query = self::fromInput($this->di, $model, $buscar);
+
+				$this->persistent->searchParams = $query->getParams();
+				
+				$actividades = Actividad::find($this->persistent->searchParams);
+
+				$paginator   = new PaginatorModel(
+				    array(
+				        "data"  => $actividades,
+				        "limit" => 2,
+				        "page"  => $currentPage
+				    )
+				);
+
+				$data['page'] = $paginator->getPaginate();
+
+
+
+				//$data['actividades'] 	= $actividades;
+		    	$data['search'] 		= $search;
+				
+			//}
+			
+			$data['users']			= Users::find();
+	    	
+	    	$themeArray['pcData'] = $data;
+
+	    	echo $this->view->render('theme', $themeArray);
+	    }
+
+	    public static function fromInput($dependencyInjector, $model, $data)
+		{
+		    $conditions = array();
+
+		    if (count($data)) 
+		    {
+		        $metaData = $dependencyInjector->getShared('modelsMetadata');
+
+		        $dataTypes = $metaData->getDataTypes($model);
+
+		        $bind = array();
+
+		        foreach ($data as $fieldName => $value) 
+		        {
+	                if (!is_null($value)) 
+	                {
+	                    if ($value != '') 
+	                    {  
+                        	if ($dataTypes[$fieldName] == 2 || $dataTypes[$fieldName] == 6 || $dataTypes[$fieldName] == 1) 
+	                        {                              
+	                            $condition = $fieldName . " LIKE :" . $fieldName . ":";                             
+	                            $bind[$fieldName] = '%' . $value . '%';
+	                        } 
+	                        //en otro caso buscamos la búsqueda exacta
+	                        else 
+	                        {                                
+	                            $condition = $fieldName . ' = :' . $fieldName . ':';
+	                            $bind[$fieldName] = $value;
+	                        }
+	                        
+	                     	$conditions[] = $condition;
+	                    }
+	                }
+		        }
+		    }
+		 
+		    $criteria = new Criteria();
+		    if (count($conditions)) 
+		    {
+		    	# como será una busqueda ocuparemos OR
+		    	# en caso de ser un filtro se ocuparía AND
+		        $criteria->where(join(' OR ', $conditions));
+		        $criteria->bind($bind);
+		    }
+		    return $criteria;
 		}
 
 	}

@@ -20,7 +20,8 @@
                                                     'downloadfile'		=> 1,
                                                     'eliminararchivo'	=> 1,
                                                     'listaarchivos'		=> 1,
-                                                    'updestado'			=> 1
+                                                    'updestado'			=> 1,
+                                                    'buscar'			=> 1
                                                     ],
                                             'hito' => [
                                             		'crearhito' 	=> 1,
@@ -42,7 +43,6 @@
 		                                    				'profile'		=> 1,
 		                                    				'editprofile'	=> 1
 		                                    			],
-
 											'test' => [
 												'testdir' 	=> 1,
 												'testform' 	=> 1,
@@ -60,7 +60,8 @@
 													'eliminararchivo'	=> 1,
 													'downloadfile'		=> 1,
 													'listaarchivos'		=> 1,
-													'updestado'			=> 1
+													'updestado'			=> 1,
+													'buscar'			=> 1
                                                     ],
                                             'hito' => [
                                             		'crearhito' => 1,
