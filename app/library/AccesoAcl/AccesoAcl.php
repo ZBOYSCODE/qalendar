@@ -28,7 +28,8 @@
                                                     'eliminararchivo'	=> 1,
                                                     'listaarchivos'		=> 1,
                                                     'updestado'			=> 1,
-                                                    'buscar'			=> 1
+                                                    'buscar'			=> 1,
+                                                    'cargaqabyproject'	=> 1
                                                     ],
                                             'hito' => [
                                             		'crearhito' 	=> 1,
@@ -65,6 +66,7 @@
 												'myformsave' 	=> 1
 											],
 		                                ],
+		                            # GESTOR
 									2   =>  [ 'acceso' => ['denegado' => 1],
 											'actividad' => [
                                                     'editarevento'    	=> 0,
@@ -77,7 +79,8 @@
 													'downloadfile'		=> 1,
 													'listaarchivos'		=> 1,
 													'updestado'			=> 1,
-													'buscar'			=> 1
+													'buscar'			=> 1,
+													'cargaqabyproject'	=> 1
                                                     ],
                                             'hito' => [
                                             		'crearhito' => 1,
@@ -141,7 +144,8 @@
 		                                                    'eliminararchivo'	=> 1,
 		                                                    'listaarchivos'		=> 1,
 		                                                    'updestado'			=> 1,
-		                                                    'buscar'			=> 1
+		                                                    'buscar'			=> 1,
+		                                                    'cargaqabyproject'	=> 1
 	                                                    ],
 
 		                            ]

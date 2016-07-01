@@ -32,6 +32,12 @@ class Actividad extends Model
 
     /**
      *
+     * @var integer
+     */
+    public $proyecto_id;
+
+    /**
+     *
      * @var string
      */
     public $actv_descripcion_breve;
@@ -169,7 +175,11 @@ class Actividad extends Model
      */
     public function guardarActividad($data){
 
-        if(empty($_POST['persona']) OR empty($_POST['fecha']) OR empty($_POST['hora'])){
+        if( empty($_POST['persona']) OR 
+            empty($_POST['fecha']) OR 
+            empty($_POST['hora'])
+
+            ){
             $callback['error'] = 1;
             $callback['msg'][] = 'Faltan rellenar campos requeridos.';            
             return $callback;
@@ -178,6 +188,9 @@ class Actividad extends Model
 
         $this->accs_id = $_POST['acceso'];
         $this->prrd_id = $_POST['prioridad'];
+
+        $this->proyecto_id = $_POST['proyecto'];
+
         $this->actv_descripcion_breve = $_POST['dscr-breve'];
         $this->actv_descripcion_ampliada = $_POST['dscr-ampliada'];
         $this->actv_location = $_POST['donde'];
@@ -199,7 +212,7 @@ class Actividad extends Model
 
 
         if(empty($this->actv_id))// se está creando recién
-        {   
+        {
             $update = false;
             $disponible = Disponible::findFirst("dspn_fecha = '{$this->actv_fecha}' AND dspn_hora = '{$this->actv_hora}' AND user_id = {$persona}");
 
@@ -237,12 +250,12 @@ class Actividad extends Model
 
 
         if ($this->save() == false) {
-            /*
-            foreach ($this->getMessages() as $message) {
-                //echo "Message: ", $message->getMessage();
-                //echo "Field: ", $message->getField();
-                //echo "Type: ", $message->getType();
+
+
+            /*foreach ($this->getMessages() as $message) {
+                $callback['msg'][] = $message->getMessage();
             }*/
+
             $callback['error'] = 1;
             $callback['msg'][] = 'Faltan rellenar campos requeridos.';
         } else{
@@ -276,7 +289,7 @@ class Actividad extends Model
 
                 $disponible->user_id = (int)$_POST['persona'];
 
-                $disponible->update();
+                $disponible->save();
 
                 $categoriaActividad = CategoriaActividad::findFirstByActvId($this->actv_id);
             }           

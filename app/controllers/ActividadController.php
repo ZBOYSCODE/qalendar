@@ -10,6 +10,7 @@
 	use Gabs\Models\Users;
 	use Gabs\Models\TipoEstado;
 	use Gabs\Models\Proyecto;
+	use Gabs\Models\UserTecnologia;
 	
 	use Phalcon\Mvc\Model\Criteria;
 	use Phalcon\Paginator\Adapter\Model as PaginatorModel;
@@ -28,12 +29,13 @@
     		$themeArray['jsScript'] = $this->view->render('event/js/evento_nuevoJS');
 
     		$themeArray['addJs'][] 		= "js/hitos.js";
+    		$themeArray['addJs'][] 		= "js/evento.js";
 
 	    	$actividad 				= Actividad::findFirst($id);
 	    	$data['accesos'] 		= Acceso::find();
 	    	$data['prioridades'] 	= Prioridad::find();
 	    	$data['categorias'] 	= Categoria::find();
-	    	$data['users']			= Users::find("rol_id = 2");
+	    	$data['users']			= Users::find("rol_id = 3");
 
 	    	$data['actividad'] 		= $actividad;
 	    	$data['catAct'] 		= $actividad->getCategorias();
@@ -41,6 +43,20 @@
 	    	$data['horaSelected']	= $actividad->actv_hora;
 
 	    	$data['usersSelected'] 	= $actividad->getUsuarios();
+
+	    	# si el usuario es un jefe de proyectos, solo podrá ver los proyectos asociados a el
+			$rol = $this->auth->getIdentity()['roleId'];
+			$JefeP = 4;# id del rol de Jefe proyecto
+
+			if($rol == $JefeP){
+				$cond = "jefep_id = ".$this->auth->getIdentity()['id'];
+			}else{
+				$cond='';
+			}
+
+			$data['proyectos'] = Proyecto::find($cond);
+
+
 
 	    	$themeArray['pcData'] = $data;
 
@@ -64,8 +80,8 @@
 	        if($rol == 1 || $rol == 2 || $rol == $a_model->actv_creado_por)
 	        {
 	        
-	        	if($this->auth->getIdentity()['name']) {
-					$_POST['creado_por'] = $this->auth->getIdentity()['name'];
+	        	if($this->auth->getIdentity()['id']) {
+					$_POST['creado_por'] = $this->auth->getIdentity()['id'];
 				}
 
 		        $callback = $a_model->guardarActividad($_POST);
@@ -125,8 +141,10 @@
 				$themeArray = $this->_themeArray;
 				$themeArray['pcView'] = 'event/event_nuevo_view';
 				$themeArray['jsScript'] = $this->view->render('event/js/evento_nuevoJS');
+				
+				$themeArray['addJs'][] 		= "js/evento.js";
 
-				$data['users'] = Users::find("rol_id = 2");
+				$data['users'] = Users::find("rol_id = 3");
 				$data['prioridad'] = Prioridad::find();
 				$data['acceso'] = Acceso::find();
 				$data['categoria'] = Categoria::find();
@@ -398,6 +416,52 @@
 	    	$themeArray['pcData'] = $data;
 
 	    	echo $this->view->render('theme', $themeArray);
+	    }
+
+	    public function cargaQaByProjectAction()
+	    {
+
+	    	try {
+
+	    		$proyecto_id = $this->request->getPost("proyecto", 'int');
+
+		    	$proyecto = Proyecto::findFirst($proyecto_id);
+
+		    	$qas = $this->modelsManager->createBuilder()
+									 ->from('Gabs\Models\UserTecnologia')
+									 ->join('Gabs\Models\Users', 'Gabs\Models\UserTecnologia.user_id = Gabs\Models\Users.id')
+									 ->join('Gabs\Models\Tecnologia', 'Gabs\Models\Tecnologia.id = Gabs\Models\UserTecnologia.tecnologia_id')
+									 //->join('Gabs\Models\Proyecto', 'Gabs\Models\Proyecto.tecnologia_id = Gabs\Models\UserTecnologia.id')
+									 ->where('Gabs\Models\Tecnologia.id = '.$proyecto->tecnologia_id)
+									 ->andWhere('Gabs\Models\Users.rol_id = 3')
+									 ->columns(	'Gabs\Models\Users.id,
+									 			 Gabs\Models\Users.name')
+									 ->getQuery()
+									 ->execute();
+
+				if($qas->count() > 0)
+				{
+				 	foreach($qas as $qa)
+				 	{
+				 		$arr[$qa->id] = $qa->name;
+				 	}
+
+				 	$data['estado'] = true;
+	    			$data['datos'] = $arr;
+ 				}else{
+ 					$data['estado'] = false;
+	    			$data['msg'] = 'Sin resultados';
+ 				}
+
+				
+
+	    	} catch (Exception $e) {
+	    		$data['estado'] = false;
+	    		$data['msg'] = 'Error al ejecutar la consulta';
+	    	}
+		    	
+
+	    	echo json_encode($data);
 	    }
 
 	    public static function fromInput($dependencyInjector, $model, $data)
