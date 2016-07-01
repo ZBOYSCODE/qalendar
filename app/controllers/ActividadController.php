@@ -42,6 +42,8 @@
 	    	$data['fechaSelected']	= $actividad->actv_fecha;
 	    	$data['horaSelected']	= $actividad->actv_hora;
 
+	    	$data['duracion']		= $this->IntToTime( $actividad->categoria->duracion );
+
 	    	$data['usersSelected'] 	= $actividad->getUsuarios();
 
 	    	# si el usuario es un jefe de proyectos, solo podrá ver los proyectos asociados a el
