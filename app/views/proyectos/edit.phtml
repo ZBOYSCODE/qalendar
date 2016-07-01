@@ -1,0 +1,121 @@
+<?php
+	$proy = $pcData['proyecto'];		
+?>
+<div class="base-page lighter">
+
+	<div class="formulario-section">
+
+		<div class="col-md-10 col-md-offset-1">
+			<h2>Edición de proyecto</h2>
+
+			<a  href="javascript:void(0)"  
+            	onclick="$('#proyecto-form').submit();" 
+            	class="btn btn-success pull-right btn-save">Editar</a>
+		</div>
+
+
+        <form id="proyecto-form" action="<?php print($this->url->get("proyecto/update")) ?>" method="post" data-type="ajax" class='form'>
+        	<br><br>
+
+        	<input type="hidden" name="proyecto_id" value='<?php echo $proy->id; ?>'>
+
+        	<div class="row">
+        		<div class="col-md-5 col-md-offset-2">
+        			<div class="form-group">
+		        		<label for="nombre">Nombre</label>
+		        		<input type="text" id='nombre' name='nombre' class="form-control" placeholder='Nombre proyecto' value='<?php echo $proy->nombre;?>'>
+		        	</div>
+        		</div>
+
+        		<div class="col-md-3">
+        			<div class="form-group">
+		        		<label for="nombre">Código</label>
+		        		<input type="text" id='codigo' name='codigo' class="form-control" placeholder='Cód. Proyecto' value='<?php echo $proy->codigo;?>'>
+		        	</div>
+        		</div>
+        	</div>
+			
+			<br>
+
+        	<div class="row">
+        		<div class="col-md-8 col-md-offset-2">
+        			<label for="descripcion">Descripción</label>
+        			<textarea name="descripcion" id="descripcion" class='form-control' rows='5' placeholder="Descripción proyecto"><?php echo $proy->descripcion;?></textarea>
+        		</div>
+        	</div>
+
+        	<br>
+
+        	<div class="row">
+        		<div class="col-md-4 col-md-offset-2">
+        			<div class="form-group">
+		        		<label for="jefep">Jefe Proyecto</label>
+		        		<select name="jefep" id="jefep" class='form-control chosen'>
+		        			<option value='0'>Seleccione</option>
+		        			<?php
+		        				foreach ($pcData['users'] as $usuario) {
+
+		        					if($usuario->id == $proy->jefep_id){
+		        						$selected = "selected";
+		        					}else{
+		        						$selected = '';
+		        					}
+
+		        					echo "<option value='".$usuario->id."' $selected>".$usuario->name."</option>";
+		        				}
+		        			?>
+		        		</select>
+		        	</div>
+        		</div>
+
+        		<div class="col-md-2">
+        			<label for="area">Área</label>
+	        		<select name="area" id="area" class='form-control chosen'>
+	        			<option value='0'>Seleccione</option>
+	        			<?php
+	        				foreach ($pcData['areas'] as $area) {
+
+	        					if($area->id == $proy->area_id){
+	        						$selected = "selected";
+	        					}else{
+	        						$selected = '';
+	        					}
+
+	        					echo "<option value='".$area->id."' $selected>".$area->nombre."</option>";
+	        				}
+	        			?>
+	        		</select>
+        		</div>
+
+        		<div class="col-md-2">
+        			<div class="form-group">
+		        		<label for="tecnologia">Tecnología</label>
+		        		<select name="tecnologia" id="tecnologia" class='form-control chosen'>
+		        			<option value='0'>Seleccione</option>
+		        			<?php
+		        				foreach ($pcData['tecnologias'] as $tecnologia) {
+
+		        					if($tecnologia->id == $proy->tecnologia_id){
+		        						$selected = "selected";
+		        					}else{
+		        						$selected = '';
+		        					}
+
+		        					echo "<option value='".$tecnologia->id."' $selected>".$tecnologia->nombre."</option>";
+		        				}
+		        			?>
+		        		</select>
+		        	</div>
+        		</div>
+        	</div>
+
+        	<div class="row">
+
+        		<
+
+        	</div>
+	        	
+
+        </form>
+
+ </div>

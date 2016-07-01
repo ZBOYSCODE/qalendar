@@ -9,6 +9,7 @@
 	use Gabs\Models\Categoria;
 	use Gabs\Models\Users;
 	use Gabs\Models\TipoEstado;
+	use Gabs\Models\Proyecto;
 	
 	use Phalcon\Mvc\Model\Criteria;
 	use Phalcon\Paginator\Adapter\Model as PaginatorModel;
@@ -57,27 +58,45 @@
 
 	        $a_model = Actividad::findFirst($id);
 
-			if($this->auth->getIdentity()['name']) {
-				$_POST['creado_por'] = $this->auth->getIdentity()['name'];
-			}
+	        $rol = $this->auth->getIdentity()['roleId'];
 
-	        $callback = $a_model->guardarActividad($_POST);
+	        # solo Admin, Gestor y el creador del evento pueden modificarlos
+	        if($rol == 1 || $rol == 2 || $rol == $a_model->actv_creado_por)
+	        {
 	        
-	        if(isset($callback['error'])){
-	            if($callback['error'] == 1){
-	                foreach ($callback['msg'] as $val) {
-	                    $this->mifaces->addPosRendEval("$.bootstrapGrowl('{$val}',{type:'danger'});");
-	                }
-	            }
-	        } else{
-	            $this->mifaces->addPosRendEval("$.bootstrapGrowl('{$callback['msg'][0]}');");
+	        	if($this->auth->getIdentity()['name']) {
+					$_POST['creado_por'] = $this->auth->getIdentity()['name'];
+				}
+
+		        $callback = $a_model->guardarActividad($_POST);
+		        
+		        if(isset($callback['error'])){
+		            if($callback['error'] == 1){
+		                foreach ($callback['msg'] as $val) {
+		                    $this->mifaces->addPosRendEval("$.bootstrapGrowl('{$val}',{type:'danger'});");
+		                }
+		            }
+		        } else{
+		            $this->mifaces->addPosRendEval("$.bootstrapGrowl('{$callback['msg'][0]}');");
+		        }
+		        if(isset($callback['error']))
+		            $this->mifaces->run();            
+		        else{
+		            $this->mifaces->addPosRendEval("window.location.replace('/qalendar');");
+		            $this->mifaces->run();            
+		        }
+		        
+
+	        }else{
+	        	$msg = "Usted no está autorizado para modificar este evento";
+	        	$this->mifaces->addPosRendEval("$.bootstrapGrowl('{$msg}');");
+	        	$this->mifaces->run();
 	        }
-	        if(isset($callback['error']))
-	            $this->mifaces->run();            
-	        else{
-	            $this->mifaces->addPosRendEval("window.location.replace('/qalendar');");
-	            $this->mifaces->run();            
-	        }
+
+
+
+
+				
 	    }
 
 		/**
@@ -111,6 +130,19 @@
 				$data['prioridad'] = Prioridad::find();
 				$data['acceso'] = Acceso::find();
 				$data['categoria'] = Categoria::find();
+
+				# si el usuario es un jefe de proyectos, solo podrá ver los proyectos asociados a el
+				$rol = $this->auth->getIdentity()['roleId'];
+				$JefeP = 4;# id del rol de Jefe proyecto
+
+				if($rol == $JefeP){
+					$cond = "jefep_id = ".$this->auth->getIdentity()['id'];
+				}else{
+					$cond='';
+				}
+
+				$data['proyectos'] = Proyecto::find($cond);
+
 
 				$themeArray['pcData'] = $data;
 				//$themeArray['addJs'] = array("js/evento_nuevoJS.phtml");
