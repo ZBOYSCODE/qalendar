@@ -418,6 +418,25 @@
 	    	echo $this->view->render('theme', $themeArray);
 	    }
 
+	    public function getDuracionCatAction()
+	    {
+	    	try {
+
+	    		$id = $this->request->getPost("categoria", 'int');
+
+	    		$categoria = Categoria::findFirst($id);
+
+	    		$data['estado']		= true;
+	    		$data['duracion'] 	= $this->IntToTime($categoria->duracion);// minutos a hrs
+	    		
+	    	} catch (Exception $e) {
+	    		$data['estado'] = false;
+	    		$data['msg'] = 'Error al ejecutar la consulta';
+	    	}
+
+	    	echo json_encode($data);
+	    }
+
 	    public function cargaQaByProjectAction()
 	    {
 
@@ -510,5 +529,21 @@
 		    }
 		    return $criteria;
 		}
+
+		private function IntToTime($int)
+        {
+            $min = $int % 60;//min
+            $hrs = floor($int / 60);//hrs
+
+            if($min<10){
+                $min = "0".$min;
+            }
+
+            if($hrs<10){
+                $hrs = "0".$hrs;
+            }
+
+            return $hrs.":".$min;
+        }
 
 	}

@@ -29,7 +29,8 @@
                                                     'listaarchivos'		=> 1,
                                                     'updestado'			=> 1,
                                                     'buscar'			=> 1,
-                                                    'cargaqabyproject'	=> 1
+                                                    'cargaqabyproject'	=> 1,
+                                                    'getduracioncat'	=> 1
                                                     ],
                                             'hito' => [
                                             		'crearhito' 	=> 1,
@@ -80,7 +81,8 @@
 													'listaarchivos'		=> 1,
 													'updestado'			=> 1,
 													'buscar'			=> 1,
-													'cargaqabyproject'	=> 1
+													'cargaqabyproject'	=> 1,
+                                                    'getduracioncat'	=> 1
                                                     ],
                                             'hito' => [
                                             		'crearhito' => 1,
@@ -145,7 +147,8 @@
 		                                                    'listaarchivos'		=> 1,
 		                                                    'updestado'			=> 1,
 		                                                    'buscar'			=> 1,
-		                                                    'cargaqabyproject'	=> 1
+		                                                    'cargaqabyproject'	=> 1,
+                                                    		'getduracioncat'	=> 1
 	                                                    ],
 
 		                            ]
