@@ -81,4 +81,9 @@ $router->add('/actividad/perfil/:params', array(
     'params' => 1
 ));
 
+$router->add('/actividad/search/{$search}', array(
+    'controller'=> 'Search',
+    'action'    => 'buscar'
+));
+
 return $router;

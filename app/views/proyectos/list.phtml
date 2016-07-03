@@ -1,0 +1,125 @@
+<div class="base-page lighter">
+
+	<div class="formulario-section">
+		
+		<div class="col-md-10 col-md-offset-1">
+			<h2>Listado de proyectos</h2>
+		</div>
+			
+		
+		<form action="<?php echo $this->url->get('proyecto'); ?>" method='GET' id='frm'>
+			<div class="row">
+
+				<div class="col-md-7 col-md-offset-1">
+
+					<div class="form-group">
+						<label for="nombre">Nombre proyecto</label>
+						<input type="text" name='nombre' class="form-control" value="<?php echo (isset($_GET['nombre']))?$_GET['nombre']:'' ?>">
+					</div>
+
+				</div>
+
+				<div class="col-md-2">
+					<div class="form-group">
+						<label for="codigo">Código</label>
+						<input type="text" id='codigo' name='codigo' class='form-control' placeholder='Código proyecto' value="<?php echo (isset($_GET['codigo']))?$_GET['codigo']:'' ?>">
+					</div>
+				</div>
+
+				<div class="col-md-1">
+					<div class="form-group">
+						<label for="">&nbsp;</label>
+						<button type='submit' class='btn btn-default form-control'>Buscar</button>
+					</div>
+				</div>
+			</div>
+
+			<br><br>
+				
+			
+			<div class="col-md-10 col-md-offset-1">
+				
+				<hr>
+				<div class="table-responsive">
+					<table class="table table-striped">
+						
+						<thead>
+							<th>ID</th>
+							<th>Código</th>
+							<th>Nombre</th>
+							<th>Área</th>
+							<th>Tecnologóia</th>
+							<th>Jefe proyecto</th>
+							<th>Acción</th>
+						</thead>
+
+						<tbody>
+							<?php
+								foreach ($pcData['page']->items as $proyecto) {
+									echo "<tr id='tr_".$proyecto->id."'>";
+									echo "<td>".$proyecto->id ."</td>";
+									echo "<td>".$proyecto->codigo ."</td>";
+									echo "<td>".$proyecto->nombre ."</td>";
+									echo "<td>".$proyecto->area->nombre."</td>";
+									echo "<td>".$proyecto->tecnologia->nombre."</td>";
+									echo "<td>".$proyecto->jefeproyecto->name ."</td>";
+									echo "<td>";
+
+									if($this->AccesoAcl->tienePermiso('edit', 'proyecto'))
+									{
+										echo "	<a href='".$this->url->get('proyecto/edit/').$proyecto->id ."'>
+													<i class='fa fa-pencil-square-o'></i>
+												</a>";
+					                }
+									
+									if($this->AccesoAcl->tienePermiso('delete', 'proyecto'))
+									{		
+										echo "	<a href='".$this->url->get('proyecto/delete/').$proyecto->id ."/' id='delete-project' data-id='".$proyecto->id."'>
+													<i class='fa fa-times'></i>
+												</a>";
+									}
+								
+									echo "</td>";
+								}
+							?>
+						</tbody>
+					</table>
+				</div>
+
+
+				
+
+					<?php
+
+						if(isset($pcData['page'])){
+							$url = '';
+
+							if(isset($_GET['nombre'])){
+								$url .= "&nombre=".$_GET['nombre'];
+							}else{
+								$url .= "nombre=";
+							}
+
+							if(isset($_GET['codigo'])){
+								$url .= "&codigo=".$_GET['codigo'];
+							}else{
+								$url .= "codigo=";
+							}
+
+							# solo mostramos la paginación si el numero de paginas es mayor a 1
+							if( $pcData['page']->total_pages > 1)
+							{
+								echo "<a href='".$this->url->get("proyecto/")."'>Primera</a> ";
+								echo "<a href='".$this->url->get("proyecto/").$url."&page=".$pcData['page']->before."'>Anterior</a> ";
+								echo "<a href='".$this->url->get("proyecto/").$url."&page=".$pcData['page']->next."'>Siguiente</a> ";
+								echo "<a href='".$this->url->get("proyecto/").$url."&page=".$pcData['page']->last."'>Ultima</a> ";
+								echo "<BR>Estas en la página ", $pcData['page']->current, " de ", $pcData['page']->total_pages; 
+
+							}
+						}
+					?>
+			</div>
+		</form>
+	</div>
+</div>
+	

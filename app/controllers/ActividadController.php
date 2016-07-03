@@ -9,6 +9,11 @@
 	use Gabs\Models\Categoria;
 	use Gabs\Models\Users;
 	use Gabs\Models\TipoEstado;
+	use Gabs\Models\Proyecto;
+	use Gabs\Models\UserTecnologia;
+	
+	use Phalcon\Mvc\Model\Criteria;
+	use Phalcon\Paginator\Adapter\Model as PaginatorModel;
 
 	class actividadController extends ControllerBase
 	{
@@ -24,19 +29,36 @@
     		$themeArray['jsScript'] = $this->view->render('event/js/evento_nuevoJS');
 
     		$themeArray['addJs'][] 		= "js/hitos.js";
+    		$themeArray['addJs'][] 		= "js/evento.js";
 
 	    	$actividad 				= Actividad::findFirst($id);
 	    	$data['accesos'] 		= Acceso::find();
 	    	$data['prioridades'] 	= Prioridad::find();
 	    	$data['categorias'] 	= Categoria::find();
-	    	$data['users']			= Users::find("rol_id = 2");
+	    	$data['users']			= Users::find("rol_id = 3");
 
 	    	$data['actividad'] 		= $actividad;
 	    	$data['catAct'] 		= $actividad->getCategorias();
 	    	$data['fechaSelected']	= $actividad->actv_fecha;
 	    	$data['horaSelected']	= $actividad->actv_hora;
 
+	    	$data['duracion']		= $this->IntToTime( $actividad->categoria->duracion );
+
 	    	$data['usersSelected'] 	= $actividad->getUsuarios();
+
+	    	# si el usuario es un jefe de proyectos, solo podrá ver los proyectos asociados a el
+			$rol = $this->auth->getIdentity()['roleId'];
+			$JefeP = 4;# id del rol de Jefe proyecto
+
+			if($rol == $JefeP){
+				$cond = "jefep_id = ".$this->auth->getIdentity()['id'];
+			}else{
+				$cond='';
+			}
+
+			$data['proyectos'] = Proyecto::find($cond);
+
+
 
 	    	$themeArray['pcData'] = $data;
 
@@ -54,27 +76,45 @@
 
 	        $a_model = Actividad::findFirst($id);
 
-			if($this->auth->getIdentity()['name']) {
-				$_POST['creado_por'] = $this->auth->getIdentity()['name'];
-			}
+	        $rol = $this->auth->getIdentity()['roleId'];
 
-	        $callback = $a_model->guardarActividad($_POST);
+	        # solo Admin, Gestor y el creador del evento pueden modificarlos
+	        if($rol == 1 || $rol == 2 || $rol == $a_model->actv_creado_por)
+	        {
 	        
-	        if(isset($callback['error'])){
-	            if($callback['error'] == 1){
-	                foreach ($callback['msg'] as $val) {
-	                    $this->mifaces->addPosRendEval("$.bootstrapGrowl('{$val}',{type:'danger'});");
-	                }
-	            }
-	        } else{
-	            $this->mifaces->addPosRendEval("$.bootstrapGrowl('{$callback['msg'][0]}');");
+	        	if($this->auth->getIdentity()['id']) {
+					$_POST['creado_por'] = $this->auth->getIdentity()['id'];
+				}
+
+		        $callback = $a_model->guardarActividad($_POST);
+		        
+		        if(isset($callback['error'])){
+		            if($callback['error'] == 1){
+		                foreach ($callback['msg'] as $val) {
+		                    $this->mifaces->addPosRendEval("$.bootstrapGrowl('{$val}',{type:'danger'});");
+		                }
+		            }
+		        } else{
+		            $this->mifaces->addPosRendEval("$.bootstrapGrowl('{$callback['msg'][0]}');");
+		        }
+		        if(isset($callback['error']))
+		            $this->mifaces->run();            
+		        else{
+		            $this->mifaces->addPosRendEval("window.location.replace('/qalendar');");
+		            $this->mifaces->run();            
+		        }
+		        
+
+	        }else{
+	        	$msg = "Usted no está autorizado para modificar este evento";
+	        	$this->mifaces->addPosRendEval("$.bootstrapGrowl('{$msg}');");
+	        	$this->mifaces->run();
 	        }
-	        if(isset($callback['error']))
-	            $this->mifaces->run();            
-	        else{
-	            $this->mifaces->addPosRendEval("window.location.replace('/qalendar');");
-	            $this->mifaces->run();            
-	        }
+
+
+
+
+				
 	    }
 
 		/**
@@ -103,11 +143,26 @@
 				$themeArray = $this->_themeArray;
 				$themeArray['pcView'] = 'event/event_nuevo_view';
 				$themeArray['jsScript'] = $this->view->render('event/js/evento_nuevoJS');
+				
+				$themeArray['addJs'][] 		= "js/evento.js";
 
-				$data['users'] = Users::find("rol_id = 2");
+				$data['users'] = Users::find("rol_id = 3");
 				$data['prioridad'] = Prioridad::find();
 				$data['acceso'] = Acceso::find();
 				$data['categoria'] = Categoria::find();
+
+				# si el usuario es un jefe de proyectos, solo podrá ver los proyectos asociados a el
+				$rol = $this->auth->getIdentity()['roleId'];
+				$JefeP = 4;# id del rol de Jefe proyecto
+
+				if($rol == $JefeP){
+					$cond = "jefep_id = ".$this->auth->getIdentity()['id'];
+				}else{
+					$cond='';
+				}
+
+				$data['proyectos'] = Proyecto::find($cond);
+
 
 				$themeArray['pcData'] = $data;
 				//$themeArray['addJs'] = array("js/evento_nuevoJS.phtml");
@@ -297,5 +352,200 @@
 
 			echo json_encode($data, JSON_PRETTY_PRINT);
 		}
+
+
+		public function buscarAction()
+	    {
+	    	$themeArray = $this->_themeArray;
+    		$themeArray['pcView'] = 'actividad/buscar';
+
+    		$data = array();
+			$model = new Actividad();
+
+			
+
+			//if($this->request->isPost()){
+
+				$search 		= $this->request->get("search", 'string');
+				$user 			= $this->request->get("user", 'int');
+				$currentPage	= $this->request->get("page", 'int');
+
+				if(empty($currentPage)){
+					$currentPage = 1;
+				}
+
+				$buscar = array();
+
+				if(!empty($search))
+				{
+					$buscar['actv_descripcion_ampliada']	= $search;
+					$buscar['actv_descripcion_breve'] 		= $search;
+					$buscar['actv_location']				= $search;
+					$buscar['actv_comentarios']				= $search;
+				}
+
+				if(!empty($user))
+				{
+					$buscar['actv_creado_por']				= $user;
+				}
+					
+
+				$query = self::fromInput($this->di, $model, $buscar);
+
+				$this->persistent->searchParams = $query->getParams();
+				
+				$actividades = Actividad::find($this->persistent->searchParams);
+
+				$paginator   = new PaginatorModel(
+				    array(
+				        "data"  => $actividades,
+				        "limit" => 2,
+				        "page"  => $currentPage
+				    )
+				);
+
+				$data['page'] = $paginator->getPaginate();
+
+
+
+				//$data['actividades'] 	= $actividades;
+		    	$data['search'] 		= $search;
+				
+			//}
+			
+			$data['users']			= Users::find();
+	    	
+	    	$themeArray['pcData'] = $data;
+
+	    	echo $this->view->render('theme', $themeArray);
+	    }
+
+	    public function getDuracionCatAction()
+	    {
+	    	try {
+
+	    		$id = $this->request->getPost("categoria", 'int');
+
+	    		$categoria = Categoria::findFirst($id);
+
+	    		$data['estado']		= true;
+	    		$data['duracion'] 	= $this->IntToTime($categoria->duracion);// minutos a hrs
+	    		
+	    	} catch (Exception $e) {
+	    		$data['estado'] = false;
+	    		$data['msg'] = 'Error al ejecutar la consulta';
+	    	}
+
+	    	echo json_encode($data);
+	    }
+
+	    public function cargaQaByProjectAction()
+	    {
+
+	    	try {
+
+	    		$proyecto_id = $this->request->getPost("proyecto", 'int');
+
+		    	$proyecto = Proyecto::findFirst($proyecto_id);
+
+		    	$qas = $this->modelsManager->createBuilder()
+									 ->from('Gabs\Models\UserTecnologia')
+									 ->join('Gabs\Models\Users', 'Gabs\Models\UserTecnologia.user_id = Gabs\Models\Users.id')
+									 ->join('Gabs\Models\Tecnologia', 'Gabs\Models\Tecnologia.id = Gabs\Models\UserTecnologia.tecnologia_id')
+									 //->join('Gabs\Models\Proyecto', 'Gabs\Models\Proyecto.tecnologia_id = Gabs\Models\UserTecnologia.id')
+									 ->where('Gabs\Models\Tecnologia.id = '.$proyecto->tecnologia_id)
+									 ->andWhere('Gabs\Models\Users.rol_id = 3')
+									 ->columns(	'Gabs\Models\Users.id,
+									 			 Gabs\Models\Users.name')
+									 ->getQuery()
+									 ->execute();
+
+				if($qas->count() > 0)
+				{
+				 	foreach($qas as $qa)
+				 	{
+				 		$arr[$qa->id] = $qa->name;
+				 	}
+
+				 	$data['estado'] = true;
+	    			$data['datos'] = $arr;
+ 				}else{
+ 					$data['estado'] = false;
+	    			$data['msg'] = 'Sin resultados';
+ 				}
+
+				
+
+	    	} catch (Exception $e) {
+	    		$data['estado'] = false;
+	    		$data['msg'] = 'Error al ejecutar la consulta';
+	    	}
+		    	
+
+	    	echo json_encode($data);
+	    }
+
+	    public static function fromInput($dependencyInjector, $model, $data)
+		{
+		    $conditions = array();
+
+		    if (count($data)) 
+		    {
+		        $metaData = $dependencyInjector->getShared('modelsMetadata');
+
+		        $dataTypes = $metaData->getDataTypes($model);
+
+		        $bind = array();
+
+		        foreach ($data as $fieldName => $value) 
+		        {
+	                if (!is_null($value)) 
+	                {
+	                    if ($value != '') 
+	                    {  
+                        	if ($dataTypes[$fieldName] == 2 || $dataTypes[$fieldName] == 6 || $dataTypes[$fieldName] == 1) 
+	                        {                              
+	                            $condition = $fieldName . " LIKE :" . $fieldName . ":";                             
+	                            $bind[$fieldName] = '%' . $value . '%';
+	                        } 
+	                        //en otro caso buscamos la búsqueda exacta
+	                        else 
+	                        {                                
+	                            $condition = $fieldName . ' = :' . $fieldName . ':';
+	                            $bind[$fieldName] = $value;
+	                        }
+	                        
+	                     	$conditions[] = $condition;
+	                    }
+	                }
+		        }
+		    }
+		 
+		    $criteria = new Criteria();
+		    if (count($conditions)) 
+		    {
+		    	# como será una busqueda ocuparemos OR
+		    	# en caso de ser un filtro se ocuparía AND
+		        $criteria->where(join(' OR ', $conditions));
+		        $criteria->bind($bind);
+		    }
+		    return $criteria;
+		}
+
+		private function IntToTime($int)
+        {
+            $min = $int % 60;//min
+            $hrs = floor($int / 60);//hrs
+
+            if($min<10){
+                $min = "0".$min;
+            }
+
+            if($hrs<10){
+                $hrs = "0".$hrs;
+            }
+
+            return $hrs.":".$min;
+        }
 
 	}

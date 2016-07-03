@@ -8,6 +8,13 @@
 
 		private static $disp;
 
+		/**
+		 *  	1 - Admin
+		 *		2 - Gestor
+		 *		3 - Qa
+		 *		4 - Jefe proyecto
+		 */
+
 		static public 	$res =   [	1	=> [ 'acceso' => ['denegado' => 1],
 											'actividad' => [
                                                     'editarevento'    	=> 1,
@@ -20,7 +27,10 @@
                                                     'downloadfile'		=> 1,
                                                     'eliminararchivo'	=> 1,
                                                     'listaarchivos'		=> 1,
-                                                    'updestado'			=> 1
+                                                    'updestado'			=> 1,
+                                                    'buscar'			=> 1,
+                                                    'cargaqabyproject'	=> 1,
+                                                    'getduracioncat'	=> 1
                                                     ],
                                             'hito' => [
                                             		'crearhito' 	=> 1,
@@ -42,13 +52,22 @@
 		                                    				'profile'		=> 1,
 		                                    				'editprofile'	=> 1
 		                                    			],
-
+		                                    'proyecto' => [
+		                                    				'index'			=> 1,
+		                                    				'list'			=> 1,
+		                                    				'create'		=> 1,
+		                                    				'store'			=> 1,
+		                                    				'edit'			=> 1,
+		                                    				'update'		=> 1,
+		                                    				'delete' 		=> 1
+		                                    ],
 											'test' => [
 												'testdir' 	=> 1,
 												'testform' 	=> 1,
 												'myformsave' 	=> 1
 											],
 		                                ],
+		                            # GESTOR
 									2   =>  [ 'acceso' => ['denegado' => 1],
 											'actividad' => [
                                                     'editarevento'    	=> 0,
@@ -60,7 +79,10 @@
 													'eliminararchivo'	=> 1,
 													'downloadfile'		=> 1,
 													'listaarchivos'		=> 1,
-													'updestado'			=> 1
+													'updestado'			=> 1,
+													'buscar'			=> 1,
+													'cargaqabyproject'	=> 1,
+                                                    'getduracioncat'	=> 1
                                                     ],
                                             'hito' => [
                                             		'crearhito' => 1,
@@ -81,8 +103,55 @@
 		                                    				'index'			=> 1,
 		                                    				'profile'		=> 1,
 		                                    				'editprofile'	=> 1
-		                                    			]
-		                                ]
+		                                    			],
+		                                    'proyecto' => [
+		                                    				'index'			=> 1,
+		                                    				'list'			=> 1,
+		                                    				'create'		=> 1,
+		                                    				'store'			=> 1,
+		                                    				'edit'			=> 1,
+		                                    				'update'		=> 1,
+		                                    				'delete' 		=> 1
+		                                    				]
+		                                ],
+		                            #QA
+		                            3 => [	'acceso' 	=> [
+		                            						'denegado' => 1
+		                                    			],
+		                                    'actividad' => [
+															'verperfilevento'	=> 1,
+		                                                    'downloadfile'		=> 1,
+		                                                    'listaarchivos'		=> 1,
+		                                                    'buscar'			=> 1
+	                                                    ],
+
+		                            ],
+		                            # JEFE PROYECTO
+		                            4 => [	'acceso' 	=> [
+		                            						'denegado' => 1
+		                            					],
+		                            		'proyecto' 	=> [
+		                                    				'index'			=> 1,
+		                                    				'list'			=> 1
+		                                    			],
+		                                    'actividad' => [
+		                                                    'editarevento'    	=> 1,
+		                                                    'editar'    		=> 1,
+															'crearevento'		=> 1,
+															'guardarevento'		=> 1,
+															'verperfilevento'	=> 1,
+		                                                    'crearhito'			=> 1,
+		                                                    'uploadarchivo'		=> 1,
+		                                                    'downloadfile'		=> 1,
+		                                                    'eliminararchivo'	=> 1,
+		                                                    'listaarchivos'		=> 1,
+		                                                    'updestado'			=> 1,
+		                                                    'buscar'			=> 1,
+		                                                    'cargaqabyproject'	=> 1,
+                                                    		'getduracioncat'	=> 1
+	                                                    ],
+
+		                            ]
 		                        ];
 		//private $
 
