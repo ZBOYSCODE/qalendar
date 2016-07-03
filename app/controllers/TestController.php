@@ -90,12 +90,31 @@ class TestController extends ControllerBase
 	public function myFormSaveAction() {
 		if($this->request->isAjax()){
 			$myform = new MyForm();
-			$myform->isValid($_POST);
-			foreach ($myform->getMessages() as $message) {
-				echo $message, '<br>';
+
+			#Verificamos que validez del form
+			if (!$myform->isValid($_POST)) {
+
+				#formatiamos mensajes para trabajar con mifaces
+				$myform->formatMessages();
+				$messages = $myform->getErrorMessages();
+
 			}
+			else {
+				#Si el formulario es correcto, persistimos.. en este caso solo mostramos un msg
+				$msg_exito = "Formulario correcto sin errores!";
+			}
+
+			#Mifaces
+			$this->mifaces->newFaces();
+			if(isset($messages))
+				$this->mifaces->addErrorsForm($messages);
+			if(isset($msg_exito))
+				$this->mifaces->addToMsg("success",$msg_exito);
+			$this->mifaces->run();
+
+
 		}else {
-			#none
+			#Si la llamada no es ajax, lo manejamos
 		}
 	}
 

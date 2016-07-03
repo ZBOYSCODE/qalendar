@@ -5,19 +5,23 @@
     <div class="col-xs-4">
         <form id="testFormId" action="<?php print $this->url->get("test/myFormSave") ?>" method="post" data-type="ajax">
 
-            <p>
-                <label>Name</label>
+            <div class="form-group">
+                <label>Nombre</label>
                 <?php echo $pcData['myform']->render("name"); ?>
-            </p>
+                <div class="error-msg help-block animation-slideDown"></div>
+            </div>
 
-            <p>
-                <label>Telephone</label>
+
+            <div class="form-group">
+                <label>Telefono</label>
                 <?php echo $pcData['myform']->render("telephone"); ?>
-            </p>
+                <div class="error-msg help-block animation-slideDown"></div>
+            </div>
 
-            <p>
+
+            <div class="form-group">
                 <input type="submit" value="Save" />
-            </p>
+            </div>
 
         </form>
     </div>

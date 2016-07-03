@@ -1,17 +1,19 @@
 <?php
 namespace Gabs\Forms;
 
-use Phalcon\Forms\Form;
 use Phalcon\Forms\Element\Text;
 use Phalcon\Forms\Element\Select;
 use Phalcon\Validation\Validator\PresenceOf;
 
-class MyForm extends Form {
+class MyForm extends BaseForm {
+    #Debemos extender BaseForm para formatear los mensajes como array
     public function initialize()
     {
+        #Definimos el field "name"
         $name =
             new Text(
                 "name",
+                #le agregamos parametros al input
                 array(
                     'maxlength'   => 30,
                     'placeholder' => 'Ingresa tu nombre...',
@@ -19,15 +21,15 @@ class MyForm extends Form {
                 )
             );
 
+        #le agregamos validaciones
         $name->addValidators(array(
             new PresenceOf(array(
-                'message' => 'The name is required'
+                'message' => 'El Nombre es requerido.'
             ))
         ));
 
-        $this->add($name);
 
-        $this->add(
+        $phone =
             new Text(
                 "telephone",
                 array(
@@ -35,8 +37,20 @@ class MyForm extends Form {
                  'placeholder' => 'Ingresa tu Telefono...',
                  'class' => 'form-control input-sm'
                 )
-            )
-        );
+            );
+
+        $phone->addValidators(array(
+            new PresenceOf(array(
+                'message' => 'El telefono es requerido.'
+            ))
+        ));
+
+
+
+        #Agregamos todos los fields al formulario
+        $this->add($name);
+        $this->add($phone);
 
     }
+
 }
