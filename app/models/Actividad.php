@@ -181,7 +181,8 @@ class Actividad extends Model
 
             ){
             $callback['error'] = 1;
-            $callback['msg'][] = 'Faltan rellenar campos requeridos.';            
+            $callback['msg'][] = 'Faltan rellenar campos requeridos.'; 
+            //$callback['msg'][] = 'Persona, fecha u hora.';            
             return $callback;
         }
 
@@ -196,8 +197,10 @@ class Actividad extends Model
         $this->actv_location = $_POST['donde'];
         $this->actv_fecha = $_POST['fecha'];
         $this->actv_hora = $_POST['hora'];
-        $this->actv_duracion_horas = $_POST['duracion'];
-        $this->actv_duracion_minutos = $_POST['duracion'];
+
+        //$this->actv_duracion_horas = $_POST['duracion'];
+        //$this->actv_duracion_minutos = $_POST['duracion'];
+
         $this->actv_categoria = $_POST['categoria'];
         //$this->actv_status = $_POST['status'];
         $this->actv_status = 2;
@@ -252,9 +255,9 @@ class Actividad extends Model
         if ($this->save() == false) {
 
 
-            /*foreach ($this->getMessages() as $message) {
+            foreach ($this->getMessages() as $message) {
                 $callback['msg'][] = $message->getMessage();
-            }*/
+            }
 
             $callback['error'] = 1;
             $callback['msg'][] = 'Faltan rellenar campos requeridos.';

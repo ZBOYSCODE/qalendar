@@ -30,7 +30,9 @@
                                                     'updestado'			=> 1,
                                                     'buscar'			=> 1,
                                                     'cargaqabyproject'	=> 1,
-                                                    'getduracioncat'	=> 1
+                                                    'getduracioncat'	=> 1,
+                                                    'delete'			=> 1,
+                                                    'activar'			=> 1
                                                     ],
                                             'hito' => [
                                             		'crearhito' 	=> 1,
@@ -59,7 +61,8 @@
 		                                    				'store'			=> 1,
 		                                    				'edit'			=> 1,
 		                                    				'update'		=> 1,
-		                                    				'delete' 		=> 1
+		                                    				'delete' 		=> 1,
+		                                    				'perfil'		=> 1
 		                                    ],
 											'test' => [
 												'testdir' 	=> 1,
@@ -82,7 +85,9 @@
 													'updestado'			=> 1,
 													'buscar'			=> 1,
 													'cargaqabyproject'	=> 1,
-                                                    'getduracioncat'	=> 1
+                                                    'getduracioncat'	=> 1,
+                                                    'delete'			=> 1,
+                                                    'activar'			=> 1
                                                     ],
                                             'hito' => [
                                             		'crearhito' => 1,
@@ -111,7 +116,8 @@
 		                                    				'store'			=> 1,
 		                                    				'edit'			=> 1,
 		                                    				'update'		=> 1,
-		                                    				'delete' 		=> 1
+		                                    				'delete' 		=> 1,
+		                                    				'perfil'		=> 1
 		                                    				]
 		                                ],
 		                            #QA
@@ -124,6 +130,9 @@
 		                                                    'listaarchivos'		=> 1,
 		                                                    'buscar'			=> 1
 	                                                    ],
+	                                        'proyecto'	=> [
+		                                    				'perfil'			=> 1
+	                                        			]
 
 		                            ],
 		                            # JEFE PROYECTO
@@ -132,7 +141,8 @@
 		                            					],
 		                            		'proyecto' 	=> [
 		                                    				'index'			=> 1,
-		                                    				'list'			=> 1
+		                                    				'list'			=> 1,
+		                                    				'perfil'		=> 1
 		                                    			],
 		                                    'actividad' => [
 		                                                    'editarevento'    	=> 1,
@@ -148,7 +158,9 @@
 		                                                    'updestado'			=> 1,
 		                                                    'buscar'			=> 1,
 		                                                    'cargaqabyproject'	=> 1,
-                                                    		'getduracioncat'	=> 1
+                                                    		'getduracioncat'	=> 1,
+                                                    		'delete'			=> 1,
+                                                    		'activar'			=> 1
 	                                                    ],
 
 		                            ]

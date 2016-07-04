@@ -158,8 +158,32 @@
 
                             </td>
                         </tr>
+
+                        <tr>
+                            <td class="title-table">Estado</td>
+                            <td class="title-table">
+                                <?php
+                                    if($pcData['actividades']->activo){
+                                        echo "<span id='span_estado'>Activo </span>";
+                                    }else{
+                                        echo "<span id='span_estado'>Cancelado </span>";
+                                    }
+
+                                    if(     $this->AccesoAcl->tienePermiso('delete', 'actividad')
+                                        ||  $this->auth->getIdentity()['id'] == $pcData['actividades']->actv_creado_por)
+                                    {  
+
+                                        if($pcData['actividades']->activo){
+                                            echo "<button class='btn btn-danger btn-xs btn_cambio_estado' id='btn_cancelar_evento'>cancelar</button>";
+                                        }else{
+                                            echo "<button class='btn btn-success btn-xs btn_cambio_estado' id='btn_activar_evento'>activar</button>";
+                                        }
+                                    }
+                                ?>
+                            </td>
+                        </tr>
                         </tbody>
-                    </table>
+                    </table>                    
                 </div>
 
                 <div class="item">
@@ -269,7 +293,7 @@
                     <div id="dropzonePreview" class="dz-default dz-message">
                     <span>Haga Click o <br/>Arrastre los Archivos para ser cargados</span>
                     </div>
-                    <input type="hidden" name="actividad" value="<?php print($pcData['actividades']->actv_id)?>">
+                    <input type="hidden" name="actividad" id='actividad' value="<?php print($pcData['actividades']->actv_id)?>">
                 </form>
             </div>
             <!-- END Modal Body -->
@@ -339,6 +363,8 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title">Editar estado</h4>
             </div>
+            
+            <input type="hidden" disabled id='frm_to_qalendar' value='<?php print($this->url->get()) ?>'>
 
             <form action="<?php print($this->url->get("actividad")) ?>" id='frmajax'></form>
 

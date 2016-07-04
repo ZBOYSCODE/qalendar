@@ -224,6 +224,7 @@
 			$themeArray['pcData']['estados'] = TipoEstado::find();
 
 			$themeArray['addJs'][] 		= "js/actividad.js";
+			$themeArray['addJs'][] 		= "js/perfil_actividad.js";
 
 			echo $this->view->render('theme', $themeArray);
 		}
@@ -481,6 +482,73 @@
 	    		$data['msg'] = 'Error al ejecutar la consulta';
 	    	}
 		    	
+
+	    	echo json_encode($data);
+	    }
+
+	    public function deleteAction()
+	    {
+
+	    	try {
+
+	    		$id = $this->request->getPost("act", 'int');
+
+	    		$actividad = Actividad::findFirstByActvId($id);
+
+
+	    		// aquí irán las restricciones
+	    		// ejem: no se podrán cancelar a cierta hora de realizarse la actividad
+	    		// $se_puede = true/false
+	    		// si es false, guardar en la variable $data['msg'] la razón 
+	    		$se_puede = true;
+
+
+	    		if($se_puede)
+	    		{
+	    			$actividad->activo = 0;
+
+		    		if(!$actividad->save()){
+		    			$data['estado'] = false;
+		    			$data['msg'] 	= "no se ha podido cancelar el evento.";
+		    		}else{
+		    			$data['estado'] = true;
+		    			$data['msg'] 	= "Evento cancelado correctamente.";
+		    		}
+
+	    		}else{
+	    			$data['msg'] 	= 'se cancela el cambio de estado por restricción';
+	    			$data['estado'] = false;
+	    		}
+	    		
+	    	} catch (Exception $e) {
+	    		$data['estado'] = false;
+	    		$data['msg'] = "Error cancelando el evento.";
+	    	}
+
+	    	echo json_encode($data);
+	    }
+
+	    public function activarAction()
+	    {
+	    	try {
+
+	    		$id = $this->request->getPost("act", 'int');
+
+	    		$actividad = Actividad::findFirstByActvId($id);
+	    		$actividad->activo = 1;
+
+	    		if(!$actividad->save()){
+	    			$data['estado'] = false;
+	    			$data['msg'] = "no se ha podido activar el evento.";
+	    		}else{
+	    			$data['estado'] = true;
+	    			$data['msg'] = "Evento activado correctamente.";
+	    		}
+
+	    	} catch (Exception $e) {
+	    		$data['estado'] = false;
+	    		$data['msg'] = "Error activando el evento.";
+	    	}
 
 	    	echo json_encode($data);
 	    }
