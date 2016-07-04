@@ -130,8 +130,8 @@
                                             <strong>Cuando:</strong> <?php print $disponible->dspn_fecha." ".$disponible->dspn_hora ?> <br>
                                             <strong>Duración:</strong> <?php print $disponible->Actividad->actv_duracion_horas ?> Horas <br>
                                             <strong>Prioridad:</strong> <?php print $disponible->Actividad->Prioridad->prrd_nombre ?> <br>
-                                            <strong>Creado Por:</strong> <?php print $disponible->Actividad->actv_creado_por ?> <br>
-                                            <strong>Estado:</strong> <?php print $disponible->Actividad->actv_status ?> <br>
+                                            <strong>Creado Por:</strong> <?php print($disponible->Actividad->creadopor->name); ?> <br>
+                                            <strong>Estado:</strong> <?php print $disponible->Actividad->estado->nombre ?> <br>
 
                                             <?php
 

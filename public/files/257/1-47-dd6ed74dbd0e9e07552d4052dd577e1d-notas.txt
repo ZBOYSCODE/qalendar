@@ -1,0 +1,34 @@
+Mainsoft
+--------
+
+Cierre diseño: 	Esta semana y agendar reunion
+Prox Semana:	Instalacion ambiente - apache - phalcon y prototipo 
+CdeU:			Esta semana (no es ruta crítica)
+Documento de pruebas: esta semana (grafico zenta)
+
+--------
+Insert: catalogo - reiteraciones - evaluaciones (siempre las mismas: lo van informar)
+WService:
+
+
+- ¿Cuándo y en qué formato? Mañana temprano
+- Catalogo vendrá igual que en el excel.
+- WS para el catálogo deberá traer algunas retricciones de tipo
+
+
+Enviar Correo con web services extras. 
+
+Miercoles: Archivos wdsl - e instalacion ambiente.
+
+
+
+Documentos Lista - Link: Documento es texto mas uno o mas adjuntos, se podrá ver online o descargar
+
+
+
+
+- WS para "traer ultimos X tickets", consider que en el home se mostrarán hasta 10 tickets y en "mostrar todos" se mostrarán hasta máximo 30 tickets.
+- traer ticket por ID (Nº TICKET)
+- para el catálogo traer data para campos autocompletables: CI, impacto, urgencia u otro que aplique.
+- Para el KM, el WS deberá entregar links a los adjuntos de cada documento.
+- WS para traer datos básicos de un usuario para mostrar en barra de navegación superior.

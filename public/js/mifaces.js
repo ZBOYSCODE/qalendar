@@ -177,17 +177,27 @@ $(function(){
 							//var fn = new Function(value);
 							//console.log(value+':'+fn() !== undefined);
 						}); 
-					}				
+					}
 					if(result.type=='errorForm'){
+						//quitamos la verificación previa
+						$('.error-msg').html("");
+						$('.form-group').removeClass("has-error");
+
 						$.each(result.errors, function(index, value) {
 							if(parent.prop('tagName')=='FORM'){
-								parent.find('[name='+index+']').parents('.form-group').addClass('has-error');
+								var form_group = parent.find('[name='+index+']').parents('.form-group');
+								//se agrega la clase de error y el mensaje
+								form_group.addClass('has-error');
+								form_group.children('.error-msg').html(value);
 							}else{
-								parent.parents('form').find('[name='+index+']').parents('.form-group').addClass('has-error');
-							}						
+								var form_group = parent.parents('form').find('[name='+index+']').parents('.form-group');
+								//se agrega la clase de error y el mensaje
+								form_group.addClass('has-error');
+								form_group.children('.error-msg').html(value);
+							}
 							console.log(index +' '+ value);
-						}); 
-					}		
+						});
+					}
 
 					if(result.type=='render'){
 						$.each(result.renders, function(index, value) {
