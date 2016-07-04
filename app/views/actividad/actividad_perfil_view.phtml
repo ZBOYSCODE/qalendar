@@ -160,14 +160,18 @@
                         </tr>
 
                         <tr>
-                            <td class="title-table">Estado</td>
                             <td class="title-table">
                                 <?php
-                                    if($pcData['actividades']->activo){
+                                   if($pcData['actividades']->activo){
                                         echo "<span id='span_estado'>Activo </span>";
                                     }else{
                                         echo "<span id='span_estado'>Cancelado </span>";
                                     }
+                                ?>
+                            </td>
+                            <td class="title-table">
+                                <?php
+                                    
 
                                     if(     $this->AccesoAcl->tienePermiso('delete', 'actividad')
                                         ||  $this->auth->getIdentity()['id'] == $pcData['actividades']->actv_creado_por)

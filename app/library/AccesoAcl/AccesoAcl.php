@@ -62,7 +62,8 @@
 		                                    				'edit'			=> 1,
 		                                    				'update'		=> 1,
 		                                    				'delete' 		=> 1,
-		                                    				'perfil'		=> 1
+		                                    				'perfil'		=> 1,
+		                                    				'activar'		=> 1
 		                                    ],
 											'test' => [
 												'testdir' 	=> 1,
@@ -117,7 +118,8 @@
 		                                    				'edit'			=> 1,
 		                                    				'update'		=> 1,
 		                                    				'delete' 		=> 1,
-		                                    				'perfil'		=> 1
+		                                    				'perfil'		=> 1,
+		                                    				'activar'		=> 1
 		                                    				]
 		                                ],
 		                            #QA

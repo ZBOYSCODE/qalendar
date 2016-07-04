@@ -6,6 +6,7 @@
 	use Gabs\Models\Area;
 	use Gabs\Models\Tecnologia;
 	use Gabs\Models\Users;
+	use Gabs\Models\Actividad;
 
 	use Phalcon\Mvc\Model\Criteria;
 	use Phalcon\Paginator\Adapter\Model as PaginatorModel;
@@ -74,6 +75,45 @@
 	        $themeArray['addJs'][] = "js/proyecto.js";
 
         	echo $this->view->render('theme', $themeArray);
+	    }
+
+	    public function perfilAction($id){
+
+	    	$id = (int)$id;
+
+		 	if($id>0)
+		 	{
+		 		# Form edit
+		    	//$data['users'] = Users::find();
+		    	//$data['areas'] = Area::find();
+		    	//$data['tecnologias'] = Tecnologia::find();
+
+		    	$data['proyecto'] = Proyecto::findFirst($id);
+
+		    	$arr = array(
+		    			"proyecto_id = $id ",
+		    			"order" => "actv_created_at DESC"
+		    		);
+
+		    	$data['actividades'] = actividad::find($arr);
+
+		    	
+
+				$themeArray = $this->_themeArray;
+
+				$themeArray['addJs'][] = 'js/perfil_proyecto.js';
+	    		$themeArray['pcView'] = 'proyectos/perfil';
+		        $themeArray['pcData'] = $data;
+
+		 	
+		 	}else{
+				$response = new \Phalcon\Http\Response();
+				$response->redirect("acceso/denegado");
+				$response->send();
+		 	}
+		 		
+
+		    echo $this->view->render('theme', $themeArray);
 	    }
 
 	    public function createAction(){
@@ -192,29 +232,71 @@
 		    }
 	    }
 
+
 	    public function deleteAction()
 	    {
-	    	if ($this->request->isPost())
-	    	{
-	    		$id 	= $this->request->getPost("proyecto", 'int');
-	    		
+
+	    	try {
+
+	    		$id = $this->request->getPost("proyecto", 'int');
+
 	    		$proyecto = Proyecto::findFirst($id);
 
-	    		if($proyecto->delete() == false){
+	    		// aquí irán las restricciones
+	    		// ejem: no se podrán cancelar a cierta hora de realizarse la actividad
+	    		// $se_puede = true/false
+	    		// si es false, guardar en la variable $data['msg'] la razón 
+	    		$se_puede = true;
+
+
+	    		if($se_puede)
+	    		{
+	    			$proyecto->estado = 0;
+
+		    		if(!$proyecto->save()){
+		    			$data['estado'] = false;
+		    			$data['msg'] 	= "no se ha podido eliminar el proyecto.";
+		    		}else{
+		    			$data['estado'] = true;
+		    			$data['msg'] 	= "Proyecto eliminado correctamente.";
+		    		}
+
+	    		}else{
+	    			$data['msg'] 	= 'se cancela la eliminación del proyecto por restricción';
 	    			$data['estado'] = false;
-	    			$data['msg'] 	= "Error al tratar de eliminar el proyecto.";
+	    		}
+	    		
+	    	} catch (Exception $e) {
+	    		$data['estado'] = false;
+	    		$data['msg'] = "Error al tratar de eliminar el proyecto.";
+	    	}
+
+	    	echo json_encode($data);
+	    }
+
+	    public function activarAction()
+	    {
+	    	try {
+
+	    		$id = $this->request->getPost("proyecto", 'int');
+
+	    		$proyecto = Proyecto::findFirst($id);
+	    		$proyecto->estado = 1;
+
+	    		if(!$proyecto->save()){
+	    			$data['estado'] = false;
+	    			$data['msg'] = "no se ha podido activar el evento.";
 	    		}else{
 	    			$data['estado'] = true;
-	    			$data['msg'] 	= "Proyecto Eliminado.";
+	    			$data['msg'] = "Evento activado correctamente.";
 	    		}
 
-	    		echo json_encode($data);
-
-	    	}else{
-	    		$response = new \Phalcon\Http\Response();
-				$response->redirect("acceso/denegado");
-				$response->send();
+	    	} catch (Exception $e) {
+	    		$data['estado'] = false;
+	    		$data['msg'] = "Error activando el evento.";
 	    	}
+
+	    	echo json_encode($data);
 	    }
 
 

@@ -1,0 +1,146 @@
+<?php
+	$proy = $pcData['proyecto'];		
+?>
+<div class="base-page lighter">
+    <div class="row header-color">
+        <div class="col-md-12 col-lg-12">
+            <div class="header-container">
+                <div class="header-perfil">
+                    <i class="gi gi-bookmark"></i>
+
+                    <?php
+
+                    print($proy->nombre);
+
+                    ?>
+
+                </div>
+
+                <div class="header-bajada">
+
+                    <?php
+                        print($proy->created_at);
+                    ?>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-8">
+            <!-- Course Widget -->
+            <div class="widget">
+                <div class="widget-advanced">
+                    <!-- Widget Header -->
+                    <!-- END Widget Header -->
+
+                    <!-- Widget Main -->
+                    <div class="widget-main" style="padding-top: 35px; background-color: white;">
+                        <ul class="nav nav-tabs push" data-toggle="tabs">
+                            <li class="active">
+                                <a href="#actTab">Actividades</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="actTab" style="position: relative;">
+                                <!-- Timeline Content -->
+                                <div id="timeline" class="timeline">
+                                    <?php echo $this->view->render('actividad/timeline_actividades',array('actividades'=>$pcData['actividades']))?>
+                                </div>
+                                <!-- END Timeline Content -->
+
+                            </div>
+                        </div>
+
+                    </div>
+                    <!-- END Widget Main -->
+                </div>
+            </div>
+            <!-- END Course Widget -->
+        </div>
+        <div class="col-md-4">
+
+            <!-- Most Viewed Courses Block -->
+            <div class="my-block">
+                <div class="item">
+                    <div class="title">
+                        Datos Relevantes
+
+                        <?php
+
+                        if($this->AccesoAcl->tienePermiso('edit', 'proyecto')) { ?>
+                            <a href="<?php print $this->url->get("proyecto/edit/".$proy->id); ?>" class="link-modal pull-right" style="font-size: 15px;"><i class="fa fa-cog"></i> Editar</a>
+
+                            <?php
+                        }
+                        ?>
+                    </div>
+                    <hr>
+                    <p class="descrp-evento">
+                        <?php print($proy->descripcion); ?>
+                    </p>
+                    <table class='table'>
+                        <tbody>
+						
+						<tr>
+                            <td class="title-table">Código</td>
+                            <td class="title-table"><?php print($proy->codigo); ?></td>
+                        </tr>
+                        <tr>
+                            <td class="title-table">Creado por</td>
+                            <td class="title-table"><?php print($proy->creador->name); ?></td>
+                        </tr>
+                        <tr>
+                            <td class="title-table">Jefe proyecto</td>
+                            <td class="title-table"><?php print($proy->jefeproyecto->name); ?></td>
+                        </tr>
+                        <tr>
+                            <td class="title-table">Área</td>
+                            <td class="title-table"><?php print($proy->area->nombre); ?></td>
+                        </tr>
+                        <tr>
+                            <td class="title-table">Tecnología</td>
+                            <td class="title-table"><?php print($proy->tecnologia->nombre); ?></td>
+                        </tr>
+
+                        <tr>
+                            <td class="title-table">
+                                <?php
+                                    if($proy->estado){
+                                        echo "<span id='span_estado'>Activo </span>";
+                                    }else{
+                                        echo "<span id='span_estado'>Cancelado </span>";
+                                    }
+                                ?>
+                            </td>
+                            <td class="title-table">
+                                <input type="hidden" disabled id='frm'          value='<?php echo $this->url->get('proyecto'); ?>'>
+                                <input type="hidden" disabled id='proyecto_id'  value='<?php echo $proy->id; ?>'>
+
+                                <?php
+                                    
+
+                                    if(     $this->AccesoAcl->tienePermiso('delete', 'proyecto')
+                                        ||  $this->auth->getIdentity()['id'] == $proy->actv_creado_por)
+                                    {  
+
+                                        if($proy->estado){
+                                            echo "<button class='btn btn-danger btn-xs btn_cambio_estado' id='btn_eliminar_proyecto'>cancelar</button>";
+                                        }else{
+                                            echo "<button class='btn btn-success btn-xs btn_cambio_estado' id='btn_activar_proyecto'>activar</button>";
+                                        }
+                                    }
+                                ?>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>                    
+                </div>
+
+            </div>
+            <!-- END Most Viewed Courses Block -->
+
+        </div>
+    </div>
+</div>

@@ -375,3 +375,39 @@
 	color: #fff;
 	font-family: sans-serif;
 }
+
+
+
+.icon-timeline{
+	position: relative;
+}
+
+.icon-timeline-1:before{
+	/* Instalación beta */
+	content: "\25AE";
+    font-family: FontAwesome;
+    left:-5px;
+    position:absolute;
+    top:0;
+}
+
+.icon-timeline-2:before{
+	/*"\f013"*/
+	content: "\f013";
+    font-family: FontAwesome;
+    left:-5px;
+    position:absolute;
+    top:0;
+}
+.icon-timeline-3:before{/**/}
+
+.icon-timeline-4:before
+{	/**/
+	content: "\f126";
+    font-family: FontAwesome;
+    left:-5px;
+    position:absolute;
+    top:0;	
+}
+
+.icon-timeline-5:before{/**/}
