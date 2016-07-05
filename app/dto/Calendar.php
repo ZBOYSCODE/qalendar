@@ -179,7 +179,7 @@ class Calendar
 		$horas = $this->getHorasWeek();
 
 		#traemos users QA
-		$users = Users::find("rol_id = 3");
+		$users = $this->getUsersCalendarDay();
 
 		$data['fecha'] = $fecha;
 
@@ -202,7 +202,7 @@ class Calendar
 			$disponible = Disponible::findFirst($disponible->dspn_id);
 
 			#Si hay que saltarse el bloque, pasamos a la siguiente iteracion
-			if($week[$hora][$disponible->user_id]["status"] == "skip" )
+			if($day[$hora][$disponible->user_id]["status"] == "skip" )
 				continue;
 
 			#Obtenemos la duración de la actividad (que viene desde la categoría)
@@ -211,6 +211,8 @@ class Calendar
 				$duracion_actividad  = $CategoriaActIter->Categoria->duracion;
 				break;
 			}
+
+
 
 			#cantidad de bloques a ocupar por la actividad lo aproximamos al entero siguiente.
 			$bloques = ceil($duracion_actividad/$this->intervalo);
@@ -223,12 +225,12 @@ class Calendar
 					$cantMinToAdd = (string) ($this->intervalo*$i);
 					$bloqueSig = (string) date("H:i", strtotime($hora. "+ ".$cantMinToAdd." minutes"));
 
-					$week[$bloqueSig][$fecha] = array("status"=>"skip");
+					$day[$bloqueSig][$disponible->user_id] = array("status"=>"skip");
 				}
 			}
 
 			//print($bloques);
-			$week[$hora][$fecha] = array(
+			$day[$hora][$disponible->user_id] = array(
 				"obj" =>$disponible,
 				"status"=>"disponible",
 				"rowspan"=>$bloques,
@@ -236,8 +238,17 @@ class Calendar
 			);
 		}
 
-		//print_r($week);exit;
-		return $week;
+		//print_r($day);exit;
+		return $day;
+	}
+
+
+	/**
+	 * Retorna los usuarios a ocupar en el calendario diario
+	 * @return mixed
+     */
+	public function getUsersCalendarDay() {
+		return Users::find("rol_id = 3");
 	}
 
 

@@ -181,16 +181,19 @@ class GestionQaController extends ControllerBase
         $DIA_ACTUAL = date('Y-m-d');
 
         $calendar = new Calendar();
-        $daily = $calendar->getDay($DIA_ACTUAL);
+        $daily = $calendar->_getDay($DIA_ACTUAL);
+        $usersCalendar = $calendar->getUsersCalendarDay();
 
-        $data['actividades'] = $daily;
+        $data['day'] = $daily;
         $data['today'] = $DIA_ACTUAL;
         $data['users'] = Users::find("rol_id = 3");
+        $data['usersCalendar'] = $usersCalendar;
         $data['categorias'] = Categoria::find();
         $data['subMenuSel'] = "diaria";
 
         $themeArray['pcData'] = $data;
         $themeArray['jsScript'] = $this->view->render('webcal/js/vista_diaria');
+        $themeArray['jsScript'] .= " $('.double-scroll').doubleScroll();";
 
         echo $this->view->render('theme', $themeArray);
     }

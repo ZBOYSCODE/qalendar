@@ -422,4 +422,24 @@
     top:0;	
 }
 
+.webcal-box {
+	min-width: 189px;
+}
+
+.double-scroll{
+	width: 100%;
+}
+
+.calendar-container {
+	width: 100%;
+	overflow-x: scroll;
+}
+
+.headcol {
+	position:absolute;
+	width:100px !important;
+	left:0;
+	top:auto;
+}
+
 .icon-timeline-5:before{/**/}
