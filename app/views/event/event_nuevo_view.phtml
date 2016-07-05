@@ -1,12 +1,10 @@
 <div class="base-page lighter">
-    <div class="list-group-container">
-        <div class="list-group list-group-custom list-group-horizontal">
-            <a href="#" class="list-group-item active">Detalle y Participantes</a>
-            <a href="javascript:void(0)" class="list-group-item" data-toggle="tooltip" data-placement="bottom" title="Proximamente">Repetición</a>
+
+        <div class="col-md-10 col-md-offset-1">
+            <h2>Creación de evento</h2>
         </div>
 
-    </div>
-    <div >
+    <div>
         <a href="javascript:void(0)"  onclick="$('#evento-form').submit();" class="btn btn-success pull-right btn-save">Guardar</a>
     </div>
     <div class="formulario-section">
@@ -14,7 +12,7 @@
         
         <form id="evento-form" action="<?php print($this->url->get("actividad/guardarEvento")) ?>" method="post" data-type="ajax">
             <div class="row">
-                <div class="col-sm-5">
+                <div class="col-sm-6">
                     <div class="form-content">
 
                         <div class="form-group row form-row">
@@ -61,69 +59,10 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="form-group row form-row">
-                            <label class="col-sm-4 control-label" for="acceso">Acceso *</label>
-                            <div class="col-sm-8" style="text-align: left;">
-                                <select id="acceso" name="acceso" class="select-chosen my-chosen" data-placeholder="Seleccionar..." style="width: 250px;">
-                                    <option value=""></option>
-                                    <?php foreach($pcData['acceso'] as $accesoItem ) {?>
-                                        <option value="<?php print $accesoItem->accs_id ?>"><?php print $accesoItem->accs_nombre ?></option>
-                                    <?php } ?>
-                                </select>
-                            </div>
-                        </div>
                         <div class="form-group row form-row my-chosen">
-                            <label class="col-sm-4 control-label" for="prioridad">Prioridad *</label>
-                            <div class="col-sm-8" style="text-align: left;">
-                                <select id="prioridad" name="prioridad" class="select-chosen" data-placeholder="Seleccionar..." style="width: 250px;">
-                                    <option></option>
-                                    <?php foreach($pcData['prioridad'] as $prioridadItem ) {?>
-                                        <option value="<?php print $prioridadItem->prrd_id ?>"><?php print $prioridadItem->prrd_nombre ?></option>
-                                    <?php } ?>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-2">
-                    <div class="form-group row form-row">
-                        <div id="datepicker" data-date-format="yyyy-mm-dd" data-date="<?php print(isset($pcData['fechaSelected'])?$pcData['fechaSelected']:date('Y-m-d')) ?>"></div>
-                        <input type="hidden" id="fecha" name="fecha" value="<?php print(isset($pcData['fechaSelected'])?$pcData['fechaSelected']:date('Y-m-d')) ?>">
-                    </div>
-                    <div class="form-group row form-row">
-                        <div class="input-group bootstrap-timepicker" style="padding-left: 0px;">
-                            <input style="margin-left:15px;" type="text" id="hora" name="hora" class="form-control input-timepicker24" value="<?php print(isset($pcData['horaSelected'])?$pcData['horaSelected']:"13:00") ?>">
-                            <span class="input-group-btn">
-                                <a href="javascript:void(0)" class="btn btn-primary"><i class="fa fa-clock-o"></i></a>
-                            </span>
-                        </div>
-                    </div>
-                    <div class="form-group row form-row">
-                        <label class="col-sm-12 control-label" for="duracion">Duración (Horas) *</label>
-                        <div class="col-sm-12">
-                            <input type="time" id="duracion" name="duracion" class="form-control input-sm" value="1" placeholder="Duración" readonly>
-                        </div>
-                    </div>
-                    <div class="form-group row" style="text-align: center;">
-                        <?php
-                            if(isset($pcData['userSelected']->id)) {
-                                $userBloque = $pcData['userSelected']->id;
-                            }else {
-                                $userBloque = '';
-                            }
-                        ?>
-                        <a id="btnBloqueLibre" href="<?php print($this->url->get("gestionQa/encontrarBloque")) ?>" data-action="<?php print($this->url->get("gestionQa/encontrarBloque")) ?>" data-val="fecha=<?php print(date('Y-m-d')) ?>&persona=<?php print $userBloque ?>">Encontrar Bloque Libre</a>
-                    </div>
-                </div>
-                <div class="col-sm-5">
-                    <div class="form-content">
-                        <div class="form-group row form-row my-chosen">
-                            <label class="col-sm-12 control-label" for="persona">Añadir Persona *</label>
+                            <label class="col-sm-4 control-label" for="persona">Añadir Persona *</label>
 
                             <div class="col-sm-8" style="text-align: left;">
-
-                                
-                                
                                 <select id="persona" name="persona" class="select-chosen" data-placeholder="Seleccionar..." style="width: 250px;">
                                         <option></option>
                                     <?php  foreach($pcData['users'] as $persona ) {?>
@@ -131,66 +70,40 @@
                                     <?php } ?>
                                 </select>
                             </div>
-                            <!--
-                            <div class="col-sm-4">
-                                <a href="javascript:void(0)" class="btn btn-sm btn-default pull-left">Añadir</a>
-                            </div>
-                            <div class="col-sm-12" style="margin: 20px;">
-                                <div class="personas-box">
-                                    <table>
-                                        <tbody>
-                                        <tr>
-                                            <td class="to-left"><i class="gi gi-user" style="margin-right: 40px: "></i> Jara, Miguel</td>
-                                            <td><a href="javascript:void(0)">
-                                                    <i class="gi gi-remove_2" style="color:gray;"></i>
-                                                </a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="to-left"><i class="gi gi-user" style="margin-right: 40px: "></i> Rodriguez, Puma</td>
-                                            <td><a href="javascript:void(0)">
-                                                    <i class="gi gi-remove_2" style="color:gray;"></i>
-                                                </a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="to-left"><i class="gi gi-user" style="margin-right: 40px: "></i> Salas, Marcelo</td>
-                                            <td><a href="javascript:void(0)">
-                                                    <i class="gi gi-remove_2" style="color:gray;"></i>
-                                                </a>
-                                            </td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
+                        </div>                        
+                    </div>
 
-                                </div>
-                                <div class="sugerencias-box">
-                                    <a id="openSugerencias" href="javascript:void(0)" class="pull-left">Sugerencias de Horas</a>
-                                </div>
-                                <div class="bubble-msg">
-                                    <div class="item-horario">
-                                        <strong>viernes 10/06 12.00</strong>
-                                        <p>Todos pueden</p>
-                                    </div>
-                                    <div class="item-horario">
-                                        <strong>viernes 10/06 14.00</strong>
-                                        <p>Todos pueden</p>
-                                    </div>
-                                    <div class="item-horario">
-                                        <strong>viernes 10/06 15.00</strong>
-                                        <p>Todos pueden</p>
-                                    </div>
-                                    <div class="item-horario">
-                                        <strong>viernes 10/06 16.00</strong>
-                                        <p>Todos pueden</p>
-                                    </div>
-                                    <div class="item-horario">
-                                        <strong>viernes 10/06 17.00</strong>
-                                        <p>Todos pueden</p>
-                                    </div>
-                                </div>
-                            </div>-->
+                </div>
+                <div class="col-sm-3 col-sm-offset-1">
+                    <div class="form-content">
+                        <div class="form-group row">
+                            <div id="datepicker" data-date-format="yyyy-mm-dd" data-date="<?php print(isset($pcData['fechaSelected'])?$pcData['fechaSelected']:date('Y-m-d')) ?>"></div>
+                            <input type="hidden" id="fecha" name="fecha" value="<?php print(isset($pcData['fechaSelected'])?$pcData['fechaSelected']:date('Y-m-d')) ?>">
                         </div>
+                        <div class="form-group row form-row">
+                            <div class="input-group bootstrap-timepicker" style="padding-left: 0px;">
+                                <input style="margin-left:15px;" type="text" id="hora" name="hora" class="form-control input-timepicker24" value="<?php print(isset($pcData['horaSelected'])?$pcData['horaSelected']:"13:00") ?>">
+                                <span class="input-group-btn">
+                                    <a href="javascript:void(0)" class="btn btn-primary"><i class="fa fa-clock-o"></i></a>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="form-group row form-row">
+                            <label class="col-sm-12 control-label" for="duracion">Duración (Horas) *</label>
+                            <div class="col-sm-12">
+                                <input type="time" id="duracion" name="duracion" class="form-control input-sm" value="1" placeholder="Duración" readonly>
+                            </div>
+                        </div>
+                        <div class="form-group row" style="text-align: center;">
+                            <?php
+                                if(isset($pcData['userSelected']->id)) {
+                                    $userBloque = $pcData['userSelected']->id;
+                                }else {
+                                    $userBloque = '';
+                                }
+                            ?>
+                            <a id="btnBloqueLibre" href="<?php print($this->url->get("gestionQa/encontrarBloque")) ?>" data-action="<?php print($this->url->get("gestionQa/encontrarBloque")) ?>" data-val="fecha=<?php print(date('Y-m-d')) ?>&persona=<?php print $userBloque ?>">Encontrar Bloque Libre</a>
+                        </div>                        
                     </div>
                 </div>
             </div>

@@ -255,14 +255,14 @@
 
 		    		if(!$proyecto->save()){
 		    			$data['estado'] = false;
-		    			$data['msg'] 	= "no se ha podido eliminar el proyecto.";
+		    			$data['msg'] 	= "No se ha podido eliminar el proyecto.";
 		    		}else{
 		    			$data['estado'] = true;
 		    			$data['msg'] 	= "Proyecto eliminado correctamente.";
 		    		}
 
 	    		}else{
-	    			$data['msg'] 	= 'se cancela la eliminación del proyecto por restricción';
+	    			$data['msg'] 	= 'Se cancela la eliminación del proyecto por restricción';
 	    			$data['estado'] = false;
 	    		}
 	    		

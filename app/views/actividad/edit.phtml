@@ -1,10 +1,7 @@
 <div class="base-page lighter">
-    <div class="list-group-container">
-        <div class="list-group list-group-custom list-group-horizontal">
-            <a href="#" class="list-group-item active">Detalle y Participantes</a>
-            <a href="javascript:void(0)" class="list-group-item" data-toggle="tooltip" data-placement="bottom" title="Proximamente">Repetición</a>
+        <div class="col-md-10 col-md-offset-1">
+            <h2>Edición de evento</h2>
         </div>
-    </div>
 
     <div >
 
@@ -42,7 +39,7 @@
         <form id="evento-form" action="<?php print($this->url->get("actividad/editarEvento")) ?>" method="post" data-type="ajax">
             <input type='hidden' name='id' id='id' value='<?php echo $pcData['actividad']->actv_id; ?>' />
             <div class="row">
-                <div class="col-sm-5">
+                <div class="col-sm-6">
                     <div class="form-content">
 
 
@@ -110,49 +107,21 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="form-group row form-row">
-                            <label class="col-sm-4 control-label" for="acceso">Acceso *</label>
-                            <div class="col-sm-8" style="text-align: left;">
-                                <select id="acceso" name="acceso" class="select-chosen my-chosen" data-placeholder="Seleccionar..." style="width: 250px;">
-                                    <option value=""></option>
-                                    <?php foreach($pcData['accesos'] as $accesoItem ) {
 
-                                            if($pcData['actividad']->accs_id == $accesoItem->accs_id)
-                                            {
-                                                $selected = "selected";
-                                            }else{
-                                                $selected = "";
-                                            }
-
-                                        ?>
-                                        <option value="<?php print $accesoItem->accs_id ?>" <?php echo $selected; ?> ><?php print $accesoItem->accs_nombre ?></option>
-                                    <?php } ?>
-                                </select>
-                            </div>
-                        </div>
                         <div class="form-group row form-row my-chosen">
-                            <label class="col-sm-4 control-label" for="prioridad">Prioridad *</label>
+                            <label class="col-sm-4 control-label" for="persona">Añadir Persona *</label>
+
                             <div class="col-sm-8" style="text-align: left;">
-                                <select id="prioridad" name="prioridad" class="select-chosen" data-placeholder="Seleccionar..." style="width: 250px;">
-                                    <option></option>
-                                    <?php foreach($pcData['prioridades'] as $prioridadItem ) {
 
+                                <input id='qa_selected' name='qa_selected' value='<?php echo $pcData['usersSelected']; ?>' type='hidden'>
 
-                                            if($pcData['actividad']->prrd_id == $prioridadItem->prrd_id)
-                                            {
-                                                $selected = "selected";
-                                            }else{
-                                                $selected = "";
-                                            }
-                                        ?>
-                                        <option value="<?php print $prioridadItem->prrd_id ?>" <?php echo $selected; ?> ><?php print $prioridadItem->prrd_nombre ?></option>
-                                    <?php } ?>
+                                <select id="persona" name="persona" class="select-chosen" data-placeholder="Seleccionar..." value="1" style="width: 250px;">
                                 </select>
                             </div>
-                        </div>
+                        </div>                        
                     </div>
                 </div>
-                <div class="col-sm-2">
+                <div class="col-sm-3 col-md-offset-1">
                     <div class="form-group row form-row">
                         <div id="datepicker" data-date-format="yyyy-mm-dd" data-date="<?php print(isset($pcData['fechaSelected'])?$pcData['fechaSelected']:date('Y-m-d')) ?>"></div>
                         <input type="hidden" id="fecha" name="fecha" value="<?php print(isset($pcData['fechaSelected'])?$pcData['fechaSelected']:date('Y-m-d')) ?>">
@@ -176,94 +145,6 @@
                            data-action="<?php print($this->url->get("gestionQa/encontrarBloque")) ?>"
                            data-val="fecha=<?php print(date('Y-m-d')) ?>&persona=<?php print($pcData['usersSelected']) ?>"
                            class="">Encontrar Bloque Libre</a>
-                    </div>
-                </div>
-                <div class="col-sm-5">
-                    <div class="form-content">
-                        <div class="form-group row form-row my-chosen">
-                            <label class="col-sm-12 control-label" for="persona">Añadir Persona *</label>
-
-                            <div class="col-sm-8" style="text-align: left;">
-
-                                <input id='qa_selected' name='qa_selected' value='<?php echo $pcData['usersSelected']; ?>' type='hidden'>
-
-                                <select id="persona" name="persona" class="select-chosen" data-placeholder="Seleccionar..." value="1" style="width: 250px;">
-                                      <!--  <option></option>
-                                    <?php /*foreach($pcData['users'] as $persona ) {
-
-
-                                        if($pcData['usersSelected'] == $persona->id)
-                                        {
-                                            $selected = 'selected';
-                                        }else{
-                                            $selected = '';
-                                        }
-
-                                        ?>
-                                        <option value="<?php print $persona->id; ?>" <?php echo $selected;?> ><?php print $persona->name; ?></option>
-                                    <?php } */ ?> -->
-                                </select>
-                            </div>
-                            <!--
-                            <div class="col-sm-4">
-                                <a href="javascript:void(0)" class="btn btn-sm btn-default pull-left">Añadir</a>
-                            </div>
-                            <div class="col-sm-12" style="margin: 20px;">
-                                <div class="personas-box">
-                                    <table>
-                                        <tbody>
-                                        <tr>
-                                            <td class="to-left"><i class="gi gi-user" style="margin-right: 40px: "></i> Jara, Miguel</td>
-                                            <td><a href="javascript:void(0)">
-                                                    <i class="gi gi-remove_2" style="color:gray;"></i>
-                                                </a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="to-left"><i class="gi gi-user" style="margin-right: 40px: "></i> Rodriguez, Puma</td>
-                                            <td><a href="javascript:void(0)">
-                                                    <i class="gi gi-remove_2" style="color:gray;"></i>
-                                                </a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="to-left"><i class="gi gi-user" style="margin-right: 40px: "></i> Salas, Marcelo</td>
-                                            <td><a href="javascript:void(0)">
-                                                    <i class="gi gi-remove_2" style="color:gray;"></i>
-                                                </a>
-                                            </td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-
-                                </div>
-                                <div class="sugerencias-box">
-                                    <a id="openSugerencias" href="javascript:void(0)" class="pull-left">Sugerencias de Horas</a>
-                                </div>
-                                <div class="bubble-msg">
-                                    <div class="item-horario">
-                                        <strong>viernes 10/06 12.00</strong>
-                                        <p>Todos pueden</p>
-                                    </div>
-                                    <div class="item-horario">
-                                        <strong>viernes 10/06 14.00</strong>
-                                        <p>Todos pueden</p>
-                                    </div>
-                                    <div class="item-horario">
-                                        <strong>viernes 10/06 15.00</strong>
-                                        <p>Todos pueden</p>
-                                    </div>
-                                    <div class="item-horario">
-                                        <strong>viernes 10/06 16.00</strong>
-                                        <p>Todos pueden</p>
-                                    </div>
-                                    <div class="item-horario">
-                                        <strong>viernes 10/06 17.00</strong>
-                                        <p>Todos pueden</p>
-                                    </div>
-                                </div>
-                            </div>-->
-                        </div>
                     </div>
                 </div>
             </div>

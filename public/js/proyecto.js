@@ -10,7 +10,7 @@ $(document).ready(function(){
 
 		var id = $(this).attr('data-id');
 
-		if(confirm("¿seguro desea eliminar este proyecto?")){
+		if(confirm("¿Seguro desea eliminar este proyecto?")){
 			deleteProyecto(id);
 		}
 

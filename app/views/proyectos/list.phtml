@@ -67,21 +67,21 @@
 
 									if($this->AccesoAcl->tienePermiso('perfil', 'proyecto'))
 									{
-										echo "	<a href='".$this->url->get('proyecto/perfil/').$proyecto->id ."'>
+										echo "	<a class='btn btn-warning' href='".$this->url->get('proyecto/perfil/').$proyecto->id ."'>
 													<i class='fa fa-newspaper-o'></i>
 												</a>";
 					                }
 
 									if($this->AccesoAcl->tienePermiso('edit', 'proyecto'))
 									{
-										echo "	<a href='".$this->url->get('proyecto/edit/').$proyecto->id ."'>
+										echo "	<a class='btn btn-warning' href='".$this->url->get('proyecto/edit/').$proyecto->id ."'>
 													<i class='fa fa-pencil-square-o'></i>
 												</a>";
 					                }
 									
 									if($this->AccesoAcl->tienePermiso('delete', 'proyecto'))
 									{		
-										echo "	<a href='".$this->url->get('proyecto/delete/').$proyecto->id ."/' id='delete-project' data-id='".$proyecto->id."'>
+										echo "	<a class='btn btn-warning' href='".$this->url->get('proyecto/delete/').$proyecto->id ."/' id='delete-project' data-id='".$proyecto->id."'>
 													<i class='fa fa-times'></i>
 												</a>";
 									}

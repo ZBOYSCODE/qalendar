@@ -164,6 +164,17 @@
                                                     		'delete'			=> 1,
                                                     		'activar'			=> 1
 	                                                    ],
+		                                    'gestionqa' => [
+		                                                    'index'                 => 1,
+		                                                    'vistasemanal'          => 1,
+															'changecalendaruser'    => 1,
+															'changecalendardate'    => 1,
+		                                                    'vistadiaria'           => 1,
+		                                                    'changedailydate'       => 1,
+		                                                    'geteventdetail'        => 1,
+		                                                    'encontrarbloque'       => 1,
+		                                                    'seleccionarbloque'     => 1
+		                                                ]                  
 
 		                            ]
 		                        ];

@@ -200,6 +200,18 @@
 	height: 33px
 }
 
+.btn-back{
+    position: relative;
+    left: -7px;
+    top: 80px;
+    width: 114px;
+    height: 33px;	
+}
+
+#datepicker .datepicker{
+	margin: 0 auto;
+}
+
 .event-blocked {
 	background-color: whitesmoke;
 }
