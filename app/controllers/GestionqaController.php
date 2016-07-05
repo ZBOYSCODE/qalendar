@@ -47,11 +47,11 @@ class GestionQaController extends ControllerBase
         $DIA_ACTUAL = date('Y-m-d');
 
         $session = $this->auth->getIdentity();
-        if($session['roleId'] == 2) {
+        if($session['roleId'] == 3) {
             $USER_ACTUAL = $this->auth->getIdentity()['id'];
         }
         else{
-            $USER_ACTUAL = Users::findFirst("rol_id = 2")->id;
+            $USER_ACTUAL = Users::findFirst("rol_id = 3")->id;
         }
 
         # Creamos Calendario Semanal
@@ -69,7 +69,7 @@ class GestionQaController extends ControllerBase
         $data['fechas'] = $fechas;
         $data['today'] = $DIA_ACTUAL;
         $data['calendarUser'] = $USER_ACTUAL;
-        $data['users'] = Users::find("rol_id = 2");
+        $data['users'] = Users::find("rol_id = 3");
         $data['subMenuSel'] = "semanal";
 
     	$themeArray['pcData'] = $data;
@@ -118,11 +118,11 @@ class GestionQaController extends ControllerBase
                     $today = date("Y-m-d");
                 }
                 $session = $this->auth->getIdentity();
-                if($session['roleId'] == 2) {
+                if($session['roleId'] == 3) {
                     $userCalendar = $this->auth->getIdentity()['id'];
                 }
                 else{
-                    $userCalendar = Users::findFirst("rol_id = 2")->id;
+                    $userCalendar = Users::findFirst("rol_id = 3")->id;
                 }
 
             }
@@ -155,7 +155,7 @@ class GestionQaController extends ControllerBase
         $data['fechas'] = $fechas;
         $data['today'] = $today;
         $data['calendarUser'] = $USER_ACTUAL;
-        $data['users'] = Users::find("rol_id = 2");
+        $data['users'] = Users::find("rol_id = 3");
         $data['subMenuSel'] = "semanal";
 
         $dataView['pcData'] = $data;
@@ -185,7 +185,7 @@ class GestionQaController extends ControllerBase
 
         $data['actividades'] = $daily;
         $data['today'] = $DIA_ACTUAL;
-        $data['users'] = Users::find("rol_id = 2");
+        $data['users'] = Users::find("rol_id = 3");
         $data['categorias'] = Categoria::find();
         $data['subMenuSel'] = "diaria";
 
@@ -215,7 +215,7 @@ class GestionQaController extends ControllerBase
 
             $data['actividades'] = $daily;
             $data['today'] = $today;
-            $data['users'] = Users::find("rol_id = 2");
+            $data['users'] = Users::find("rol_id = 3");
             $data['categorias'] = Categoria::find();
             $data['subMenuSel'] = "diaria";
 
