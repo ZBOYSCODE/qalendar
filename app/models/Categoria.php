@@ -19,6 +19,13 @@ class Categoria extends Model
     public $ctgr_nombre;
 
     /**
+     *
+     * @var integer
+     */
+    public $duracion;
+
+
+    /**
      * Initialize method for model.
      */
     public function initialize()

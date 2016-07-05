@@ -88,7 +88,7 @@
                 <i class="fa fa-clock-o"></i><?php print date('H:i',strtotime($keyHora)) ?>
             </td>
             <?php foreach($hora as $keyFecha => $disponible) {?>
-                <?php if(!is_object($disponible) && $disponible==0) {?>
+                <?php if(!isset($disponible['obj']) && !is_array($disponible) && $disponible == 0) {?>
                     <td class="event-disp">
                         <?php
                             if($this->AccesoAcl->tienePermiso('crearevento', 'actividad')) { ?>
@@ -113,68 +113,71 @@
                         ?>
                     </td>
                 <?php } else { ?>
-                    <?php if(isset($disponible->Actividad) && is_object($disponible->Actividad)) { ?>
-                        <td class="event-container">
-                            <div class="event">
-                                <div class="title"><?php print $disponible->Actividad->actv_descripcion_breve ?></div>
-                                <div class="details">
-                                    <?php print(date('H:i',strtotime($disponible->dspn_hora))." - ".date('H:i',strtotime($disponible->dspn_hora." + 1 hours "))) ?>
-                                    <div class="popup">
-                                        <div class="title"><?php print $disponible->Actividad->actv_descripcion_breve ?></div>
-                                        <p style="text-align: left;"><?php print $disponible->Actividad->actv_descripcion_ampliada ?> <br>
-                                            <strong>Participantes:</strong>
-                                            <?php foreach($disponible->Actividad->UserActividad as $iter ) {
-                                                print($iter->Users->name.", ");
-                                            } ?>
-                                            <br>
-                                            <strong>Cuando:</strong> <?php print $disponible->dspn_fecha." ".$disponible->dspn_hora ?> <br>
-                                            <strong>Duración:</strong> <?php print $disponible->Actividad->actv_duracion_horas ?> Horas <br>
-                                            <strong>Prioridad:</strong> <?php print $disponible->Actividad->Prioridad->prrd_nombre ?> <br>
-                                            <strong>Creado Por:</strong> <?php print($disponible->Actividad->creadopor->name); ?> <br>
-                                            <strong>Estado:</strong> <?php print $disponible->Actividad->estado->nombre ?> <br>
+                    <?php if( $disponible['status'] == 'disponible') { ?>
+                        <?php if(isset($disponible['obj']->Actividad) && is_object($disponible['obj']->Actividad)) { ?>
+                            <td class="event-container" rowspan="<?php print $disponible['rowspan'] ?>">
+                                <div class="event">
+                                    <div class="title" style="min-height: <?php print ($disponible['rowspan']*82)."px" ?>;"><?php print $disponible['obj']->Actividad->actv_descripcion_breve ?></div>
+                                    <div class="details">
+                                        <?php print(date('H:i',strtotime($disponible['obj']->dspn_hora))." - ".date('H:i',strtotime($disponible['obj']->dspn_hora." + ". $disponible['duracion'] ." minutes "))) ?>
+                                        <div class="popup">
+                                            <div class="title"><?php print $disponible['obj']->Actividad->actv_descripcion_breve ?></div>
+                                            <p style="text-align: left;"><?php print $disponible['obj']->Actividad->actv_descripcion_ampliada ?> <br>
+                                                <strong>Participantes:</strong>
+                                                <?php foreach($disponible['obj']->Actividad->UserActividad as $iter ) {
+                                                    print($iter->Users->name.", ");
+                                                } ?>
+                                                <br>
+                                                <strong>Cuando:</strong> <?php print $disponible['obj']->dspn_fecha." ".$disponible['obj']->dspn_hora ?> <br>
+                                                <strong>Duración:</strong> <?php print $disponible['obj']->Actividad->actv_duracion_horas ?> Horas <br>
+                                                <strong>Prioridad:</strong> <?php print $disponible['obj']->Actividad->Prioridad->prrd_nombre ?> <br>
+                                                <strong>Creado Por:</strong> <?php print($disponible['obj']->Actividad->creadopor->name); ?> <br>
+                                                <strong>Estado:</strong> <?php print $disponible['obj']->Actividad->estado->nombre ?> <br>
 
-                                            <?php
+                                                <?php
 
-                                                if($this->AccesoAcl->tienePermiso('verperfilevento', 'actividad')) { ?>
-                                                    <a href="<?php print $this->url->get("actividad/perfil/" . $disponible->Actividad->actv_id) ?>"
-                                                       class="link-lighter"></a>
+                                                    if($this->AccesoAcl->tienePermiso('verperfilevento', 'actividad')) { ?>
+                                                        <a href="<?php print $this->url->get("actividad/perfil/" . $disponible['obj']->Actividad->actv_id) ?>"
+                                                           class="link-lighter"></a>
 
-                                            <?php
-                                                }
-                                            ?>
-                                        </p>
+                                                <?php
+                                                    }
+                                                ?>
+                                            </p>
 
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </td>
-                    <?php } else { ?>
-                        <?php if($disponible->EstadoDisponibilidad->edsp_id == 1) { ?>
-                            <td class="event-disp">
-                                <?php
-                                    if($this->AccesoAcl->tienePermiso('crearevento', 'actividad')) { ?>
-                                        <div class="btn-group  pull-right ">
-                                            <a href="javascript:void(0)" data-toggle="dropdown" class="dropdown-toggle">
-                                                <i class="hi hi-collapse"></i>
-                                            </a>
-                                            <ul class="dropdown-menu dropdown-custom text-left"
-                                                style="min-width: 140px;">
-                                                <li>
-                                                    <a href="<?php print $this->url->get() ?>evento/nuevo"
-                                                       data-action="<?php print $this->url->get() ?>evento/nuevo"
-                                                       data-val="hora=<?php print $keyHora ?>&fecha=<?php print $keyFecha ?>&calendarUser=<?php print $pcData['calendarUser'] ?>"
-                                                       data-ajax="false">Crear Evento</a>
-
-                                                    <a href="javascript:void(0)">Bloquear</a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                <?php
-                                    }
-                                ?>
                             </td>
-                        <?php } elseif($disponible->EstadoDisponibilidad->edsp_id == 3) { ?>
-                            <td class="event-blocked">&nbsp;</td>
+                        <?php } else { ?>
+                            <?php if($disponible['obj']->EstadoDisponibilidad->edsp_id == 1) { ?>
+                                <td class="event-disp">
+                                    <?php
+                                        if($this->AccesoAcl->tienePermiso('crearevento', 'actividad')) { ?>
+                                            <div class="btn-group  pull-right ">
+                                                <a href="javascript:void(0)" data-toggle="dropdown" class="dropdown-toggle">
+                                                    <i class="hi hi-collapse"></i>
+                                                </a>
+                                                <ul class="dropdown-menu dropdown-custom text-left"
+                                                    style="min-width: 140px;">
+                                                    <li>
+                                                        <a href="<?php print $this->url->get() ?>evento/nuevo"
+                                                           data-action="<?php print $this->url->get() ?>evento/nuevo"
+                                                           data-val="hora=<?php print $keyHora ?>&fecha=<?php print $keyFecha ?>&calendarUser=<?php print $pcData['calendarUser'] ?>"
+                                                           data-ajax="false">Crear Evento</a>
+
+                                                        <a href="javascript:void(0)">Bloquear</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                    <?php
+                                        }
+                                    ?>
+                                </td>
+                            <?php } elseif($disponible['obj']->EstadoDisponibilidad->edsp_id == 3) { ?>
+                                <td class="event-blocked">&nbsp;</td>
+                            <?php } ?>
+
                         <?php } ?>
                     <?php } ?>
                 <?php } ?>

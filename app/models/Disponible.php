@@ -95,7 +95,15 @@ class Disponible extends Model
     public function getDisponiblesWeek($data)
     {
         $fecha = date('Y-m-d',strtotime($data['fecha']));
-        $query = new Query("SELECT d.dspn_id,dspn_fecha,dspn_hora FROM Gabs\Models\Disponible d WHERE YEARWEEK('{$fecha}',7) = YEARWEEK(d.dspn_fecha,7) AND d.user_id = {$data['user_id']}", $this->getDI());
+        $query = new Query("SELECT d.dspn_id,dspn_fecha,dspn_hora FROM Gabs\Models\Disponible d WHERE YEARWEEK('{$fecha}',7) = YEARWEEK(d.dspn_fecha,7) AND d.user_id = {$data['user_id']} AND edsp_id = 2 AND actv_id is not null", $this->getDI());
+
+        return $query->execute();
+    }
+
+    public function getDisponiblesDay($data)
+    {
+        $fecha = date('Y-m-d',strtotime($data['fecha']));
+        $query = new Query("SELECT d.dspn_id,dspn_fecha,dspn_hora FROM Gabs\Models\Disponible d WHERE YEARWEEK('{$fecha}',7) = YEARWEEK(d.dspn_fecha,7) AND edsp_id = 2 AND actv_id is not null", $this->getDI());
 
         return $query->execute();
     }
