@@ -211,6 +211,8 @@ class Actividad extends Model
         //$actividad->actv_comentarios = $_POST['comentarios'];
 
 
+
+
         // Considerando relacion 1 a 1 para actividad - persona
         $persona = $_POST['persona'];
 
