@@ -7,6 +7,8 @@
 	use Gabs\Models\Tecnologia;
 	use Gabs\Models\Users;
 	use Gabs\Models\Actividad;
+	use Gabs\Models\Categoria;
+	use Gabs\Models\CategoriaActividad;
 
 	use Phalcon\Mvc\Model\Criteria;
 	use Phalcon\Paginator\Adapter\Model as PaginatorModel;
@@ -89,6 +91,7 @@
 		    	//$data['tecnologias'] = Tecnologia::find();
 
 		    	$data['proyecto'] = Proyecto::findFirst($id);
+		    	$data['proyecto']->total_horas = $this->getTotalHoras($id);
 
 		    	$arr = array(
 		    			"proyecto_id = $id ",
@@ -299,7 +302,40 @@
 	    	echo json_encode($data);
 	    }
 
+	    private function getTotalHoras($proyecto)
+	    {
 
+	    	$where = "Gabs\Models\Actividad.proyecto_id = :proyecto:";
+	    	$bind['proyecto'] = (int)$proyecto;
+
+	    	$cat = $this->modelsManager->createBuilder()
+                        ->from('Gabs\Models\Categoria')
+                        ->join('Gabs\Models\CategoriaActividad', 'Gabs\Models\CategoriaActividad.ctgr_id = Gabs\Models\Categoria.ctgr_id')
+                        ->join('Gabs\Models\Actividad', 'Gabs\Models\CategoriaActividad.actv_id = Gabs\Models\Actividad.actv_id')
+                        ->where($where, $bind)
+                        ->columns('sum ( Gabs\Models\Categoria.duracion ) as total_horas')
+                        ->getQuery()
+                        ->getSingleResult();
+
+
+	    	return $this->IntToTime($cat->total_horas);
+	    }
+
+	    private function IntToTime($int)
+        {
+            $min = $int % 60;//min
+            $hrs = floor($int / 60);//hrs
+
+            if($min<10){
+                $min = "0".$min;
+            }
+
+            if($hrs<10){
+                $hrs = "0".$hrs;
+            }
+
+            return $hrs.":".$min;
+        }
 
 	    public static function fromInput($dependencyInjector, $model, $data)
 		{
