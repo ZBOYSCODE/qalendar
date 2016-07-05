@@ -187,8 +187,9 @@ class Actividad extends Model
         }
 
 
-        $this->accs_id = $_POST['acceso'];
-        $this->prrd_id = $_POST['prioridad'];
+        // No van
+        //$this->accs_id = $_POST['acceso'];
+        //$this->prrd_id = $_POST['prioridad'];
 
         $this->proyecto_id = $_POST['proyecto'];
 

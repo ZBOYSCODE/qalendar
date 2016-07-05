@@ -4,8 +4,6 @@
 
 	use Gabs\Models\Actividad;
 	use Gabs\Models\Archivos;
-	use Gabs\Models\Acceso;
-	use Gabs\Models\Prioridad;
 	use Gabs\Models\Categoria;
 	use Gabs\Models\Users;
 	use Gabs\Models\TipoEstado;
@@ -32,8 +30,6 @@
     		$themeArray['addJs'][] 		= "js/evento.js";
 
 	    	$actividad 				= Actividad::findFirst($id);
-	    	$data['accesos'] 		= Acceso::find();
-	    	$data['prioridades'] 	= Prioridad::find();
 	    	$data['categorias'] 	= Categoria::find();
 	    	$data['users']			= Users::find("rol_id = 3");
 
@@ -147,8 +143,7 @@
 				$themeArray['addJs'][] 		= "js/evento.js";
 
 				$data['users'] = Users::find("rol_id = 3");
-				$data['prioridad'] = Prioridad::find();
-				$data['acceso'] = Acceso::find();
+
 				$data['categoria'] = Categoria::find();
 
 				# si el usuario es un jefe de proyectos, solo podrá ver los proyectos asociados a el
