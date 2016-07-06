@@ -6,8 +6,10 @@ use Phalcon\Mvc\Model;
 use Phalcon\Mvc\Model\Query;
 use Gabs\Models\Disponible;
 use Gabs\Models\UserActividad;
+use Gabs\Models\Categoria;
 use Gabs\Models\CategoriaActividad;
 use Gabs\Models\Archivos;
+use Gabs\Models\ConfiguradorDisponibilidad;
 
 class Actividad extends Model
 {
@@ -187,69 +189,26 @@ class Actividad extends Model
         }
 
 
-        // No van
-        //$this->accs_id = $_POST['acceso'];
-        //$this->prrd_id = $_POST['prioridad'];
-
         $this->proyecto_id = $_POST['proyecto'];
-
         $this->actv_descripcion_breve = $_POST['dscr-breve'];
         $this->actv_descripcion_ampliada = $_POST['dscr-ampliada'];
         $this->actv_location = $_POST['donde'];
         $this->actv_fecha = $_POST['fecha'];
         $this->actv_hora = $_POST['hora'];
-
-        //$this->actv_duracion_horas = $_POST['duracion'];
-        //$this->actv_duracion_minutos = $_POST['duracion'];
-
         $this->actv_categoria = $_POST['categoria'];
-        //$this->actv_status = $_POST['status'];
         $this->actv_status = 2;
         $this->actv_creado_por = isset($_POST['creado_por'])?$_POST['creado_por']:'Admin';
         $this->actv_created_at = date('Y-m-d'); 
-        $this->actv_updated_at = date('Y-m-d'); 
-        //$actividad->actv_comentarios = $_POST['comentarios'];
-
-
-
-
+        $this->actv_updated_at = date('Y-m-d');
         // Considerando relacion 1 a 1 para actividad - persona
         $persona = $_POST['persona'];
 
-
-        if(empty($this->actv_id))// se está creando recién
-        {
-            $update = false;
-            $disponible = Disponible::findFirst("dspn_fecha = '{$this->actv_fecha}' AND dspn_hora = '{$this->actv_hora}' AND user_id = {$persona}");
-
-            if($disponible){
-
-
-                if($disponible->edsp_id == 1){ //Disponible
-
-                    $disponible->edsp_id = 2;
-
-                } else{
-                    $callback['error'] = 1;
-                    $callback['msg'][] = 'No hay bloques disponibles en la hora y fecha seleccionadas.';  
-                }
-            } else{
-                /*
-                $callback['error'] = 1;
-                $callback['msg'] = 'No hay bloques creados en la hora y fecha seleccionadas.';*/
-
-                //Bloques no creados ahora se crean.
-                $disponible = new Disponible();
-                $disponible->dspn_fecha = $this->actv_fecha;
-                $disponible->dspn_hora = $this->actv_hora;
-                $disponible->user_id = $persona;
-                $disponible->edsp_id = 2; // Ocupado
-
-            }
-        }else{
-            $update = true;
-        }
+        // creamos variable update que indica si se esta creando o actualizando la actividad
+        $update = true;
+        if(empty($this->actv_id)) $update = false; 
+        
             
+        
 
         if(isset($callback['error']))
             return $callback; 
@@ -269,14 +228,47 @@ class Actividad extends Model
             if(!$update)// se está creando recién
             {
 
-                $disponible->actv_id = $this->actv_id;
-                if($disponible->save() == false){
-                    foreach ($disponible->getMessages() as $message) {
-                        $callback['msg'][] = $message->getMessage();
+                $disponible = Disponible::findFirst("dspn_fecha = '{$this->actv_fecha}' AND dspn_hora = '{$this->actv_hora}' AND user_id = {$persona}");
+
+                if($disponible){
+                    if($disponible->edsp_id == 1){ //Disponible
+                        $disponible->edsp_id = 2;
+                    } else{
+                        $callback['error'] = 1;
+                        $callback['msg'][] = 'No hay bloques disponibles en la hora y fecha seleccionadas.';  
                     }
+                } else{
+                    /*
                     $callback['error'] = 1;
-                    $callback['msg'][] = 'Error creando al usuario.';                 
+                    $callback['msg'] = 'No hay bloques creados en la hora y fecha seleccionadas.';*/
+
+
+                    $categoria  = Categoria::findFirst($_POST['categoria']);
+
+                    $nblocks    = $categoria->duracion/15;
+
+                    for ($i=0; $i < $nblocks; $i++) {
+
+                        //Bloques no creados ahora se crean.
+                        $disponible = new Disponible();
+                        $disponible->dspn_fecha = $this->actv_fecha;
+                        $disponible->dspn_hora = $this->actv_hora;
+                        $disponible->user_id = $persona;
+                        $disponible->edsp_id = 2; // Ocupado
+                        $disponible->actv_id = $this->actv_id;
+                        $disponible->save();
+
+                        // se le suman el valor de un bloque
+                        $date = new \DateTime($this->actv_hora);
+
+                        $valor_bloque = $this->getValorBloque();
+
+                        $date->add(new \DateInterval('PT'.$valor_bloque.'M'));
+                        $this->actv_hora = $date->format('H:i:s');
+                    }
                 }
+
+                
 
                 // creando nueva actividad
                 $userActividad          = new UserActividad();
@@ -323,7 +315,11 @@ class Actividad extends Model
         return $callback;
     }
 
-
+    public function getValorBloque(){
+        // obtenemos los minutos que vale el bloque
+        $valor = ConfiguradorDisponibilidad::findFirst(1);
+        return $valor->cnfg_intervalo;
+    }
 
     public function getCategorias()
     {

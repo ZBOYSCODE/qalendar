@@ -91,7 +91,7 @@
 		    	//$data['tecnologias'] = Tecnologia::find();
 
 		    	$data['proyecto'] = Proyecto::findFirst($id);
-		    	$data['proyecto']->total_horas = $this->getTotalHoras($id);
+		    	$data['proyecto']->total_horas = $this->IntToTime($this->getTotalHoras($id));
 
 		    	$arr = array(
 		    			"proyecto_id = $id ",
@@ -318,7 +318,7 @@
                         ->getSingleResult();
 
 
-	    	return $this->IntToTime($cat->total_horas);
+	    	return $cat->total_horas;
 	    }
 
 	    private function IntToTime($int)
