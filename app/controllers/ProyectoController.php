@@ -94,7 +94,7 @@
 		    	$data['proyecto']->total_horas = $this->IntToTime($this->getTotalHoras($id));
 
 		    	$arr = array(
-		    			"proyecto_id = $id ",
+		    			"proyecto_id = $id AND activo = 1",
 		    			"order" => "actv_created_at DESC"
 		    		);
 
