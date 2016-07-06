@@ -45,7 +45,7 @@
                         <div class="form-group row form-row">
                             <label class="col-sm-4 control-label" for="dscr-breve">Proyecto *</label>
                             <div class="col-sm-8">
-                                <select id="proyecto" name="proyecto" class="form-control input-sm">
+                                <select id="proyecto" name="proyecto" class="form-control input-sm select-chosen" disabled>
                                     <option value="0">Seleccione</option>
                                     <?php
                                         foreach ($pcData['proyectos'] as $proyecto) {
@@ -61,6 +61,7 @@
 
                                     ?>
                                 </select>
+                                <input type="hidden" name="proyecto" value="<?php print $pcData['actividad']->proyecto_id ?>">
                             </div>
                         </div>
 

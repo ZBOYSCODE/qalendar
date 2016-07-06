@@ -94,7 +94,8 @@
 		                }
 		            }
 		        } else{
-		            $this->mifaces->addPosRendEval("$.bootstrapGrowl('{$callback['msg'][0]}');");
+		        	$msg = "Activada editada correctamente";
+		            $this->mifaces->addPosRendEval("$.bootstrapGrowl('{$msg}');");
 		        }
 		        if(isset($callback['error']))
 		            $this->mifaces->run();            
@@ -193,7 +194,8 @@
 						}
 					}
 				} else {
-					$this->mifaces->addPosRendEval("$.bootstrapGrowl('{$callback['msg'][0]}');");
+					$msg = "Actividad creada correctamente.";
+					$this->mifaces->addPosRendEval("$.bootstrapGrowl('{$msg}');");
 				}
 				if (isset($callback['error']))
 					$this->mifaces->run();

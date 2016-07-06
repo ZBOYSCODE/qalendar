@@ -330,8 +330,9 @@ class Actividad extends Model
                 $callback['msg'][] = 'Error creando al usuario.';                
             }
 
-            if(!isset($callback['error']))
-                $callback['msg'][] = 'Actividad creada correctamente.';
+            if(!isset($callback)){
+                return array();
+            }
 
             
         }
