@@ -146,7 +146,8 @@
 		                            		'proyecto' 	=> [
 		                                    				'index'			=> 1,
 		                                    				'list'			=> 1,
-		                                    				'perfil'		=> 1
+		                                    				'perfil'		=> 1,
+												 			'proyectosactividad' => 1
 		                                    			],
 		                                    'actividad' => [
 		                                                    'editarevento'    	=> 1,
@@ -164,8 +165,7 @@
 		                                                    'cargaqabyproject'	=> 1,
                                                     		'getduracioncat'	=> 1,
                                                     		'delete'			=> 1,
-                                                    		'activar'			=> 1,
-															'proyectosactividad' => 1
+                                                    		'activar'			=> 1
 	                                                    ],
 		                                    'gestionqa' => [
 		                                                    'index'                 => 1,

@@ -168,6 +168,9 @@
 						}
 					}
 				}
+				else {
+					$data['users'] = $usersTmp;
+				}
 
 
 				$data['categoria'] = Categoria::find();
