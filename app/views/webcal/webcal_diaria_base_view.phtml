@@ -74,7 +74,7 @@
                                     <li>
                                         <a href="<?php print $this->url->get() ?>evento/nuevo"
                                            data-action="<?php print $this->url->get() ?>evento/nuevo"
-                                           data-val="hora=<?php print $keyHora ?>&fecha=<?php print $pcData['today'] ?>&calendarUser=<?php print $pcData['calendarUser'] ?>"
+                                           data-val="hora=<?php print $keyHora ?>&fecha=<?php print $pcData['today'] ?>&calendarUser=<?php print $user->id ?>"
                                            data-ajax="false">Crear Evento</a>
 
                                         <a href="javascript:void(0)">Bloquear</a>
@@ -94,7 +94,7 @@
                                     <div class="details">
                                         <?php print(date('H:i',strtotime($disponible['obj']->dspn_hora))." - ".date('H:i',strtotime($disponible['obj']->dspn_hora." + ". $disponible['duracion'] ." minutes "))) ?>
                                         <div class="popup" style="min-height: <?php print ($disponible['rowspan']*82)."px" ?>;">
-                                            <div class="title"><?php print $disponible['obj']->Actividad->actv_descripcion_breve ?></div>
+                                            <div class="title-pop"><?php print $disponible['obj']->Actividad->actv_descripcion_breve ?></div>
                                             <p style="text-align: left;"><?php print $disponible['obj']->Actividad->actv_descripcion_ampliada ?> <br>
                                                 <strong>Participantes:</strong>
                                                 <?php foreach($disponible['obj']->Actividad->UserActividad as $iter ) {
@@ -109,6 +109,7 @@
                                                 <?php
 
                                                 if($this->AccesoAcl->tienePermiso('verperfilevento', 'actividad')) { ?>
+
                                                     <a href="<?php print $this->url->get("actividad/perfil/" . $disponible['obj']->Actividad->actv_id) ?>"
                                                        class="link-lighter"></a>
 

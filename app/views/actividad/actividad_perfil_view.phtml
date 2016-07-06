@@ -23,7 +23,7 @@
 
                         print(date('H:i',strtotime($pcData['actividades']->actv_hora)).
                             " - ".
-                            date('H:i',strtotime($pcData['actividades']->actv_hora." + 1 hours")));
+                            date('H:i',strtotime($pcData['actividades']->actv_hora." + ". $pcData['duracion'] ." minutes ")));
                     ?>
 
                 </div>
@@ -119,6 +119,10 @@
                     </p>
                     <table>
                         <tbody>
+                        <tr>
+                            <td class="title-table">Proyecto</td>
+                            <td class="title-table"><?php print $pcData['actividades']->Proyecto->nombre ?></td>
+                        </tr>
                         <tr>
                             <td class="title-table">Estado</td>
                             <td class="title-table"><span id='nombre_estado'><?php print($pcData['actividades']->estado->nombre); ?></span> <span class='editar_estado pull-right'><a href="" data-toggle="modal" data-target="#modal_edit_estado">editar</a></span></td>

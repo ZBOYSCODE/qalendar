@@ -8,7 +8,7 @@
                 <div class="subheader-item">
                     <div class="row">
                         <div class="col-xs-12" style="padding: 4px;padding-right: 28px;">
-                            <?php print($pcData['actividad']->actv_fecha); ?>, <?php print(date('H:i',strtotime($pcData['actividad']->actv_hora))." - ".date('H:i',strtotime($pcData['actividad']->actv_hora." + 1 hours"))); ?>
+                            <?php print($pcData['actividad']->actv_fecha); ?>, <?php print(date('H:i',strtotime($pcData['actividad']->actv_hora))." - ".date('H:i',strtotime($pcData['actividad']->actv_hora." + ". $pcData['duracion'] ." minutes "))); ?>
                         </div>
                     </div>
                 </div>
@@ -20,6 +20,10 @@
                                <td><?php print($pcData['actividad']->actv_descripcion_ampliada); ?></td>
                            </tr>
                            <tr>
+                               <td class="title-table">Proyecto</td>
+                               <td> <?php print $pcData['actividad']->Proyecto->nombre ?></td>
+                           </tr>
+                           <tr>
                                <td class="title-table">Estado</td>
                                <td><?php print($pcData['actividad']->estado->nombre); ?></td>
                            </tr>
@@ -29,7 +33,7 @@
                            </tr>
                            <tr>
                                <td class="title-table">Duración</td>
-                               <td>1 hr</td>
+                               <td><?php print $pcData['duracion']; ?> Minutos</td>
                            </tr>
                            <tr>
                                <td class="title-table">Categoría</td>

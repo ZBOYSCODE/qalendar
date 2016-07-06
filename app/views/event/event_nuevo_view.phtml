@@ -22,8 +22,18 @@
                                     <option value="0">Seleccione</option>
                                     <?php
                                         foreach ($pcData['proyectos'] as $proyecto) {
-                                            echo "<option value='".$proyecto->id."'>".$proyecto->nombre."</option>";
+                                        ?>
+
+
+
+                                            <option <?php print(isset($pcData['proyectoSelected']) && $pcData['proyectoSelected'] == $proyecto->id?'selected="selected"':'' )?>
+                                                value='<?php print $proyecto->id ?>'><?php print $proyecto->nombre ?></option>
+
+
+
+                                    <?php
                                         }
+                                    ?>
 
                                     ?>
                                 </select>

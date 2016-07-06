@@ -1,18 +1,3 @@
-function openBubleBox(fecha){
-    var idDiv = 'b-'+fecha;
-    $("div[id='"+idDiv+"']").css({"display":"flex"});
-}
-$(document).mouseup(function (e) {
-    var container = $("div[id^='b-']");
-
-    if (!container.is(e.target) // if the target of the click isn't the container...
-    && container.has(e.target).length === 0) // ... nor a descendant of the container
-    {
-        container.hide();
-    }
-});
-
-
 $(document).ready(function(){
     $('.double-scroll').doubleScroll();
 });

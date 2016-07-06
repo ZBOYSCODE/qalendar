@@ -122,6 +122,8 @@ class Actividad extends Model
 
         $this->HasOne('actv_categoria', __NAMESPACE__.'\Categoria', 'ctgr_id', array('alias' => 'categoria'));
 
+        $this->HasOne('proyecto_id', __NAMESPACE__.'\Proyecto', 'id', array('alias' => 'Proyecto'));
+
         $this->belongsTo('accs_id', __NAMESPACE__.'\Acceso', 'accs_id', array('alias' => 'Acceso'));
         $this->belongsTo('prrd_id', __NAMESPACE__.'\Prioridad', 'prrd_id', array('alias' => 'Prioridad'));
     }
