@@ -104,6 +104,9 @@ class Actividad extends Model
      */
     public $actv_comentarios;    
 
+
+    public $activo;
+
     /**
      * Initialize method for model.
      */
@@ -200,6 +203,7 @@ class Actividad extends Model
         $this->actv_creado_por = isset($_POST['creado_por'])?$_POST['creado_por']:'Admin';
         $this->actv_created_at = date('Y-m-d'); 
         $this->actv_updated_at = date('Y-m-d');
+        $this->activo = 1;
         // Considerando relacion 1 a 1 para actividad - persona
         $persona = $_POST['persona'];
 
