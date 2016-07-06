@@ -468,7 +468,7 @@
 	    			$data['datos'] = $arr;
  				}else{
  					$data['estado'] = false;
-	    			$data['msg'] = 'Sin resultados';
+	    			$data['msg'] = 'No se encontraron QAs asociados a la tecnología';
  				}
 
 				
