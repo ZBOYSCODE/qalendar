@@ -56,6 +56,7 @@ class GestionQaController extends ControllerBase
             $USER_ACTUAL = Users::findFirst("rol_id = 3")->id;
         }
 
+
         $userTecnologiasObj = UserTecnologia::find("user_id = ". $USER_ACTUAL);
 
         # Creamos Calendario Semanal
@@ -141,14 +142,9 @@ class GestionQaController extends ControllerBase
                 } else {
                     $today = date("Y-m-d");
                 }
-                $session = $this->auth->getIdentity();
-                if($session['roleId'] == 3) {
-                    $userCalendar = $this->auth->getIdentity()['id'];
+                if(isset($_POST['userCalendar'])) {
+                    $userCalendar = $_POST['userCalendar'];
                 }
-                else{
-                    $userCalendar = Users::findFirst("rol_id = 3")->id;
-                }
-
             }
             #actualizamos calendario
             $this->updateCalendar($today, $userCalendar);

@@ -64,10 +64,10 @@
         <input type="text" value="<?php print $pcData['today'] ?>">
         <a href="<?php print $this->url->get()?>calendar/changeWeekByDay"
            data-action="<?php print $this->url->get()?>calendar/changeWeekByDay"
-           data-val="dateChange=<?php print date("Y-m-d", strtotime($pcData['today']."-1 week")); ?>" class="prev fa fa-angle-left"></a>
+           data-val="dateChange=<?php print date("Y-m-d", strtotime($pcData['today']."-1 week")); ?>&userCalendar=<?php print($pcData['calendarUser']) ?>" class="prev fa fa-angle-left"></a>
         <a href="<?php print $this->url->get()?>calendar/changeWeekByDay"
            data-action="<?php print $this->url->get()?>calendar/changeWeekByDay"
-           data-val="dateChange=<?php print date("Y-m-d", strtotime($pcData['today']."+1 week")); ?>" class="next fa fa-angle-right"></a>
+           data-val="dateChange=<?php print date("Y-m-d", strtotime($pcData['today']."+1 week")); ?>&userCalendar=<?php print($pcData['calendarUser']) ?>" class="next fa fa-angle-right"></a>
         <a href="#" class="cal fa fa-calendar"></a>
     </div>
 
