@@ -108,24 +108,24 @@
                             <td class="title-table">Horas invertidas</td>
                             <td class="title-table"><?php print($proy->total_horas); ?> Hrs</td>
                         </tr>
-
+<!--
                         <tr>
                             <td class="title-table">
-                                <?php
+                                <?php /*
                                     if($proy->estado){
                                         echo "<span id='span_estado'>Activo </span>";
                                     }else{
                                         echo "<span id='span_estado'>Cancelado </span>";
-                                    }
+                                    }*/
                                 ?>
                             </td>
                             <td class="title-table">
-                                <input type="hidden" disabled id='frm'          value='<?php echo $this->url->get('proyecto'); ?>'>
-                                <input type="hidden" disabled id='proyecto_id'  value='<?php echo $proy->id; ?>'>
+                                <input type="hidden" disabled id='frm'          value='<?php //echo $this->url->get('proyecto'); ?>'>
+                                <input type="hidden" disabled id='proyecto_id'  value='<?php //echo $proy->id; ?>'>
 
                                 <?php
                                     
-
+                                    /*
                                     if(     $this->AccesoAcl->tienePermiso('delete', 'proyecto')
                                         ||  $this->auth->getIdentity()['id'] == $proy->actv_creado_por)
                                     {  
@@ -135,10 +135,10 @@
                                         }else{
                                             echo "<button class='btn btn-success btn-xs btn_cambio_estado' id='btn_activar_proyecto'>activar</button>";
                                         }
-                                    }
+                                    }*/
                                 ?>
                             </td>
-                        </tr>
+                        </tr>-->
                         </tbody>
                     </table>                    
                 </div>
