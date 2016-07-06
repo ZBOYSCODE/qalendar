@@ -38,7 +38,7 @@
 					$this->mifaces->newFaces();
 					$view = $this->view->render('actividad/actividad_hitos_view', array('pcData'=>$data));
 					$this->mifaces->addToRend('timeline', $view);
-					$this->mifaces->addPosRendEval('$.bootstrapGrowl("Hito Creado Con Exito.'.$hito->hito_id.'", { type: "success" });'."$('#modal-new-actividad').modal('hide')");
+					$this->mifaces->addPosRendEval('$.bootstrapGrowl("Hito creado Con éxito.", { type: "success" });'."$('#modal-new-actividad').modal('hide')");
 					$this->mifaces->run();                	
                 }
             }
