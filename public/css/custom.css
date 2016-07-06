@@ -422,24 +422,42 @@
     top:0;	
 }
 
-.webcal-box {
-	min-width: 189px;
-}
-
 .double-scroll{
 	width: 100%;
 }
 
-.calendar-container {
-	width: 100%;
-	overflow-x: scroll;
-}
-
-.headcol {
-	position:absolute;
-	width:100px !important;
-	left:0;
-	top:auto;
-}
-
 .icon-timeline-5:before{/**/}
+
+
+/*Aside*/
+
+aside {
+	padding: 12px 0;
+	width: 18%;
+}
+aside h1 {
+	background-color: #231f6e;
+	background-image: linear-gradient(transparent, rgba(0,0,0,0.2));
+	border-radius: 3px 0 0 3px;
+	box-sizing: border-box;
+	color: #fff;
+	font-size: 1.2em;
+	margin: 0 0 13px -10px;
+	padding: 4px 0 4px 25px;
+	position: relative;
+	width: 100%;
+}
+aside h1:after {
+	border-color: #263746 transparent transparent #263746;
+	border-style: solid;
+	border-width: 6px;
+	bottom: -11px;
+	content: "";
+	position: absolute;
+	left: 0;
+	transform: rotate(90deg);
+	-ms-transform: rotate(90deg);
+	-moz-transform: rotate(90deg);
+	-webkit-transform: rotate(90deg);
+	-o-transform: rotate(90deg);
+}

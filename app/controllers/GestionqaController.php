@@ -188,12 +188,10 @@ class GestionQaController extends ControllerBase
         $data['today'] = $DIA_ACTUAL;
         $data['users'] = Users::find("rol_id = 3");
         $data['usersCalendar'] = $usersCalendar;
-        $data['categorias'] = Categoria::find();
         $data['subMenuSel'] = "diaria";
 
         $themeArray['pcData'] = $data;
         $themeArray['jsScript'] = $this->view->render('webcal/js/vista_diaria');
-        $themeArray['jsScript'] .= " $('.double-scroll').doubleScroll();";
 
         echo $this->view->render('theme', $themeArray);
     }
@@ -214,11 +212,13 @@ class GestionQaController extends ControllerBase
             }
 
             $calendar = new Calendar();
-            $daily = $calendar->getDay($today);
+            $daily = $calendar->_getDay($today);
+            $usersCalendar = $calendar->getUsersCalendarDay();
 
-            $data['actividades'] = $daily;
+            $data['day'] = $daily;
             $data['today'] = $today;
             $data['users'] = Users::find("rol_id = 3");
+            $data['usersCalendar'] = $usersCalendar;
             $data['categorias'] = Categoria::find();
             $data['subMenuSel'] = "diaria";
 

@@ -75,17 +75,21 @@
         <a href="javascript:void(0)" data-toggle="tooltip" title="Usted está viendo la vista semanal para un usuario" class="active"><i class="fa fa-calendar-o"></i></a>
     </div>
 </header>
+
 <table class="week-view">
     <tr>
-        <th class="td-time">&nbsp;</th>
+        <th class="td-time">Bloques <br> <i class="fa fa-clock-o" style="color:gray;font-size: 15px;"></i> </th>
         <?php foreach($pcData['fechas'] as $fecha) { ?>
-            <th><span><?php print $fecha ?> </span> <?php print $this->config['dateES']['dias_full'][date('w',strtotime($fecha))]; ?> </th>
+            <th>
+                <?php print $this->config['dateES']['dias_full'][date('w',strtotime($fecha))]; ?> <br>
+                <span><?php print date('d/m',strtotime($fecha)) ?> </span>
+            </th>
         <?php } ?>
     </tr>
     <?php foreach($pcData['week'] as $keyHora => $hora) {?>
         <tr>
             <td class="td-time">
-                <i class="fa fa-clock-o"></i><?php print date('H:i',strtotime($keyHora)) ?>
+                <?php print date('H:i',strtotime($keyHora)) ?>
             </td>
             <?php foreach($hora as $keyFecha => $disponible) {?>
                 <?php if(!isset($disponible['obj']) && !is_array($disponible) && $disponible == 0) {?>
@@ -120,7 +124,7 @@
                                     <div class="title" style="min-height: <?php print ($disponible['rowspan']*82)."px" ?>;"><?php print $disponible['obj']->Actividad->actv_descripcion_breve ?></div>
                                     <div class="details">
                                         <?php print(date('H:i',strtotime($disponible['obj']->dspn_hora))." - ".date('H:i',strtotime($disponible['obj']->dspn_hora." + ". $disponible['duracion'] ." minutes "))) ?>
-                                        <div class="popup">
+                                        <div class="popup" style = "min-height: <?php print ($disponible['rowspan']*82)."px" ?>;">
                                             <div class="title"><?php print $disponible['obj']->Actividad->actv_descripcion_breve ?></div>
                                             <p style="text-align: left;"><?php print $disponible['obj']->Actividad->actv_descripcion_ampliada ?> <br>
                                                 <strong>Participantes:</strong>
