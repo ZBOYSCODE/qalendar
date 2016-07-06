@@ -51,7 +51,7 @@
                         <div class="form-group row form-row">
                             <label class="col-sm-4 control-label" for="categoria">Categoría *</label>
                             <div class="col-sm-8" style="text-align: left;">
-                                <select id="categoria" name="categoria" class="select-chosen my-chosen" data-placeholder="Elegir Categorías" style="width: 250px;">
+                                <select id="categoria" name="categoria" class="select-chosen my-chosen" data-placeholder="Seleccionar..." style="width: 250px;">
                                     <option value="" selected=""></option>
                                     <?php foreach($pcData['categoria'] as $categoriaItem ) {?>
                                         <option value="<?php print $categoriaItem->ctgr_id ?>"><?php print $categoriaItem->ctgr_nombre ?></option>
