@@ -104,6 +104,9 @@ class Actividad extends Model
      */
     public $actv_comentarios;    
 
+
+    public $activo;
+
     /**
      * Initialize method for model.
      */
@@ -202,6 +205,7 @@ class Actividad extends Model
         $this->actv_creado_por = isset($_POST['creado_por'])?$_POST['creado_por']:'Admin';
         $this->actv_created_at = date('Y-m-d'); 
         $this->actv_updated_at = date('Y-m-d');
+        $this->activo = 1;
         // Considerando relacion 1 a 1 para actividad - persona
         $persona = $_POST['persona'];
 
@@ -248,6 +252,25 @@ class Actividad extends Model
                     $categoria  = Categoria::findFirst($_POST['categoria']);
 
                     $nblocks    = $categoria->duracion/15;
+
+                    $bloqueHora = $this->actv_hora;
+                    for ($i=0; $i < $nblocks; $i++) { 
+                        
+                        $disp = Disponible::findFirst("dspn_fecha = '{$this->actv_fecha}' AND dspn_hora = '{$bloqueHora}' AND user_id = {$persona}");
+                        if(is_object($disp)){
+                            if($disp->edsp_id != 1){
+                                $callback['error'] = 1;
+                                $callback['msg'][] = 'La duración de los bloques excede la disponibilidad actual.';                             
+                                return $callback;
+                            }
+                        }
+
+                        $date = new \DateTime($bloqueHora);
+                        $valor_bloque = $this->getValorBloque();
+                        $date->add(new \DateInterval('PT'.$valor_bloque.'M'));
+                        $bloqueHora = $date->format('H:i:s');                         
+
+                    }
 
                     for ($i=0; $i < $nblocks; $i++) {
 
@@ -309,8 +332,9 @@ class Actividad extends Model
                 $callback['msg'][] = 'Error creando al usuario.';                
             }
 
-            if(!isset($callback['error']))
-                $callback['msg'][] = 'Actividad creada correctamente.';
+            if(!isset($callback)){
+                return array();
+            }
 
             
         }
