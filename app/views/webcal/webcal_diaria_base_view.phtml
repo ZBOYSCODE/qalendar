@@ -50,7 +50,10 @@
 <div class="calendar-container double-scroll">
     <table class="week-view">
     <tr>
-        <th class="td-time">&nbsp;</th>
+        <th class="td-time">
+            Bloques <br> <i class="fa fa-clock-o" style="color:gray;font-size: 15px;"></i>
+        </th>
+
         <?php foreach($pcData['usersCalendar'] as $user) { ?>
             <th class="webcal-box"><span><?php print $user->name ?> </span> </th>
         <?php } ?>
@@ -58,7 +61,7 @@
     <?php foreach($pcData['day'] as $keyHora => $hora) {?>
         <tr>
             <td class="td-time">
-                <i class="fa fa-clock-o"></i><?php print date('H:i',strtotime($keyHora)) ?>
+                <?php print date('H:i',strtotime($keyHora)) ?>
             </td>
             <?php foreach($hora as $keyUser => $disponible) {?>
                 <?php if(!isset($disponible['obj']) && !is_array($disponible) && $disponible == 0) {?>
@@ -66,34 +69,38 @@
                         <?php
                         if($this->AccesoAcl->tienePermiso('crearevento', 'actividad')) { ?>
 
-                            <div class="btn-group  pull-right ">
-                                <a href="javascript:void(0)" data-toggle="dropdown" class="dropdown-toggle">
+                            <div class="btn-group  pull-right">
+                                <a id="newEventBox"
+                                   href="javascript:void(0)"
+                                   action="<?php print $this->url->get("proyecto") ?>"
+                                   base_url="<?php print $this->url->get("proyecto") ?>"
+                                   data-fecha="<?php print $pcData['today'] ?>"
+                                   data-hora="<?php print $keyHora ?>"
+                                   data-user="<?php print $keyUser ?>"
+                                   data-tecnologias="<?php print $pcData['tecnologiaDictionary'][$keyUser] ?>" >
                                     <i class="hi hi-collapse"></i>
                                 </a>
-                                <ul class="dropdown-menu dropdown-custom text-left" style="min-width: 140px;">
-                                    <li>
-                                        <a href="<?php print $this->url->get() ?>evento/nuevo"
-                                           data-action="<?php print $this->url->get() ?>evento/nuevo"
-                                           data-val="hora=<?php print $keyHora ?>&fecha=<?php print $pcData['today'] ?>&calendarUser=<?php print $user->id ?>"
-                                           data-ajax="false">Crear Evento</a>
 
-                                        <a href="javascript:void(0)">Bloquear</a>
-                                    </li>
-                                </ul>
+                                <div id="<?php print "b-".$keyHora."-".$pcData['today']."-".$keyUser ?>" class="bubble-msg-new-event">
+
+                                </div>
+
                             </div>
-                            <?php
-                        }
+
+                        <?php
+                            }
                         ?>
+
                     </td>
                 <?php } else { ?>
                     <?php if( $disponible['status'] == 'disponible') { ?>
                         <?php if(isset($disponible['obj']->Actividad) && is_object($disponible['obj']->Actividad)) { ?>
                             <td class="event-container" rowspan="<?php print $disponible['rowspan'] ?>">
                                 <div class="event">
-                                    <div class="title" style="min-height: <?php print ($disponible['rowspan']*82)."px" ?>;"><?php print $disponible['obj']->Actividad->actv_descripcion_breve ?></div>
+                                    <div class="title" style="min-height: <?php print ($disponible['rowspan']*27)."px" ?>;"><?php print $disponible['obj']->Actividad->actv_descripcion_breve ?></div>
                                     <div class="details">
                                         <?php print(date('H:i',strtotime($disponible['obj']->dspn_hora))." - ".date('H:i',strtotime($disponible['obj']->dspn_hora." + ". $disponible['duracion'] ." minutes "))) ?>
-                                        <div class="popup" style="min-height: <?php print ($disponible['rowspan']*82)."px" ?>;">
+                                        <div class="popup" style="min-height: <?php print ($disponible['rowspan']*27)."px" ?>;">
                                             <div class="title-pop"><?php print $disponible['obj']->Actividad->actv_descripcion_breve ?></div>
                                             <p style="text-align: left;"><?php print $disponible['obj']->Actividad->actv_descripcion_ampliada ?> <br>
                                                 <strong>Participantes:</strong>

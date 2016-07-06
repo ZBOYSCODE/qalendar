@@ -128,12 +128,24 @@
 				if(isset($_POST)) {
 					//caso: crear un evento con datos precargados
 					$callData = $_POST;
-					if(isset($callData['hora']) && isset($callData['fecha']) && isset($callData['calendarUser']) && isset($callData['proyecto'])) {
+					if(
+						isset($callData['hora']) &&
+						isset($callData['fecha']) &&
+						isset($callData['calendarUser']) &&
+						isset($callData['proyecto'])
+					) {
 						$hora = $callData['hora'];
 						$fecha = $callData['fecha'];
 						$owner = $callData['calendarUser'];
-						$proyecto = $callData['proyecto'];
-						$proyectoObj = Proyecto::findFirst("id = ".$proyecto);;
+
+						#Si esta seteado el proyecto traemos sus datos, si no lo omitimos
+						if($callData['proyecto'] != '') {
+
+							$proyecto = $callData['proyecto'];
+							$proyectoObj = Proyecto::findFirst("id = ".$proyecto);
+							$data['proyectoSelected'] = $proyecto;
+						}
+
 						$userOwner = Users::findFirst($owner);
 
 						/*... Podemos seguir seteando datos, dependiendo del caso*/
@@ -141,7 +153,6 @@
 						$data['fechaSelected'] = date("Y-m-d", strtotime($fecha));
 						$data['horaSelected'] = $hora;
 						$data['userSelected'] = $userOwner;
-						$data['proyectoSelected'] = $proyecto;
 					}
 				}
 

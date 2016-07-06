@@ -1,6 +1,11 @@
 $(document).ready(function(){
 
     var url = $("#newEventBox").attr('action');
+    var getUrl = window.location;
+    var baseUrl = getUrl .protocol + "//" + getUrl.host + "/" + getUrl.pathname.split('/')[1];
+
+    console.log("url:" +baseUrl);
+
 
     $(document).on('click', '#newEventBox', function(e){
 
@@ -18,7 +23,6 @@ $(document).ready(function(){
     {
 
 
-
         datos = {
             'fecha' : fecha,
             'hora' : hora,
@@ -32,8 +36,8 @@ $(document).ready(function(){
         {
             if(data.estado)
             {
-                $form = $("<form id='newEvent-"+hora+"-"+fecha+"' action='evento/nuevo' method='post' data-ajax='true'></form>");
-                $form = $("div[id='b-"+hora+"-"+fecha+"']").append($form);
+                $form = $("<form id='newEvent-"+hora+"-"+fecha+"-"+user+"' action='"+baseUrl+"/evento/nuevo' method='post' data-ajax='true'></form>");
+                $form = $("div[id='b-"+hora+"-"+fecha+"-"+user+"']").append($form);
 
                 ln = "<div class=\"form-group row my-chosen\"> \n";
                 ln += "<span class=\"col-sm-12\">Crear Evento</span> \n";
@@ -52,7 +56,7 @@ $(document).ready(function(){
                 ln +=  "</div>\n";
 
 
-                $form = $("form[id='newEvent-"+hora+"-"+fecha+"']").html(ln);
+                $form = $("form[id='newEvent-"+hora+"-"+fecha+"-"+user+"']").html(ln);
 
 
 
@@ -69,7 +73,13 @@ $(document).ready(function(){
 
 
                 //mostramos el bubble
-                $("div[id='b-"+hora+"-"+fecha+"']").css({"display":"flex"});
+                $("div[id='b-"+hora+"-"+fecha+"-"+user+"']").css({"display":"flex"});
+
+                //comprobamos si no esta dentro de la pantalla y lo posicionamos a la derecha
+                visibility = $("div[id='b-"+hora+"-"+fecha+"-"+user+"']").visible(false,false,'horizontal');
+                if(visibility == false){
+                    $("div[id='b-"+hora+"-"+fecha+"-"+user+"']").addClass("to-right");
+                }
 
 
 
@@ -107,5 +117,13 @@ $(document).ready(function(){
             container.hide();
         }
     });
+
+    jQuery.expr.filters.offscreen = function(el) {
+        return (
+            (el.offsetLeft + el.offsetWidth) < 0
+            || (el.offsetTop + el.offsetHeight) < 0
+            || (el.offsetLeft > window.innerWidth || el.offsetTop > window.innerHeight)
+        );
+    };
 
 });

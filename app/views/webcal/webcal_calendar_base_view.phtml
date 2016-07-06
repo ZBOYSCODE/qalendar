@@ -100,7 +100,7 @@
                             <div class="btn-group  pull-right">
                                 <a id="newEventBox"
                                    href="javascript:void(0)"
-                                   action="proyecto"
+                                   action="<?php print $this->url->get("proyecto") ?>"
                                    data-fecha="<?php print $keyFecha ?>"
                                    data-hora="<?php print $keyHora ?>"
                                    data-user="<?php print $pcData['calendarUser'] ?>"
@@ -108,7 +108,7 @@
                                     <i class="hi hi-collapse"></i>
                                 </a>
 
-                                <div id="<?php print "b-".$keyHora."-".$keyFecha?>" class="bubble-msg-new-event">
+                                <div id="<?php print "b-".$keyHora."-".$keyFecha."-".$pcData['calendarUser'] ?>" class="bubble-msg-new-event">
 
                                 </div>
 

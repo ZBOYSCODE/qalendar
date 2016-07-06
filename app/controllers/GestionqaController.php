@@ -86,6 +86,11 @@ class GestionQaController extends ControllerBase
     }
 
 
+    /**
+     *  A partir de las tecnologias de un usuario (array) genera un string con los id separados por coma
+     * @param $arrayObj
+     * @return string
+     */
     private function _formatObjStrUserTecnologia($arrayObj) {
         $str = "";
 
@@ -194,6 +199,7 @@ class GestionQaController extends ControllerBase
         $this->mifaces->run();
     }
 
+
     /**
      * General el calendario diario con las actividades de todos los usuarios
      */
@@ -211,13 +217,46 @@ class GestionQaController extends ControllerBase
         $data['day'] = $daily;
         $data['today'] = $DIA_ACTUAL;
         $data['users'] = Users::find("rol_id = 3");
+        $data['tecnologiaDictionary'] = $this->_getTecnologiaUserDictionary($data['users']);
         $data['usersCalendar'] = $usersCalendar;
         $data['subMenuSel'] = "diaria";
 
         $themeArray['pcData'] = $data;
         $themeArray['jsScript'] = $this->view->render('webcal/js/vista_diaria');
 
+        $themeArray['addJs'][] = "js/vendor/jquery.visible.js";
+        $themeArray['addJs'][] = "js/webcal.js";
+
         echo $this->view->render('theme', $themeArray);
+    }
+
+
+    /**
+     * Para un resulset de objetos Users genera un array tipo diccionario asociados a las tecnologias del usuario
+     * la tecnologias del usario son formateadas con los id y separadas por coma ej:  array[1] = "1,2,3";
+     * @param $users
+     * @return array
+     */
+    private function _getTecnologiaUserDictionary($users) {
+
+        $dictionary = array();
+
+        #Para todos los usuarios
+        foreach($users as $user) {
+
+            #traemos sus tecnologias
+            $userTecnologiasObj = UserTecnologia::find("user_id = ". $user->id);
+            $userTecnologiasArray = $userTecnologiasObj->toArray();
+
+            #las formateamos separadas por coma
+            $tecnologiasStr = $this->_formatObjStrUserTecnologia($userTecnologiasArray);
+
+            #construimos el diccionario
+            $dictionary[$user->id] = $tecnologiasStr;
+
+        }
+
+        return $dictionary;
     }
 
     /**
@@ -242,6 +281,7 @@ class GestionQaController extends ControllerBase
             $data['day'] = $daily;
             $data['today'] = $today;
             $data['users'] = Users::find("rol_id = 3");
+            $data['tecnologiaDictionary'] = $this->_getTecnologiaUserDictionary($data['users']);
             $data['usersCalendar'] = $usersCalendar;
             $data['categorias'] = Categoria::find();
             $data['subMenuSel'] = "diaria";

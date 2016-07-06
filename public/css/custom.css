@@ -250,6 +250,10 @@
 	width: 225px;
 }
 
+.bubble-msg-new-event.to-right {
+	left: 0px !important;
+}
+
 .btn-group-box {
 	margin-top: 15px;
 	text-align: right;
