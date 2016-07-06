@@ -1,8 +1,7 @@
 <div class="base-page lighter">
-        <div class="col-md-10 col-md-offset-1">
-            <h2>Edición de evento</h2>
-        </div>
-
+    <aside>
+        <h1 class="blog">Edición Evento</h1>
+    </aside>
     <div >
 
         <?php
@@ -87,8 +86,8 @@
                         <div class="form-group row form-row">
                             <label class="col-sm-4 control-label" for="categoria">Categoría *</label>
                             <div class="col-sm-8" style="text-align: left;">
-
-                                <select id="categoria" name="categoria" class="select-chosen my-chosen" data-placeholder="Elegir Categorías" style="width: 250px;">
+                                <!-- USAR CUANDO LA EDICION ESTE OK -->
+                                <select id="categoria" name="categoria" class="select-chosen my-chosen" data-placeholder="Elegir Categorías" style="width: 250px;" disabled>
                                     <option value="" selected=""></option>
                                     <?php 
 
@@ -105,6 +104,8 @@
                                             <option value="<?php print $categoriaItem->ctgr_id ?>" <?php echo $selected; ?> ><?php print $categoriaItem->ctgr_nombre ?></option>
                                         <?php } ?>
                                 </select>
+
+                                <input type="hidden" name="categoria" value="<?php print $categoriaItem->ctgr_id ?>">
                             </div>
                         </div>
 
@@ -133,12 +134,15 @@
                     </div>
                     <div class="form-group row form-row">
                         <label class="control-label" for="hora">Hora Inicio *</label>
+                        <!--
                         <div class="input-group bootstrap-timepicker" style="padding-left: 0px;">
-                            <input  type="text" id="hora" name="hora" class="form-control input-timepicker24" value="<?php print(isset($pcData['horaSelected'])?$pcData['horaSelected']:"13:00") ?>" readonly>
+                            <input  type="text" id="hora" name="hora" class="form-control input-timepicker24" value="<?php //print(isset($pcData['horaSelected'])?$pcData['horaSelected']:"13:00") ?>" readonly>
                             <span class="input-group-btn">
                                 <a href="javascript:void(0)" class="btn btn-primary"><i class="fa fa-clock-o"></i></a>
                             </span>
                         </div>
+                        -->
+                        <input  id="hora" name="hora" type="text" class="form-control" readonly value="<?php print(isset($pcData['horaSelected'])?$pcData['horaSelected']:date('Y-m-d')) ?>"/>
                     </div>
                     <div class="form-group row form-row">
                         <label class="control-label" for="duracion">Duración (Minutos) *</label>

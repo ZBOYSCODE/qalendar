@@ -251,6 +251,25 @@ class Actividad extends Model
 
                     $nblocks    = $categoria->duracion/15;
 
+                    $bloqueHora = $this->actv_hora;
+                    for ($i=0; $i < $nblocks; $i++) { 
+                        
+                        $disp = Disponible::findFirst("dspn_fecha = '{$this->actv_fecha}' AND dspn_hora = '{$bloqueHora}' AND user_id = {$persona}");
+                        if(is_object($disp)){
+                            if($disp->edsp_id != 1){
+                                $callback['error'] = 1;
+                                $callback['msg'][] = 'La duración de los bloques excede la disponibilidad actual.';                             
+                                return $callback;
+                            }
+                        }
+
+                        $date = new \DateTime($bloqueHora);
+                        $valor_bloque = $this->getValorBloque();
+                        $date->add(new \DateInterval('PT'.$valor_bloque.'M'));
+                        $bloqueHora = $date->format('H:i:s');                         
+
+                    }
+
                     for ($i=0; $i < $nblocks; $i++) {
 
                         //Bloques no creados ahora se crean.
