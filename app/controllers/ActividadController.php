@@ -36,12 +36,14 @@
 
 	    	$data['actividad'] 		= $actividad;
 	    	$data['catAct'] 		= $actividad->getCategorias();
+	    	$data['categoriaSelected'] = $actividad->actv_categoria;
 	    	$data['fechaSelected']	= $actividad->actv_fecha;
 	    	$data['horaSelected']	= $actividad->actv_hora;
 
 	    	$data['duracion']		= $this->IntToTime( $actividad->categoria->duracion );
 
 	    	$data['usersSelected'] 	= $actividad->getUsuarios();
+	    	$data['nameUserSelected'] = Users::findFirstById($data['usersSelected'])->name;
 
 	    	# si el usuario es un jefe de proyectos, solo podrá ver los proyectos asociados a el
 			$rol = $this->auth->getIdentity()['roleId'];

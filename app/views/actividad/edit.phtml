@@ -105,7 +105,7 @@
                                         <?php } ?>
                                 </select>
 
-                                <input type="hidden" name="categoria" value="<?php print $categoriaItem->ctgr_id ?>">
+                                <input type="hidden" name="categoria" value="<?php print $pcData['categoriaSelected'] ?>">
                             </div>
                         </div>
 
@@ -116,8 +116,11 @@
 
                                 <input id='qa_selected' name='qa_selected' value='<?php echo $pcData['usersSelected']; ?>' type='hidden'>
 
-                                <select id="persona" name="persona" class="select-chosen" data-placeholder="Seleccionar..." value="1" style="width: 250px;">
+                                <select id="persona" name="persona" class="select-chosen" data-placeholder="Seleccionar..." value="1" style="width: 250px;" disabled>
+                                    <option value=""><?php print($pcData['nameUserSelected']) ?></option>
                                 </select>
+
+                                <input type="hidden" name="persona" value="<?php print $pcData['usersSelected'] ?>">
                             </div>
                         </div>                        
                     </div>
