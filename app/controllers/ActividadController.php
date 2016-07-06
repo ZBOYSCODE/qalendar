@@ -3,6 +3,7 @@
 	namespace Gabs\Controllers;
 
 	use Gabs\Models\Actividad;
+	use Gabs\Models\Disponible;
 	use Gabs\Models\Archivos;
 	use Gabs\Models\Categoria;
 	use Gabs\Models\Users;
@@ -508,6 +509,13 @@
 		    		}else{
 		    			$data['estado'] = true;
 		    			$data['msg'] 	= "Evento cancelado correctamente.";
+		    			$disponibles = Disponible::findByActvId($id);
+		    			foreach ($disponibles as $disp) {
+    						$disp->user_id = null;
+		    				$disp->actv_id = null;
+		    				$disp->edsp_id = 1;
+		    				$disp->save();
+		    			}
 		    		}
 
 	    		}else{

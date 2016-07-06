@@ -65,6 +65,8 @@ $(document).ready(function(){
 					$(".btn_cambio_estado").addClass("btn-success");
 
 					$("#span_estado").text("Cancelado ");
+					var urlAgenda = $("#frmagenda").attr('action');
+					window.location.replace(urlAgenda);
 				}
 
 

@@ -1,0 +1,1 @@
+ALTER TABLE `disponible` CHANGE `user_id` `user_id` INT(11) NULL;
