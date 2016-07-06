@@ -2,6 +2,7 @@ $(document).ready(function(){
 
 	var url = $("#frm").attr('action');
 
+	//se cargaran los usuarios via action la "primera vez"
 	//cargar_qa();
 	carga_tiempo();
 
@@ -70,6 +71,7 @@ $(document).ready(function(){
 			}
 		});
 	}
+
 
 
 	

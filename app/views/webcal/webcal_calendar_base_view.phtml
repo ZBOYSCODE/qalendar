@@ -97,21 +97,22 @@
                         <?php
                             if($this->AccesoAcl->tienePermiso('crearevento', 'actividad')) { ?>
 
-                                <div class="btn-group  pull-right ">
-                                    <a href="javascript:void(0)" data-toggle="dropdown" class="dropdown-toggle">
-                                        <i class="hi hi-collapse"></i>
-                                    </a>
-                                    <ul class="dropdown-menu dropdown-custom text-left" style="min-width: 140px;">
-                                        <li>
-                                            <a href="<?php print $this->url->get() ?>evento/nuevo"
-                                               data-action="<?php print $this->url->get() ?>evento/nuevo"
-                                               data-val="hora=<?php print $keyHora ?>&fecha=<?php print $keyFecha ?>&calendarUser=<?php print $pcData['calendarUser'] ?>"
-                                               data-ajax="false">Crear Evento</a>
+                            <div class="btn-group  pull-right">
+                                <a id="newEventBox"
+                                   href="javascript:void(0)"
+                                   action="proyecto"
+                                   data-fecha="<?php print $keyFecha ?>"
+                                   data-hora="<?php print $keyHora ?>"
+                                   data-user="<?php print $pcData['calendarUser'] ?>"
+                                   data-tecnologias="<?php print $pcData['tecnologiasUser'] ?>" >
+                                    <i class="hi hi-collapse"></i>
+                                </a>
 
-                                            <a href="javascript:void(0)">Bloquear</a>
-                                        </li>
-                                    </ul>
+                                <div id="<?php print "b-".$keyHora."-".$keyFecha?>" class="bubble-msg-new-event">
+
                                 </div>
+
+                            </div>
                         <?php
                             }
                         ?>
@@ -121,31 +122,28 @@
                         <?php if(isset($disponible['obj']->Actividad) && is_object($disponible['obj']->Actividad)) { ?>
                             <td class="event-container" rowspan="<?php print $disponible['rowspan'] ?>">
                                 <div class="event">
-                                    <div class="title" style="min-height: <?php print ($disponible['rowspan']*82)."px" ?>;"><?php print $disponible['obj']->Actividad->actv_descripcion_breve ?></div>
+                                    <div class="title" style="min-height: <?php print ($disponible['rowspan']*27)."px" ?>;"><?php print $disponible['obj']->Actividad->actv_descripcion_breve ?></div>
                                     <div class="details">
                                         <?php print(date('H:i',strtotime($disponible['obj']->dspn_hora))." - ".date('H:i',strtotime($disponible['obj']->dspn_hora." + ". $disponible['duracion'] ." minutes "))) ?>
                                         <div class="popup" style = "min-height: <?php print ($disponible['rowspan']*82)."px" ?>;">
-                                            <div class="title"><?php print $disponible['obj']->Actividad->actv_descripcion_breve ?></div>
+                                            <div class="title-pop"><?php print $disponible['obj']->Actividad->actv_descripcion_breve ?></div>
                                             <p style="text-align: left;"><?php print $disponible['obj']->Actividad->actv_descripcion_ampliada ?> <br>
                                                 <strong>Participantes:</strong>
                                                 <?php foreach($disponible['obj']->Actividad->UserActividad as $iter ) {
                                                     print($iter->Users->name.", ");
                                                 } ?>
                                                 <br>
+                                                <strong>Proyecto:</strong> <?php print $disponible['obj']->Actividad->Proyecto->nombre ?> <br>
                                                 <strong>Cuando:</strong> <?php print $disponible['obj']->dspn_fecha." ".$disponible['obj']->dspn_hora ?> <br>
-                                                <strong>Duración:</strong> <?php print $disponible['obj']->Actividad->actv_duracion_horas ?> Horas <br>
+                                                <strong>Duración:</strong> <?php print $disponible['duracion'] ?> Minutos <br>
                                                 <strong>Creado Por:</strong> <?php print($disponible['obj']->Actividad->creadopor->name); ?> <br>
                                                 <strong>Estado:</strong> <?php print $disponible['obj']->Actividad->estado->nombre ?> <br>
 
-                                                <?php
+                                                <a  href="<?php print $this->url->get()?>GestionQa/getEventDetail"
+                                                    data-action="<?php print $this->url->get()?>GestionQa/getEventDetail"
+                                                    data-val="actv=<?php print $disponible['obj']->Actividad->actv_id ?>">
+                                                </a>
 
-                                                    if($this->AccesoAcl->tienePermiso('verperfilevento', 'actividad')) { ?>
-                                                        <a href="<?php print $this->url->get("actividad/perfil/" . $disponible['obj']->Actividad->actv_id) ?>"
-                                                           class="link-lighter"></a>
-
-                                                <?php
-                                                    }
-                                                ?>
                                             </p>
 
                                         </div>

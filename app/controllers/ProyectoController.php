@@ -383,4 +383,32 @@
 		    }
 		    return $criteria;
 		}
+
+		public function proyectosActividadAction() {
+
+			$tecnologias = $this->request->getPost("tecnologias");
+
+			$hora = $this->request->getPost("hora");
+			$fecha = $this->request->getPost("fecha");
+			$user_id = $this->request->getPost("user", 'int');
+			$proyectos = Proyecto::find("tecnologia_id  in(".$tecnologias.")");
+
+			$proyectos = $proyectos->toArray();
+
+			if(empty($proyectos)){
+
+				$data['estado'] = false;
+				$data['msg'] = 'No hay proyectos con la tecnologia asociada al QA actual.';
+			}else{
+				$data['estado'] = true;
+				$data['proyectos']	= $proyectos;
+				$data['formData']	= ["hora"=>$hora,"fecha"=>$fecha, "user_id"=>$user_id];
+
+				$data['msg'] = 'Se traern los proyectos correctamente..';
+			}
+
+
+
+			echo json_encode($data, JSON_PRETTY_PRINT);
+		}
 	}

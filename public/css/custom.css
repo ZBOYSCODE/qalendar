@@ -241,13 +241,13 @@
 	border: 1px solid;
 	border-color: #bbb #bbb #a8a8a8;
 	padding: 16px;
-	position: relative;
+	position: absolute;
 	color: grey !important;
 	z-index: 1201 !important;
 	display: none;
-	top: 13px;
-	left: 0px;
-	width: 300px;
+	top: 19px;
+	left: -210px;
+	width: 225px;
 }
 
 .btn-group-box {
@@ -428,7 +428,12 @@
 
 .icon-timeline-5:before{/**/}
 
-
+.select-chosen {
+	color: #8a8a8a;
+}
+.chosen-container a span {
+	color: #8a8a8a;
+}
 /*Aside*/
 
 aside {

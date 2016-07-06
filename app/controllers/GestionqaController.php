@@ -9,6 +9,8 @@ use \Gabs\Models\Prioridad;
 use \Gabs\Models\Acceso;
 use \Gabs\Models\Categoria;
 use \Gabs\Models\Users;
+use \Gabs\Models\ConfiguradorDisponibilidad;
+use \Gabs\Models\UserTecnologia;
 
 class GestionQaController extends ControllerBase
 {
@@ -54,6 +56,8 @@ class GestionQaController extends ControllerBase
             $USER_ACTUAL = Users::findFirst("rol_id = 3")->id;
         }
 
+        $userTecnologiasObj = UserTecnologia::find("user_id = ". $USER_ACTUAL);
+
         # Creamos Calendario Semanal
         $calendar = new Calendar();
         $data = array('fecha'=>$DIA_ACTUAL,'user_id'=>$USER_ACTUAL);
@@ -69,12 +73,32 @@ class GestionQaController extends ControllerBase
         $data['fechas'] = $fechas;
         $data['today'] = $DIA_ACTUAL;
         $data['calendarUser'] = $USER_ACTUAL;
+        $data['tecnologiasUser'] = $this->_formatObjStrUserTecnologia($userTecnologiasObj->toArray());
         $data['users'] = Users::find("rol_id = 3");
         $data['subMenuSel'] = "semanal";
 
     	$themeArray['pcData'] = $data;
+        $themeArray['jsScript'] = $this->view->render('webcal/js/vista_diaria');
+        $themeArray['addJs'][] = "js/webcal.js";
 
         echo $this->view->render('theme', $themeArray);
+    }
+
+
+    private function _formatObjStrUserTecnologia($arrayObj) {
+        $str = "";
+
+        $arrayKeys = array_keys($arrayObj);
+        $lastArrayKey = array_pop($arrayKeys);
+
+        foreach($arrayObj as $k => $iter) {
+            if($lastArrayKey != $k)
+                $str .= $iter['tecnologia_id'] .",";
+            else
+                $str .= $iter['tecnologia_id'];
+        }
+
+        return $str;
     }
 
 
@@ -142,6 +166,7 @@ class GestionQaController extends ControllerBase
      */
     private function updateCalendar($today, $userCalendar) {
         $USER_ACTUAL = isset($userCalendar)?$userCalendar:$this->auth->getIdentity()['id'];
+        $userTecnologiasObj = UserTecnologia::find("user_id = ". $USER_ACTUAL);
 
         /* Creamos Calendario Semanal*/
         $calendar = new Calendar();
@@ -150,11 +175,14 @@ class GestionQaController extends ControllerBase
         $horas = $calendar->getHorasWeek();
         $fechas = $calendar->getFechasWeek($today);
 
+
+
         $data['week'] = $week;
         $data['horas'] = $horas;
         $data['fechas'] = $fechas;
         $data['today'] = $today;
         $data['calendarUser'] = $USER_ACTUAL;
+        $data['tecnologiasUser'] = $this->_formatObjStrUserTecnologia($userTecnologiasObj->toArray());
         $data['users'] = Users::find("rol_id = 3");
         $data['subMenuSel'] = "semanal";
 
@@ -250,6 +278,22 @@ class GestionQaController extends ControllerBase
             $view = 'event/event_detalle_modal_view';
             $data['actividad'] = Actividad::findFirst('actv_id = '.$actv_id);
 
+
+            # Calculo de duracion actividad
+            $cnfg = ConfiguradorDisponibilidad::findFirst("cnfg_id = 1");
+            $intervalo =  $cnfg->cnfg_intervalo;
+
+            foreach($data['actividad']->CategoriaActividad as $CategoriaActIter){
+                $duracion_actividad  = $CategoriaActIter->Categoria->duracion;
+                break;
+            }
+
+            $bloques = ceil($duracion_actividad/$intervalo);
+
+            $data['duracion'] = $bloques*$intervalo;
+            # fin Calculo de duracion actividad
+
+
             $dataView['pcData'] = $data;
             //mifaces
             $toRenderView = $this->view->render($view, $dataView);
@@ -310,5 +354,9 @@ class GestionQaController extends ControllerBase
             }
             $this->mifaces->run();
         }
+    }
+
+    public function getProyectosNuevoEvento() {
+
     }
 }

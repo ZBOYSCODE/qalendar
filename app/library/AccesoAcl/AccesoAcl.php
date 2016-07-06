@@ -63,7 +63,8 @@
 		                                    				'update'		=> 1,
 		                                    				'delete' 		=> 1,
 		                                    				'perfil'		=> 1,
-		                                    				'activar'		=> 1
+		                                    				'activar'		=> 1,
+															'proyectosactividad' => 1
 		                                    ],
 											'test' => [
 												'testdir' 	=> 1,
@@ -119,7 +120,8 @@
 		                                    				'update'		=> 1,
 		                                    				'delete' 		=> 1,
 		                                    				'perfil'		=> 1,
-		                                    				'activar'		=> 1
+		                                    				'activar'		=> 1,
+															'proyectosactividad' => 1
 		                                    				]
 		                                ],
 		                            #QA
@@ -162,7 +164,8 @@
 		                                                    'cargaqabyproject'	=> 1,
                                                     		'getduracioncat'	=> 1,
                                                     		'delete'			=> 1,
-                                                    		'activar'			=> 1
+                                                    		'activar'			=> 1,
+															'proyectosactividad' => 1
 	                                                    ],
 		                                    'gestionqa' => [
 		                                                    'index'                 => 1,

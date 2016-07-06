@@ -10,7 +10,8 @@
 	use Gabs\Models\TipoEstado;
 	use Gabs\Models\Proyecto;
 	use Gabs\Models\UserTecnologia;
-	
+	use Gabs\Models\ConfiguradorDisponibilidad;
+
 	use Phalcon\Mvc\Model\Criteria;
 	use Phalcon\Paginator\Adapter\Model as PaginatorModel;
 
@@ -123,13 +124,16 @@
 		public function crearEventoAction() {
 			$data = array();
 			if(!$this->request->isAjax() == true) {
+
 				if(isset($_POST)) {
 					//caso: crear un evento con datos precargados
 					$callData = $_POST;
-					if(isset($callData['hora']) && isset($callData['fecha']) && isset($callData['calendarUser'])) {
+					if(isset($callData['hora']) && isset($callData['fecha']) && isset($callData['calendarUser']) && isset($callData['proyecto'])) {
 						$hora = $callData['hora'];
 						$fecha = $callData['fecha'];
 						$owner = $callData['calendarUser'];
+						$proyecto = $callData['proyecto'];
+						$proyectoObj = Proyecto::findFirst("id = ".$proyecto);;
 						$userOwner = Users::findFirst($owner);
 
 						/*... Podemos seguir seteando datos, dependiendo del caso*/
@@ -137,6 +141,7 @@
 						$data['fechaSelected'] = date("Y-m-d", strtotime($fecha));
 						$data['horaSelected'] = $hora;
 						$data['userSelected'] = $userOwner;
+						$data['proyectoSelected'] = $proyecto;
 					}
 				}
 
@@ -146,7 +151,24 @@
 				
 				$themeArray['addJs'][] 		= "js/evento.js";
 
-				$data['users'] = Users::find("rol_id = 3");
+				$usersTmp = Users::find("rol_id = 3");
+
+				#copiamos los usuarios segun el proyecto seleccionado  (solo usuarios que tengan la tecnologia asociada al proyecto)
+				if(isset($data['proyectoSelected'])) {
+					foreach($usersTmp as $userIter){
+						#traemos todas las tecnologias
+						$userTecnologias = UserTecnologia::find("user_id = ".$userIter->id)->toArray();
+
+						foreach ($userTecnologias as $userTecnologiaIter) {
+							# la primera tecnologia que encuentre igual al proyecto se agrega la persona y bye bye!
+							if($userTecnologiaIter['tecnologia_id'] == $proyectoObj->tecnologia_id) {
+								$data['users'][] = $userIter;
+								break;
+							}
+						}
+					}
+				}
+
 
 				$data['categoria'] = Categoria::find();
 
@@ -218,6 +240,20 @@
 			$themeArray['jsScript'] = $this->view->render('actividad/js/actividad_perfil_js');
 			
 			$data['actividades'] = Actividad::findFirst("actv_id = ".$id);
+
+			# Calculo de duracion actividad
+			$cnfg = ConfiguradorDisponibilidad::findFirst("cnfg_id = 1");
+			$intervalo =  $cnfg->cnfg_intervalo;
+
+			foreach($data['actividades']->CategoriaActividad as $CategoriaActIter){
+				$duracion_actividad  = $CategoriaActIter->Categoria->duracion;
+				break;
+			}
+
+			$bloques = ceil($duracion_actividad/$intervalo);
+
+			$data['duracion'] = $bloques*$intervalo;
+			# fin Calculo de duracion actividad
 
 			$themeArray['pcData'] = $data;
 

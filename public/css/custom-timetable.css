@@ -256,7 +256,7 @@
   display: block;
 }
 .timetable .week-view .event-container {
-  background: #efefef;
+  background: #e8e8e8;
 }
 .timetable .week-view .event-container {
   -o-transition: background 0.3s, color 0.3s;
@@ -268,19 +268,24 @@
   color: #fff;
 }
 .timetable .week-view .title {
-      /* padding: 20px; */
-    text-transform: uppercase;
-    color: #fff;
-    font-size: 10px;
-    min-height: 82px;
-    padding: 6px 20px 0px 20px;
+  color: #fff;
+  font-size: 10px;
+  min-height: 27px;
+  padding: 7px;
+  overflow: hidden;
+  word-wrap: break-word;
+  max-height: 27px;
 }
+
+.timetable .week-view .title-pop {
+  font-size: 14px;
+  padding: 15px;
+}
+
 .timetable .week-view .details {
   	position: relative;
-    /* padding: 20px; */
-    min-height: 25px;
-    padding: 5px 20px 5px 20px;
     text-align: center;
+    font-size: 10px;
 }
 .timetable .week-view .popup {
   position: absolute;
@@ -394,6 +399,7 @@
   color: #fff;
 }
 .timetable .list-view .popup {
+  font-size: 12px;
   position: absolute;
   bottom: 100%;
   left: -9999px;
@@ -484,9 +490,6 @@
   }
   .timetable .week-view th span {
     display: none;
-  }
-  .timetable .week-view .title {
-    padding: 15px;
   }
   .timetable .week-view .details {
     padding: 15px;
