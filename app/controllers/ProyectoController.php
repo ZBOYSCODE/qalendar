@@ -391,7 +391,18 @@
 			$hora = $this->request->getPost("hora");
 			$fecha = $this->request->getPost("fecha");
 			$user_id = $this->request->getPost("user", 'int');
-			$proyectos = Proyecto::find("tecnologia_id  in(".$tecnologias.")");
+
+			# si el usuario es un jefe de proyectos, solo podrá ver los proyectos asociados a el
+			$rol = $this->auth->getIdentity()['roleId'];
+			$JefeP = 4;# id del rol de Jefe proyecto
+
+			if($rol == $JefeP){
+				$cond = " AND jefep_id = ".$this->auth->getIdentity()['id'];
+			}else{
+				$cond='';
+			}
+
+			$proyectos = Proyecto::find("tecnologia_id  in(".$tecnologias.") ".$cond );
 
 			$proyectos = $proyectos->toArray();
 
