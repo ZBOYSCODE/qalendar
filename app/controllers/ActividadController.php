@@ -80,9 +80,10 @@
 	        $actividad = Actividad::findFirst($id);
 
 	        $rol = $this->auth->getIdentity()['roleId'];
+	        $id = $this->auth->getIdentity()['id'];
 
 	        # solo Admin, Gestor y el creador del evento pueden modificarlos
-	        if($rol == 1 || $rol == 2 || $rol == $actividad->actv_creado_por)
+	        if($rol == 1 || $rol == 2 || $id == $actividad->actv_creado_por)
 	        {
 	        
 	        	if($this->auth->getIdentity()['id']) {

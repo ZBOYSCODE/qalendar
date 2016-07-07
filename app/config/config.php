@@ -40,8 +40,8 @@ return new \Phalcon\Config([
     ],
 	'noAuth' => //noAuth -> configuracion de controller y acciones que no tienen que pasar por la autentificacion
 	array('session'=>array('login'=>true,'logout'=>true)),
-	'appTitle'=>'QA Calendar',
-	'appName'=>"<strong>QA</strong>Calendar",
+	'appTitle'=>'QAlendar',
+	'appName'=>"QAlendar",
 	'appAutor'=>'Zenta',
 	'appAutorLink'=>'http://www.zentagroup.com/',
 	'dateES' => [
