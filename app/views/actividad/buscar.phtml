@@ -1,136 +1,181 @@
-<div class="container">
-	<div class="row">
-		<div class="col-md-8 col-md-offset-2">
+<div class="base-page lighter">
 
-			<div class="panel panel-default">
-  				<div class="panel-body">
+	<aside>
+		<h1 class="blog"> <i class="fa fa-search"></i> Buscador de Eventos</h1>
+	</aside>
 
-					<form action="<?php echo $this->url->get('actividad/buscar'); ?>" method='GET'>
-						
-						<div class="col-md-12">
-							<div class="form-group">
-								<label for="search">Buscar</label>
-								<input type="text" name='search' class="form-control" value="<?php echo (isset($_GET['search']))?$_GET['search']:'' ?>">
+
+	<div class="container">
+		<div class="row">
+			<div class="col-md-8 col-md-offset-2">
+
+				<div class="panel panel-default">
+					<div class="panel-body">
+
+						<form action="<?php echo $this->url->get('actividad/buscar'); ?>" method='GET'>
+
+							<div class="col-md-12">
+								<div class="form-group">
+									<label for="search">Buscar</label>
+									<input type="text" name='search' class="form-control" value="<?php echo (isset($_GET['search']))?$_GET['search']:'' ?>">
+								</div>
 							</div>
-						</div>
-						
-						<div class="col-md-9">
-							<div class="form-group">
-								<label for="user">Coordinador</label>
-								<select name='user' class="form-control select-chosen">
-									<option value="">Seleccione</option>
-									<?php
-										$users = $pcData['users'];
 
-										$usr_slc = $_GET['user'];
+							<div class="col-md-9">
+								<div class="form-group">
+									<label for="user">Coordinador</label>
+									<select name='user' class="form-control select-chosen">
+										<option value="">Seleccione</option>
+										<?php
+											$users = $pcData['users'];
 
-										foreach ($users as $user) {
-											
-											if(!empty($usr_slc) and $usr_slc == $user->id){
-												$selected = 'selected';
-											}else{
-												$selected = '';
+											$usr_slc = $_GET['user'];
+
+											foreach ($users as $user) {
+
+												if(!empty($usr_slc) and $usr_slc == $user->id){
+													$selected = 'selected';
+												}else{
+													$selected = '';
+												}
+
+												echo "<option value='".$user->id."' $selected>".$user->name."</option>";
 											}
-
-											echo "<option value='".$user->id."' $selected>".$user->name."</option>";
-										}
-									?>
-								</select>
+										?>
+									</select>
+								</div>
 							</div>
-						</div>
-							
-						<div class="col-md-3">
-							<div class="form-group">
-								<label for="">&nbsp;</label>
-								<button type='submit' class='btn btn-default form-control'>Buscar</button>
-							</div>
-						</div>
 
-					
+							<div class="col-md-3">
+								<div class="form-group">
+									<label for="">&nbsp;</label>
+									<button type='submit' class='btn btn-default form-control'>Buscar</button>
+								</div>
+							</div>
+
+						</form>
+
+
+					</div>
 				</div>
 			</div>
 		</div>
-	</div>
-		
 
 
-	<div class="row">
-		<?php
+		<?php if(isset($pcData['page'] ) && isset($pcData['page']->items) && count($pcData['page']->items) == 0 ) {?>
+			<div style="text-align: center;">
+				<h5>No se han encontrado resultados para los parametros seleccionados. </h5>
+			</div>
+		<?php } ?>
 
-			if(isset($pcData['page'])){
-				# Mostrando resultados
-				echo "<h1>buscando: ".$pcData['search']."</h1>";
-				echo "<ul>";
-				foreach ($pcData['page']->items as $actividad)
-				{
-					echo "<li>".$actividad->actv_descripcion_breve."</li>";
-				}
-				echo "</ul>";
+			<?php
 
+				if(isset($pcData['page']) && isset($pcData['page']->items) && count($pcData['page']->items) > 0){
+					# Mostrando resultados ?>
 
-				# armo la url
-				$url = '';
+					<div class="row">
 
-				if(isset($_GET['search'])){
-					$url .= "&search=".$_GET['search'];
-				}else{
-					$url .= "search=";
-				}
-				
-				if(isset($_GET['user'])){
-					$url .= "&user=".$_GET['user'];
-				}else{
-					$url .= "user=";
-				}
+						<h5 class="col-md-offset-2"> <?php print (strlen($pcData['search']) != 0 ?"Resultados para: ".$pcData['search']:"Mostrando todos los eventos "); ?></h5>
+
+							<div class="col-md-8 col-md-offset-2">
+								<!-- resultados de la busqueda -->
+								<?php echo $this->view->render('actividad/actividad_lista',array('actividades'=>$pcData['page']->items))?>
+							</div>
+
+					</div>
 
 
-				# solo mostramos la paginación si el numero de paginas es mayor a 1
-				if( $pcData['page']->total_pages > 1){
+					<?php
+							# armo la url
+							$url = '';
 
-				
-				?>
+							if(isset($_GET['search'])){
+								$url .= "&search=".$_GET['search'];
+							}else{
+								$url .= "search=";
+							}
 
+							if(isset($_GET['user'])){
+								$url .= "&user=".$_GET['user'];
+							}else{
+								$url .= "&user=";
+							}
 
-
-				<nav>
-					<ul class="pagination">
-
-						<li><a href="/qalendar/actividad/buscar">First</a></li>
-
-						<li>
-							<a href="/qalendar/actividad/buscar?<?=$url?>&page=<?= $pcData['page']->before; ?>" aria-label="Previous">
-								<span aria-hidden="true">&laquo;</span>
-							</a>
-						</li>					
-						
-						<li>
-							<a href="/qalendar/actividad/buscar?<?=$url?>&page=<?= $pcData['page']->next; ?>" aria-label="Next">
-								<span aria-hidden="true">&raquo;</span>
-							</a>
-						</li>
-
-						<li><a href="/qalendar/actividad/buscar?<?=$url?>&page=<?= $pcData['page']->last; ?>">Last</a></li>
-					</ul>
-				</nav>
+					?>
 
 
 
 
-				<a href="/qalendar/actividad/buscar">First</a>
-				<a href="/qalendar/actividad/buscar?<?=$url?>&page=<?= $pcData['page']->before; ?>">Previous</a>
-				<a href="/qalendar/actividad/buscar?<?=$url?>&page=<?= $pcData['page']->next; ?>">Next</a>
-				<a href="/qalendar/actividad/buscar?<?=$url?>&page=<?= $pcData['page']->last; ?>">Last</a>
-				
-				</form>
-		<?php 
 
-					echo "Estas en la página ", $pcData['page']->current, " de ", $pcData['page']->total_pages; 
+					<?php
+							# solo mostramos la paginación si el numero de paginas es mayor a 1
+							if( $pcData['page']->total_pages > 1){
+					?>
 
-				}// endif	
+								<div class="row">
 
-			}
-		?>
+									<div class="col-md-8 col-md-offset-2">
+										<nav style="text-align: center;">
+											<ul class="pagination">
 
+											<li><a href="/qalendar/actividad/buscar">Primera</a></li>
+
+											<li>
+												<a href="/qalendar/actividad/buscar?<?=$url?>&page=<?= $pcData['page']->before; ?>" aria-label="Anterior">
+													<span aria-hidden="true">&laquo;</span>
+												</a>
+											</li>
+												<?php
+													if($pcData['page']->current==0) {
+														$initial_number = 0;
+													}
+													else {
+														$initial_number = $pcData['page']->current;
+													}
+
+													if($pcData['page']->total_pages < 5) {
+														$pages_to_show = $pcData['page']->total_pages;
+													}
+													else {
+														$pages_to_show = 5;
+													}
+
+
+												?>
+
+												<?php
+													for($iter = $initial_number; $iter <= $pages_to_show; $iter ++ ) {
+											?>
+													<li>
+														<a href="/qalendar/actividad/buscar?<?=$url?>&page=<?= $iter; ?>" aria-label="Siguiente">
+															<span aria-hidden="true"><?= $iter ?></span>
+														</a>
+													</li>
+												<?php
+													}
+												?>
+
+											<li>
+												<a href="/qalendar/actividad/buscar?<?=$url?>&page=<?= $pcData['page']->next; ?>" aria-label="Siguiente">
+													<span aria-hidden="true">&raquo;</span>
+												</a>
+											</li>
+
+											<li><a href="/qalendar/actividad/buscar?<?=$url?>&page=<?= $pcData['page']->total_pages; ?>">Última</a></li>
+										</ul>
+										<p style="color:#a5a5a5;font-size: 12px;">
+											<?php echo "Estas en la página ", $pcData['page']->current, " de ", $pcData['page']->total_pages;?>
+										</p>
+										</nav>
+
+									</div>
+								</div>
+					<?php  } ?>
+
+
+
+
+			<?php }  ?>
 
 	</div>
 </div>

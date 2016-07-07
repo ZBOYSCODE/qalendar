@@ -363,7 +363,10 @@
 
 .user-list {
 	list-style: none;
-	text-align: center;
+}
+
+.user-list.user-list-alt .user {
+	font-size: 10px;
 }
 
 .user-list .user {
@@ -383,6 +386,11 @@
 	margin: 0 auto;
 }
 
+.avatar-sm {
+	width: 40px;
+	height: 40px;
+}
+
 .initials {
 	position: relative;
 	top: 21px;
@@ -390,6 +398,12 @@
 	line-height: 27px;
 	color: #fff;
 	font-family: sans-serif;
+}
+
+.initials-sm {
+	top: 10px;
+	font-size: 21px;
+	line-height: 21px;
 }
 
 
@@ -469,4 +483,58 @@ aside h1:after {
 	-moz-transform: rotate(90deg);
 	-webkit-transform: rotate(90deg);
 	-o-transform: rotate(90deg);
+}
+/*fin aside*/
+
+
+.table-evento thead > tr > th,
+.table-evento tbody > tr > th,
+.table-evento tfoot > tr > th,
+.table-evento thead > tr > td,
+.table-evento tbody > tr > td,
+.table-evento tfoot > tr > td,
+.table-evento tbody + tbody {
+	height: 43px;
+	font-size: 10px;
+}
+
+.table-evento {
+	margin-bottom: 0px;
+	border-bottom-left-radius: 5px;
+	border-bottom-right-radius: 5px;
+}
+
+.table-evento .descrp {
+	height: 50px;
+	max-height: 50px;
+	overflow: hidden;
+	overflow: hidden;
+	word-wrap: break-word;
+}
+
+.table-evento .lg-col {
+	width: 40%;
+}
+
+.result-item .result-item-header {
+	height:60px;
+	background-color: #2aabd2;
+	color:white;
+	border-top-left-radius: 7px;
+	border-top-right-radius: 7px;
+	padding: 5px;
+	font-size: 16px;
+	height: 30px;
+}
+
+.result-item .result-item-header span{
+	font-size: 13px;
+	font-weight: 600;
+	text-align: right;
+	float: right;
+}
+
+.result-item {
+	border-radius: 5px;
+	margin-bottom: 15px;
 }

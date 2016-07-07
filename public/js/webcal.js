@@ -4,7 +4,7 @@ $(document).ready(function(){
     var getUrl = window.location;
     var baseUrl = getUrl .protocol + "//" + getUrl.host + "/" + getUrl.pathname.split('/')[1];
 
-    console.log("url:" +baseUrl);
+    //console.log("url:" +baseUrl);
 
 
     $(document).on('click', '#newEventBox', function(e){

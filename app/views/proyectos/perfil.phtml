@@ -46,7 +46,20 @@
                             <div class="tab-pane active" id="actTab" style="position: relative;">
                                 <!-- Timeline Content -->
                                 <div id="timeline" class="timeline">
-                                    <?php echo $this->view->render('actividad/timeline_actividades',array('actividades'=>$pcData['actividades']))?>
+
+                                    <?php
+                                        if(isset($pcData['actividades']) && count($pcData['actividades']) >0 ) { ?>
+
+                                        <?php echo $this->view->render('actividad/actividad_lista',array('actividades'=>$pcData['actividades']))?>
+
+                                    <?php
+                                        } else { ?>
+                                            <div style="padding: 20px;">
+                                                <h4> Aún no se han creados eventos asociados a este proyecto.
+                                                </h4>
+                                            </div>
+
+                                    <?php }  ?>
                                 </div>
                                 <!-- END Timeline Content -->
 

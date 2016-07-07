@@ -1,0 +1,166 @@
+<?php
+
+foreach ($actividades as $actividad) {
+    ?>
+    <div class="result-item">
+        <div class="result-item-header">
+            <!-- opciones evento -->
+            <div class="btn-group " style="margin-bottom: 6px;">
+                <a href="javascript:void(0)" data-toggle="dropdown" class="dropdown-toggle">
+                    <i class="hi hi-collapse" style="color:white"></i>
+                </a>
+                <ul class="dropdown-menu dropdown-custom text-left" style="min-width: 140px;">
+                    <li>
+
+                        <a href="<?php print $this->url->get() ?>actividad/perfil/<?php print $actividad->actv_id ?>">Ver Evento</a>
+                        <a href="<?php print $this->url->get() ?>proyecto/perfil/<?php print $actividad->Proyecto->id ?>"">Ver Proyecto</a>
+                    </li>
+                </ul>
+
+            </div>
+            <!-- fin opciones -->
+
+            <?php print $actividad->actv_descripcion_breve ?>
+
+            <span> <i class="fa fa-calendar-check-o"></i> <?php print(date("d-m-Y",strtotime($actividad->actv_fecha))) ;?> </span>
+        </div>
+        <table class="table table-bordered table-evento" style="margin-bottom: 0px;">
+            <tbody>
+            <tr>
+                <td><strong>Proyecto</strong><br><?php print $actividad->Proyecto->nombre ?></td>
+                <td><strong>Lugar</strong><br> <?php print $actividad->actv_location ?></td>
+                <td><strong>Categoría</strong><br> <?php print $actividad->Categoria->ctgr_nombre ?></td>
+                <td><strong>Estado</strong><br><?php print($actividad->estado->nombre);?></td>
+
+
+                <!-- participantes -->
+
+                <td class="lg-col" rowspan="3">
+                    <div class="user-list user-list-alt">
+                        <strong>Participantes</strong><br>
+                        <div class="row" style="margin: 5px;">
+                            <div class="col-xs-6 user">
+                                <?php
+
+                                $owner = $actividad->creadopor;
+                                $iniciales = explode(" ", $owner->name);
+                                $frst = str_split($iniciales[0])[0];
+                                $scnd = str_split($iniciales[1])[0];
+                                if(isset($iniciales[0]) && isset($iniciales[1])) {
+                                    $nombre = $iniciales[0] . " " . $iniciales[1];
+                                }
+                                else {
+                                    $nombre =  $iniciales[0];
+                                }
+
+
+                                if(isset($owner->avatar)) {
+
+                                    ?>
+
+                                    <a href="javascript:void(0)" id="chat-user1" class="chat-user-online themed-color-night" style="text-decoration:none;">
+                                        <img src="<?php print($this->url->get($owner->avatar))?>" alt="avatar" class="img-circle" width="40" height="40">
+                                    </a><br>
+
+                                    <?php print $nombre ?><br>
+                                    Creador Evento
+
+                                    <?php
+
+                                } else {
+
+                                    ?>
+
+                                    <div class="avatar-circle avatar-sm">
+                                        <span class="initials initials-sm"><?php print $frst.$scnd ?></span>
+                                    </div>
+
+                                    <?php print $nombre ?><br>
+                                    Creador Evento
+
+                                    <?php
+
+                                }
+                                ?>
+
+                            </div>
+
+                            <?php
+
+                            foreach($actividad->UserActividad as $iter ) { ?>
+                                <div class="col-xs-6 user">
+
+                                    <?php
+
+                                    $owner = $iter->Users;;
+                                    $iniciales = explode(" ", $owner->name);
+                                    $frst = str_split($iniciales[0])[0];
+                                    $scnd = str_split($iniciales[1])[0];
+                                    if(isset($iniciales[0]) && isset($iniciales[1])) {
+                                        $nombre = $iniciales[0] . " " . $iniciales[1];
+                                    }
+                                    else {
+                                        $nombre =  $iniciales[0];
+                                    }
+
+                                    if(isset($owner->avatar)) {
+
+                                        ?>
+                                        <a href="javascript:void(0)" id="chat-user1" class="chat-user-online themed-color-night" style="text-decoration:none;">
+                                            <img src="<?php print($this->url->get($owner->avatar))?>" alt="avatar" class="img-circle" width="40" height="40">
+                                        </a>
+                                        <br>
+
+                                        <?php print $nombre ?><br>
+                                        <?php print $owner->rol->descripcion ?>
+
+                                        <?php
+
+                                    } else {
+
+                                        ?>
+
+                                        <div class="avatar-circle avatar-sm">
+                                            <span class="initials initials-sm"><?php print $frst.$scnd ?></span>
+                                        </div>
+
+                                        <?php print $nombre ?><br>
+                                        <?php print $owner->rol->descripcion ?>
+
+                                        <?php
+
+                                    }
+
+                                    ?>
+                                </div>
+                                <?php
+                            }
+                            ?>
+
+                        </div>
+                    </div>
+                </td>
+
+                <!-- fin participantes -->
+
+
+            </tr>
+            <tr>
+                <td colspan="2"><strong>Desde</strong><br><?php print $actividad->actv_hora ?> </td>
+                <td colspan="2"><strong>Hasta</strong><br>
+                    <?php print date("H:i:s", strtotime($actividad->actv_hora. " + ". $actividad->CategoriaActividad->getFirst()->Categoria->duracion ." minutes"))?></td>
+            </tr>
+            <td class="descrp" colspan="4"><strong>Descripción Ampliada</strong> <br>
+                <?php print($actividad->actv_descripcion_ampliada) ;?>
+                <tr>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+
+    <?php
+
+}
+
+?>
