@@ -11,6 +11,9 @@
 	use Gabs\Models\Proyecto;
 	use Gabs\Models\UserTecnologia;
 	use Gabs\Models\ConfiguradorDisponibilidad;
+	use Gabs\Models\UserActividad;
+	use Gabs\Models\CategoriaActividad;
+
 
 	use Phalcon\Mvc\Model\Criteria;
 	use Phalcon\Paginator\Adapter\Model as PaginatorModel;
@@ -74,7 +77,7 @@
 
 	        $this->mifaces->newFaces();
 
-	        $a_model = Actividad::findFirst($id);
+	        $actividad = Actividad::findFirst($id);
 
 	        $rol = $this->auth->getIdentity()['roleId'];
 
@@ -86,24 +89,134 @@
 					$_POST['creado_por'] = $this->auth->getIdentity()['id'];
 				}
 
-		        $callback = $a_model->guardarActividad($_POST);
-		        
-		        if(isset($callback['error'])){
-		            if($callback['error'] == 1){
-		                foreach ($callback['msg'] as $val) {
-		                    $this->mifaces->addPosRendEval("$.bootstrapGrowl('{$val}',{type:'danger'});");
+				$estado_edicion = true;
+
+		        $actividad->proyecto_id 				= $this->request->getPost("proyecto", 		'int');
+		        $actividad->actv_descripcion_breve 		= $this->request->getPost("dscr-breve", 	'string');
+		        $actividad->actv_descripcion_ampliada 	= $this->request->getPost("dscr-ampliada", 	'string');
+		        $actividad->actv_location 				= $this->request->getPost("donde", 			'string');
+		        $actividad->actv_fecha 					= $this->request->getPost("fecha", 			'string');
+		        $actividad->actv_hora 					= $this->request->getPost("hora", 			'string');
+		        $actividad->actv_categoria 				= $this->request->getPost("categoria", 		'int');
+		        $actividad->actv_status 				= 2;
+		        #$actividad->actv_creado_por 			= $this->auth->getIdentity()['id'];
+		        #$actividad->actv_created_at 			= date('Y-m-d'); 
+		        $actividad->actv_updated_at 			= date('Y-m-d');
+		        $actividad->activo 						= 1;
+
+		        $usuario = $this->request->getPost("persona", 'int');
+
+				# obtenemos los datos de la categoria
+				$categoria = Categoria::findFirst($actividad->actv_categoria);
+
+				# obtenemos los datos de configuración
+				$ConfDisp = ConfiguradorDisponibilidad::findFirst(1);
+	        	$valor_bloque = $ConfDisp->cnfg_intervalo;
+				
+
+				$disponible = new Disponible();
+				$disponible->dspn_fecha = $actividad->actv_fecha;
+				$disponible->dspn_hora	= $actividad->actv_hora;
+				$disponible->user_id 	= $usuario;
+				$disponible->cnfg_id 	= $ConfDisp->cnfg_id;
+				$disponible->actv_id 	= $actividad->actv_id;
+
+				/**
+				 * este metodo descarta los bloques creados ya para esta actividad
+				 */
+				if(!$disponible->comprobarDisponibilidadEdicion($valor_bloque, $categoria->duracion)){
+					# si no están disponibles					
+					$estado_edicion = false;
+                    $callback['msg'][] = 'No hay bloques disponibles en la hora y fecha seleccionadas.'; 
+				}
+
+				# Guardamos el evento
+                if($estado_edicion){
+					if(!$actividad->save()){
+						$estado_edicion = false;
+	                	$callback['msg'][] = 'Error guardar la actividad.';
+
+	                	foreach ($actividad->getMessages() as $message) {
+		                    $callback['msg'][] = $message->getMessage();
 		                }
-		            }
-		        } else{
-		        	$msg = "Activada editada correctamente";
-		            $this->mifaces->addPosRendEval("$.bootstrapGrowl('{$msg}');");
-		        }
-		        if(isset($callback['error']))
-		            $this->mifaces->run();            
-		        else{
-		            $this->mifaces->addPosRendEval("window.location.replace('/qalendar');");
-		            $this->mifaces->run();            
-		        }
+					}
+				}
+
+				// editando nueva actividad
+				
+
+				if($estado_edicion){
+					$userActividad      = UserActividad::findFirstByActvId($actividad->actv_id);
+	                $userActividad->user_id = $usuario;
+
+	                if(!$userActividad->save()){
+	                	$estado_edicion = false;
+	                	$callback['msg'][] = 'Error al editar la relacion usuario-actividad.';
+
+	                	foreach ($userActividad->getMessages() as $message) {
+		                    $callback['msg'][] = $message->getMessage();
+		                }
+	                }
+				}
+
+				# editando categoria
+				
+                
+
+				// creando nueva categoria
+                if($estado_edicion){
+                	$categoriaActividad = CategoriaActividad::findFirstByActvId($actividad->actv_id);
+                	$categoriaActividad->ctgr_id	= $actividad->actv_categoria;
+
+                	if(!$categoriaActividad->save()){
+                		$estado_edicion = false;
+                		$callback['msg'][] = 'Error al editar la relacion categoria-actividad.';
+
+                		foreach ($categoriaActividad->getMessages() as $message) {
+		                    $callback['msg'][] = $message->getMessage();
+		                }
+                	}
+                }
+
+                # Guardamos la disponibilidad
+                if($estado_edicion){
+
+                	
+
+                	/**
+                	 * reseteamos los que ya existian, para luego volver a crearlos según la edición
+                	 */
+                	$disponible->resetDisponibilidad();
+
+					if(!$disponible->guardarDisponibilidad($valor_bloque, $categoria->duracion)){
+
+						$estado_edicion = false;
+	                	$callback['msg'][] = 'Error guardar la disponibilidad.';
+
+	                	foreach ($disponible->getMessages() as $message) {
+		                    $callback['msg'][] = $message->getMessage();
+		                }
+					}
+				}
+
+				$this->mifaces->newFaces();
+
+				if(!$estado_edicion)
+				{
+					foreach ($callback['msg'] as $val) {
+						$this->mifaces->addPosRendEval("$.bootstrapGrowl('{$val}',{type:'danger'});");
+					}
+
+					$this->mifaces->run();
+				} else {
+					$msg = "Actividad editada correctamente.";
+					$this->mifaces->addPosRendEval("$.bootstrapGrowl('{$msg}');");
+					# no se alcanza a ver este msg por la redirección
+
+					//$this->mifaces->addPosRendEval("window.location.replace('/qalendar');");
+					$this->mifaces->run();
+				}
+		        
 		        
 
 	        }else{
@@ -112,10 +225,6 @@
 	        	$this->mifaces->run();
 	        }
 
-
-
-
-				
 	    }
 
 		/**
@@ -214,33 +323,130 @@
 		 * Guarda el evento y redirige al home
 		 */
 		public function guardarEventoAction(){
+			# comprobamos que el metodo POST sea enviado por ajax
 			if($this->request->isAjax() == true) {
-				$this->mifaces->newFaces();
-				$a_model = new Actividad();
 
-				if($this->auth->getIdentity()['id']) {
-					$_POST['creado_por'] = $this->auth->getIdentity()['id'];
+				$estado_creacion = true;
+				
+				# obtenemos los datos
+				$actividad = new Actividad();
+				$actividad->proyecto_id 				= $this->request->getPost("proyecto", 		'int');
+		        $actividad->actv_descripcion_breve 		= $this->request->getPost("dscr-breve", 	'string');
+		        $actividad->actv_descripcion_ampliada 	= $this->request->getPost("dscr-ampliada", 	'string');
+		        $actividad->actv_location 				= $this->request->getPost("donde", 			'string');
+		        $actividad->actv_fecha 					= $this->request->getPost("fecha", 			'string');
+		        $actividad->actv_hora 					= $this->request->getPost("hora", 			'string');
+		        $actividad->actv_categoria 				= $this->request->getPost("categoria", 		'int');
+		        $actividad->actv_status 				= 2;
+		        $actividad->actv_creado_por 			= $this->auth->getIdentity()['id'];
+		        $actividad->actv_created_at 			= date('Y-m-d'); 
+		        $actividad->actv_updated_at 			= date('Y-m-d');
+		        $actividad->activo 						= 1;
+
+		        $usuario = $this->request->getPost("persona", 'int');
+
+				# obtenemos los datos de la categoria
+				$categoria = Categoria::findFirst($_POST['categoria']);
+
+				# obtenemos los datos de configuración
+				$ConfDisp = ConfiguradorDisponibilidad::findFirst(1);
+	        	$valor_bloque = $ConfDisp->cnfg_intervalo;
+				
+
+				$disponible = new Disponible();
+				$disponible->dspn_fecha = $actividad->actv_fecha;
+				$disponible->dspn_hora	= $actividad->actv_hora;
+				$disponible->user_id 	= $usuario;
+				$disponible->cnfg_id 	= $ConfDisp->cnfg_id;
+
+
+				if(!$disponible->comprobarDisponibilidad($valor_bloque, $categoria->duracion)){
+					# si no están disponibles					
+					$estado_creacion = false;
+                    $callback['msg'][] = 'No hay bloques disponibles en la hora y fecha seleccionadas.'; 
 				}
 
-				$callback = $a_model->guardarActividad($_POST);
-				if (isset($callback['error'])) {
-					if ($callback['error'] == 1) {
-						foreach ($callback['msg'] as $val) {
-							$this->mifaces->addPosRendEval("$.bootstrapGrowl('{$val}',{type:'danger'});");
-						}
+				# Guardamos el evento
+                if($estado_creacion){
+					if(!$actividad->save()){
+						$estado_creacion = false;
+	                	$callback['msg'][] = 'Error guardar la actividad.';
+
+	                	foreach ($actividad->getMessages() as $message) {
+		                    $callback['msg'][] = $message->getMessage();
+		                }
 					}
+				}
+
+				// creando nueva actividad
+				if($estado_creacion){
+					$userActividad          = new UserActividad();
+	                $userActividad->actv_id = $actividad->actv_id;
+	                $userActividad->user_id = $usuario;
+
+	                if(!$userActividad->save()){
+	                	$estado_creacion = false;
+	                	$callback['msg'][] = 'Error al crear la relacion usuario-actividad.';
+
+	                	foreach ($userActividad->getMessages() as $message) {
+		                    $callback['msg'][] = $message->getMessage();
+		                }
+	                }
+				}
+
+				// creando nueva categoria
+                if($estado_creacion){
+                	$categoriaActividad             = new CategoriaActividad();
+                	$categoriaActividad->actv_id    = $actividad->actv_id;
+                	$categoriaActividad->ctgr_id	= $actividad->actv_categoria;
+
+                	if(!$categoriaActividad->save()){
+                		$estado_creacion = false;
+                		$callback['msg'][] = 'Error al crear la relacion categoria-actividad.';
+
+                		foreach ($categoriaActividad->getMessages() as $message) {
+		                    $callback['msg'][] = $message->getMessage();
+		                }
+                	}
+                }
+
+                # Guardamos la disponibilidad
+                if($estado_creacion){
+
+                	$disponible->actv_id 	= $actividad->actv_id;
+
+					if(!$disponible->guardarDisponibilidad($valor_bloque, $categoria->duracion)){
+
+						$estado_creacion = false;
+	                	$callback['msg'][] = 'Error guardar la disponibilidad.';
+
+	                	foreach ($disponible->getMessages() as $message) {
+		                    $callback['msg'][] = $message->getMessage();
+		                }
+					}
+				}
+
+				$this->mifaces->newFaces();
+
+				if(!$estado_creacion)
+				{
+					foreach ($callback['msg'] as $val) {
+						$this->mifaces->addPosRendEval("$.bootstrapGrowl('{$val}',{type:'danger'});");
+					}
+
+					$this->mifaces->run();
 				} else {
 					$msg = "Actividad creada correctamente.";
 					$this->mifaces->addPosRendEval("$.bootstrapGrowl('{$msg}');");
-				}
-				if (isset($callback['error']))
-					$this->mifaces->run();
-				else {
+					# no se alcanza a ver este msg por la redirección
+
 					$this->mifaces->addPosRendEval("window.location.replace('/qalendar');");
 					$this->mifaces->run();
 				}
 			}
 		}
+
+
 
 		/**
 		 * Muestra el perfil de un evento
@@ -538,6 +744,7 @@
 
 	    public function deleteAction()
 	    {
+	    	$se_puede = true;
 
 	    	try {
 
@@ -550,7 +757,16 @@
 	    		// ejem: no se podrán cancelar a cierta hora de realizarse la actividad
 	    		// $se_puede = true/false
 	    		// si es false, guardar en la variable $data['msg'] la razón 
-	    		$se_puede = true;
+	    		
+	    		# Reset de disponibilidad
+		    		$disponible = new Disponible();
+		    		$disponible->actv_id = $actividad->actv_id;
+
+		    		if(!$disponible->resetDisponibilidad()){
+		    			$se_puede = false;
+		    		}
+
+		    	#
 
 
 	    		if($se_puede)
@@ -591,16 +807,59 @@
 
 	    		$id = $this->request->getPost("act", 'int');
 
+	    		# obtenemos la actividad
 	    		$actividad = Actividad::findFirstByActvId($id);
-	    		$actividad->activo = 1;
 
-	    		if(!$actividad->save()){
-	    			$data['estado'] = false;
-	    			$data['msg'] = "no se ha podido activar el evento.";
-	    		}else{
-	    			$data['estado'] = true;
-	    			$data['msg'] = "Evento activado correctamente.";
-	    		}
+
+	    		# COMPROBAMOS DISPONIBILIDAD
+		    		# obtenemos los datos de la categoria
+					$categoria = Categoria::findFirst($actividad->actv_categoria);
+
+					# obtenemos los datos de configuración
+					$ConfDisp = ConfiguradorDisponibilidad::findFirst(1);
+		        	$valor_bloque = $ConfDisp->cnfg_intervalo;
+
+		    		# comprobamos la disponibilidad
+		    		$disponible = new Disponible();
+					$disponible->dspn_fecha = $actividad->actv_fecha;
+					$disponible->dspn_hora	= $actividad->actv_hora;
+					$disponible->user_id 	= $actividad->usuario->user_id;
+					$disponible->cnfg_id 	= $ConfDisp->cnfg_id;
+					$disponible->actv_id 	= $actividad->actv_id;
+
+					/**
+					 * este metodo descarta los bloques creados ya para esta actividad
+					 */
+					if(!$disponible->comprobarDisponibilidadEdicion($valor_bloque, $categoria->duracion)){
+						# si no están disponibles
+						$data['estado'] = false;				
+	                    $data['msg'] = 'No hay bloques disponibles en la hora y fecha seleccionadas.';
+
+					}else{
+						
+						$disponible->resetDisponibilidad();
+
+						if(!$disponible->guardarDisponibilidad($valor_bloque, $categoria->duracion)){
+
+							$data['estado'] = false;
+				    		$data['msg'] = "No se ha podido guardar la disponibilidad.";
+
+						} else {
+							# una vez que esté ok la disponibilidad activamos el evento
+							$actividad->activo = 1;
+				    		
+				    		if(!$actividad->save()){
+				    			$data['estado'] = false;
+				    			$data['msg'] = "No se ha podido activar el evento.";
+				    		}else{
+				    			$data['estado'] = true;
+				    			$data['msg'] = "Evento activado correctamente.";
+				    		}
+
+						}
+						
+							
+					}			    		
 
 	    	} catch (Exception $e) {
 	    		$data['estado'] = false;
@@ -609,6 +868,7 @@
 
 	    	echo json_encode($data);
 	    }
+
 
 	    public static function fromInput($dependencyInjector, $model, $data)
 		{
