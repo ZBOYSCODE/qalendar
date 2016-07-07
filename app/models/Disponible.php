@@ -127,6 +127,149 @@ class Disponible extends Model
 
         return $horasDisponibles;
     }
+        
+
+    /**
+     * comprbaremos la disponibilidad de la actividad
+     * 
+     */
+    public function comprobarDisponibilidad($bloque, $duracion)
+    {
+
+        $nblocks    = $duracion/$bloque;
+
+        $bloqueHora = $this->dspn_hora;
+        
+        for ($i=0; $i < $nblocks; $i++) { 
+            
+            $disp = Disponible::findFirst("     dspn_fecha  = '{$this->dspn_fecha}' 
+                                            AND dspn_hora   = '{$bloqueHora}' 
+                                            AND user_id     = {$this->user_id}"
+                                        );
+            
+            if(is_object($disp))
+            {
+                if($disp->edsp_id != 1){
+                    return false;
+                }
+            }
+
+            $date = new \DateTime($bloqueHora);
+            $date->add(new \DateInterval('PT'.$bloque.'M'));
+            $bloqueHora = $date->format('H:i:s');                         
+
+        }
+
+        return true;
+    }
+
+    public function comprobarDisponibilidadEdicion($bloque, $duracion)
+    {
+        $nblocks    = $duracion/$bloque;
+
+        $bloqueHora = $this->dspn_hora;
+        
+        for ($i=0; $i < $nblocks; $i++) { 
+            
+            $disp = Disponible::findFirst("     dspn_fecha  = '{$this->dspn_fecha}' 
+                                            AND dspn_hora   = '{$bloqueHora}' 
+                                            AND user_id     = {$this->user_id}
+                                            AND NOT actv_id = {$this->actv_id} "
+                                        );
+            
+            if(is_object($disp))
+            {
+                if($disp->edsp_id != 1){
+                    return false;
+                }
+            }
+
+            $date = new \DateTime($bloqueHora);
+            $date->add(new \DateInterval('PT'.$bloque.'M'));
+            $bloqueHora = $date->format('H:i:s');                         
+
+        }
+
+        return true;
+    }
+
+    /**
+     * una vez comprobada la actividad
+     * 
+     */
+    public function guardarDisponibilidad($bloque, $duracion)
+    {
+        $nblocks    = $duracion/$bloque;
+        $bloqueHora = $this->dspn_hora;
+
+        $fecha      = $this->dspn_fecha;
+        $actv_id    = $this->actv_id;
+        $user       = $this->user_id;
+        $cnfg_id    = $this->cnfg_id;
+
+        for ($i=0; $i < $nblocks; $i++)
+        {
+            /**
+             * existe la posibilidad de que ya exista la disponibilidad creada
+             * en este caso, se buscara y se modificará, en caso contrario se creará una nueva
+             */
+
+            $disponible = Disponible::findFirst("     dspn_fecha  = '{$fecha}' 
+                                            AND dspn_hora   = '{$bloqueHora}' 
+                                            AND user_id     = {$user}"
+                                        );
+
+            // si no existe el registro, creamos uno nuevo
+            if(!is_object($disponible))
+            {
+                $disponible = new Disponible();
+            }
+
+
+            //Bloques no creados ahora se crean.
+            
+            $disponible->dspn_fecha     = $fecha;
+            $disponible->dspn_hora      = $bloqueHora;
+            $disponible->edsp_id        = 2; // Ocupado
+            $disponible->actv_id        = $actv_id;
+            $disponible->user_id        = $user;
+            $disponible->cnfg_id        = $cnfg_id;
+
+            if(!$disponible->save())
+            {
+                # guardamos los mensajes de error
+                foreach ($disponible->getMessages() as $message) {
+                    $callback['msg'][] = $message->getMessage();
+                }
+
+                echo "<pre>"; print_r($callback);
+
+                return false;
+            }
+
+            // se le suman el valor de un bloque
+            $date = new \DateTime($bloqueHora);
+            $date->add(new \DateInterval('PT'.$bloque.'M'));
+            $bloqueHora = $date->format('H:i:s');
+        }
+
+        return true;
+    }
+
+
+    public function resetDisponibilidad()
+    {
+        if( isset($this->actv_id) && !empty($this->actv_id) ) {
+
+            $disponible = Disponible::findByActvId($this->actv_id);
+
+            foreach ($disponible as $disp){
+                $disp->edsp_id = 1;
+                $disp->actv_id = null;
+                $disp->save();
+            }
+        }
+    }
 
 
 }
