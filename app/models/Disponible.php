@@ -269,6 +269,8 @@ class Disponible extends Model
                 $disp->save();
             }
         }
+
+        return true;
     }
 
 

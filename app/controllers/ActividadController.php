@@ -744,6 +744,7 @@
 
 	    public function deleteAction()
 	    {
+	    	$se_puede = true;
 
 	    	try {
 
@@ -756,7 +757,16 @@
 	    		// ejem: no se podrán cancelar a cierta hora de realizarse la actividad
 	    		// $se_puede = true/false
 	    		// si es false, guardar en la variable $data['msg'] la razón 
-	    		$se_puede = true;
+	    		
+	    		# Reset de disponibilidad
+		    		$disponible = new Disponible();
+		    		$disponible->actv_id = $actividad->actv_id;
+
+		    		if(!$disponible->resetDisponibilidad()){
+		    			$se_puede = false;
+		    		}
+
+		    	#
 
 
 	    		if($se_puede)
@@ -797,16 +807,59 @@
 
 	    		$id = $this->request->getPost("act", 'int');
 
+	    		# obtenemos la actividad
 	    		$actividad = Actividad::findFirstByActvId($id);
-	    		$actividad->activo = 1;
 
-	    		if(!$actividad->save()){
-	    			$data['estado'] = false;
-	    			$data['msg'] = "no se ha podido activar el evento.";
-	    		}else{
-	    			$data['estado'] = true;
-	    			$data['msg'] = "Evento activado correctamente.";
-	    		}
+
+	    		# COMPROBAMOS DISPONIBILIDAD
+		    		# obtenemos los datos de la categoria
+					$categoria = Categoria::findFirst($actividad->actv_categoria);
+
+					# obtenemos los datos de configuración
+					$ConfDisp = ConfiguradorDisponibilidad::findFirst(1);
+		        	$valor_bloque = $ConfDisp->cnfg_intervalo;
+
+		    		# comprobamos la disponibilidad
+		    		$disponible = new Disponible();
+					$disponible->dspn_fecha = $actividad->actv_fecha;
+					$disponible->dspn_hora	= $actividad->actv_hora;
+					$disponible->user_id 	= $actividad->usuario->user_id;
+					$disponible->cnfg_id 	= $ConfDisp->cnfg_id;
+					$disponible->actv_id 	= $actividad->actv_id;
+
+					/**
+					 * este metodo descarta los bloques creados ya para esta actividad
+					 */
+					if(!$disponible->comprobarDisponibilidadEdicion($valor_bloque, $categoria->duracion)){
+						# si no están disponibles
+						$data['estado'] = false;				
+	                    $data['msg'] = 'No hay bloques disponibles en la hora y fecha seleccionadas.';
+
+					}else{
+						
+						$disponible->resetDisponibilidad();
+
+						if(!$disponible->guardarDisponibilidad($valor_bloque, $categoria->duracion)){
+
+							$data['estado'] = false;
+				    		$data['msg'] = "No se ha podido guardar la disponibilidad.";
+
+						} else {
+							# una vez que esté ok la disponibilidad activamos el evento
+							$actividad->activo = 1;
+				    		
+				    		if(!$actividad->save()){
+				    			$data['estado'] = false;
+				    			$data['msg'] = "No se ha podido activar el evento.";
+				    		}else{
+				    			$data['estado'] = true;
+				    			$data['msg'] = "Evento activado correctamente.";
+				    		}
+
+						}
+						
+							
+					}			    		
 
 	    	} catch (Exception $e) {
 	    		$data['estado'] = false;
