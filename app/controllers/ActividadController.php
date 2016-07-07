@@ -82,7 +82,7 @@
 	        $rol = $this->auth->getIdentity()['roleId'];
 
 	        # solo Admin, Gestor y el creador del evento pueden modificarlos
-	        if($rol == 1 || $rol == 2 || $rol == $a_model->actv_creado_por)
+	        if($rol == 1 || $rol == 2 || $rol == $actividad->actv_creado_por)
 	        {
 	        
 	        	if($this->auth->getIdentity()['id']) {
