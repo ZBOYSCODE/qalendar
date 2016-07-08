@@ -51,6 +51,8 @@ $(document).ready(function(){
 
 		if(proyecto == 0) return false;
 
+		$("#persona").html("<option value='0'>Seleccionar...</option>");
+
 		var datos = {
 			'proyecto' : proyecto
 		}

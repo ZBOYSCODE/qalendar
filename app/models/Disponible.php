@@ -4,6 +4,8 @@ use Phalcon\Mvc\Model;
 use Phalcon\Mvc\Model\Query;
 use \Gabs\Dto\Calendar;
 
+use Gabs\Models\Bloqueo;
+
 class Disponible extends Model
 {
 
@@ -153,6 +155,19 @@ class Disponible extends Model
                     return false;
                 }
             }
+
+            $fecha      = $this->dspn_fecha." ".$bloqueHora;
+
+            $bloqueado  = Bloqueo::findfirst("      '{$fecha}' >=   fecha_inicio 
+                                                AND '{$fecha}' <   fecha_termino 
+                                                AND user_id = {$this->user_id} ");
+
+            if(is_object($bloqueado))
+            {
+                return false;
+            }
+
+
 
             $date = new \DateTime($bloqueHora);
             $date->add(new \DateInterval('PT'.$bloque.'M'));

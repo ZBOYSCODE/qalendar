@@ -20,7 +20,7 @@
 			$themeArray = $this->_themeArray;
     		$themeArray['pcView'] = 'bloqueo/list';
 
-    		$data['users'] = Users::find();
+    		$data['users'] = Users::find(" rol_id = 3 ");
 
     		# Paginación
     		$usuario	= $this->request->get("usuario", 'int');
