@@ -31,7 +31,7 @@ class GestionQaController extends ControllerBase
     {
 
         $rolUser = isset($this->auth->getIdentity()['roleId'])? $this->auth->getIdentity()['roleId']:null;
-        if($rolUser == 1 || $rolUser == 3) {
+        if($rolUser == 1 || $rolUser == 4) {
             $this->vistaDiariaAction();
         } elseif($rolUser == 2) {
             $this->vistaSemanalAction();
