@@ -9,7 +9,7 @@
         <span class="icon-bar"></span>
       </button>
       <!-- logo -->
-      <a class="navbar-brand" href="<?php print $this->url->get() ?>"><img alt="" height="20" src="<?php print($this->url->get("img/latam-logo.png"))?>"/></a>     
+      <a class="navbar-brand" href="<?php print $this->url->get() ?>"><img alt="" height="20" src="<?php print($this->url->get("img/latam-logo.png"))?>"/></a>
     </div>
     <div class="collapse navbar-collapse animated fadeIn" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav animated fadeIn text15">
@@ -84,6 +84,11 @@
                 <li class=""><a href="<?php print($this->url->get($this->auth->getIdentity()['email'])) ?>"> Perfil  </a></li>
                 <li class=""><a href="<?php print($this->url->get('logout')) ?>"> Salir  </a></li>
             </ul>
+        </li>
+        <li class="logo-to-right">
+          <a href="<?php print($this->config->appAutorLink)?>" >
+            <img class="img-responsive" height="10" src="<?php print $this->url->get() ?>img/zenta-logo.png">
+          </a>
         </li>
       </ul>
     </div><!-- /.navbar-collapse -->
