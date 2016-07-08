@@ -44,7 +44,7 @@
         			<div class="form-group">
 		        		<label for="jefep">Jefe Proyecto</label>
 		        		<select name="jefep" id="jefep" class='form-control chosen'>
-		        			<option value='0'>Seleccione</option>
+		        			<option value=''>Seleccione</option>
 		        			<?php
 		        				foreach ($pcData['users'] as $usuario) {
 		        					echo "<option value='".$usuario->id."'>".$usuario->name."</option>";
@@ -57,7 +57,7 @@
         		<div class="col-md-2">
         			<label for="area">Área</label>
 	        		<select name="area" id="area" class='form-control chosen'>
-	        			<option value='0'>Seleccione</option>
+	        			<option value=''>Seleccione</option>
 	        			<?php
 	        				foreach ($pcData['areas'] as $area) {
 	        					echo "<option value='".$area->id."'>".$area->nombre."</option>";
@@ -70,7 +70,7 @@
         			<div class="form-group">
 		        		<label for="tecnologia">Tecnología</label>
 		        		<select name="tecnologia" id="tecnologia" class='form-control chosen'>
-		        			<option value='0'>Seleccione</option>
+		        			<option value=''>Seleccione</option>
 		        			<?php
 		        				foreach ($pcData['tecnologias'] as $tecnologia) {
 		        					echo "<option value='".$tecnologia->id."'>".$tecnologia->nombre."</option>";
