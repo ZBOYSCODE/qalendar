@@ -59,7 +59,17 @@
 
         <?php
         }
+
+        if($this->AccesoAcl->tienePermiso('index', 'bloqueo')) { ?>
         ?>
+
+            <li class=""><a  href="<?php print($this->url->get('bloqueo/')); ?>"> Bloqueo horas  </a></li>
+
+
+        <?php
+            }
+        ?>
+
 
         <li class=""><a href="javscript:void(0)" data-toggle="tooltip" data-placement="bottom" title="Proximamente"> Informes  </a></li>
         <li class=""><a href="javscript:void(0)" data-toggle="tooltip" data-placement="bottom" title="Proximamente"> Opciones  </a></li>

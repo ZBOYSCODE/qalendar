@@ -1,0 +1,155 @@
+<div class="base-page lighter">
+
+	<div class="formulario-section">
+		
+		    <aside>
+		        <h1 class="blog">Bloqueo de horas</h1>
+		    </aside>
+
+		
+		<form action="<?php echo $this->url->get('bloqueo'); ?>" method='GET' id='frm'>
+			<div class="row">
+
+				<div class="col-md-3 col-md-offset-1">
+
+					<div class="form-group">
+						<label for="usuario">Usuario</label>
+
+						<select name="usuario" id="usuario" class='form-control'>
+							<option value=''>Seleccione...</option>
+
+							<?php
+
+								foreach ($pcData['users'] as $user) {
+									echo "<option value='{$user->id}'>{$user->name}</option>";
+								}
+
+							?>
+						</select>
+					</div>
+
+				</div>
+
+				<div class="col-md-1">
+					<div class="form-group">
+						<label for="">&nbsp;</label>
+						<button type='submit' class='btn btn-default form-control'>Buscar</button>
+					</div>
+				</div>
+
+				<div class='col-md-2 col-md-offset-4'>
+					<div class="form-group">
+						<label for="crea">&nbsp;</label>
+						<button type='button' id='crea' class='btn btn-success form-control' data-toggle="modal" data-target="#crear_bloqueo_modal">Nuevo bloqueo</button>
+					</div>
+					
+				</div>
+			</div>
+
+			<br><br>
+				
+			
+			<div class="col-md-10 col-md-offset-1">
+				
+				<hr>
+				<div class="table-responsive">
+					<table class="table table-striped">
+						
+						<thead>
+							<th>Fecha</th>
+							<th>Usuario</th>
+							<th>Hora inicio</th>
+							<th>Hora termino</th>
+							<th>Acción</th>
+						</thead>
+
+						<tbody>
+							<?php 
+								foreach ($pcData['page']->items as $bloqueos)
+								{
+									echo "<tr id='tr_{$bloqueos->id}'>";
+									echo "<td>{$bloqueos->id}</td>";
+									echo "<td>{$bloqueos->usuario->name}</td>";
+									echo "<td>{$bloqueos->fecha_inicio}</td>";
+									echo "<td>{$bloqueos->fecha_termino}</td>";
+									echo "<td>
+											<a class='btn btn-warning delete-bloqueo' data-id='{$bloqueos->id}'>
+												<i class='fa fa-times'></i>
+											</a>
+										  </td>";
+									echo "</td>";
+								}
+							?>
+						</tbody>
+					</table>
+				</div>
+
+
+				
+
+					<?php
+
+						if(isset($pcData['page'])){
+							$url = '';
+
+							if(isset($_GET['usuario'])){
+								$url .= "&usuario=".$_GET['usuario'];
+							}else{
+								$url .= "usuario=";
+							}
+
+							# solo mostramos la paginación si el numero de paginas es mayor a 1
+							if( $pcData['page']->total_pages > 1)
+							{
+								echo "<a href='".$this->url->get("bloqueo/")."'>Primera</a> ";
+								echo "<a href='".$this->url->get("bloqueo/").$url."&page=".$pcData['page']->before."'>Anterior</a> ";
+								echo "<a href='".$this->url->get("bloqueo/").$url."&page=".$pcData['page']->next."'>Siguiente</a> ";
+								echo "<a href='".$this->url->get("bloqueo/").$url."&page=".$pcData['page']->last."'>Ultima</a> ";
+								echo "<BR>Estas en la página ", $pcData['page']->current, " de ", $pcData['page']->total_pages; 
+
+							}
+						}
+					?>
+			</div>
+		</form>
+	</div>
+</div>
+
+<div class="modal fade" tabindex="-1" role="dialog" id='crear_bloqueo_modal'>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Crear bloqueo</h4>
+      </div>
+
+		<div class="modal-body">
+
+			<div id="alerta"></div>
+				
+			<div class="form-group">
+				<label for="fecha">Fecha</label>
+				<input type="date" id='fecha' class='form-control' value="<?php echo date('Y-m-d'); ?>">	
+			</div>
+
+			<div class="form-group">
+				<label for="hora_inicio">Hora inicio</label>
+				<input type="time" id='hora_inicio'  class='form-control' value="00:00">
+			</div>
+
+			<div class="form-group">
+				<label for="hora_fin">Hora termino</label>
+				<input type="time" id='hora_fin' class='form-control' value="00:00">
+			</div>
+
+		</div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary" id='crear_bloque'>Crear bloqueo</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+	

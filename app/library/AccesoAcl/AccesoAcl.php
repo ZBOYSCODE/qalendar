@@ -34,6 +34,11 @@
 															'delete'			=> 1,
 															'activar'			=> 1
                                                     ],
+                                            'bloqueo' => [
+                                            				'index' 			=> 1,
+                                            				'create'			=> 1,
+                                            				'delete'			=> 1
+                                            		],
                                             'hito' => [
 															'crearhito' 	=> 1,
 															'deletehito'	=> 1
@@ -94,6 +99,11 @@
 															'delete'			=> 1,
 															'activar'			=> 1
                                                     ],
+                                             'bloqueo' => [
+                                            				'index' 			=> 1,
+                                            				'create'			=> 1,
+                                            				'delete'			=> 1
+                                            		],
                                             'hito' => [
 															'crearhito'			=> 1,
 															'deletehito'		=> 1
