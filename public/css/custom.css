@@ -538,3 +538,18 @@ aside h1:after {
 	border-radius: 5px;
 	margin-bottom: 15px;
 }
+
+.logo-to-right {
+
+}
+
+.logo-to-right > a:hover,
+.logo-to-right > li > a:focus,
+.logo-to-right > .active > a,
+.logo-to-right > .active > a:hover,
+.logo-to-right > .active > a:focus,
+.logo-to-right > .open > a,
+.logo-to-right > .open > a:hover,
+.logo-to-right > .open > a:focus {
+	background-color: transparent !important;
+}
