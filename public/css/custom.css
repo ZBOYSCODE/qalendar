@@ -553,3 +553,15 @@ aside h1:after {
 .logo-to-right > .open > a:focus {
 	background-color: transparent !important;
 }
+
+.aselected{
+	color: rgba(243, 156, 18, 1);
+}
+
+.aselected:hover{
+	color: rgba(243, 156, 18, 1);
+}
+
+.aselected:focus{
+	color: rgba(243, 156, 18, 1);
+}

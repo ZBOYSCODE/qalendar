@@ -2,7 +2,7 @@
 
 	namespace Gabs\Controllers;
 
-	class accesoController extends ControllerBase
+	class AccesoController extends ControllerBase
 	{
 
 		public function initialize()
