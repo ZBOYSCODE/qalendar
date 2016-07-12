@@ -27,7 +27,7 @@
 
 
                                             <option <?php print(isset($pcData['proyectoSelected']) && $pcData['proyectoSelected'] == $proyecto->id?'selected="selected"':'' )?>
-                                                value='<?php print $proyecto->id ?>'><?php print $proyecto->nombre ?></option>
+                                                value='<?php print $proyecto->id ?>'><?php print $proyecto->nombre." [ ".$proyecto->tecnologia->nombre." ]"; ?></option>
 
 
 
