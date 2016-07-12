@@ -60,15 +60,27 @@
         <?php
         }
 
-        if($this->AccesoAcl->tienePermiso('index', 'bloqueo')) { ?>
-        
-
-            <li class=""><a  href="<?php print($this->url->get('bloqueo/')); ?>"> Bloqueo horas  </a></li>
-
-
-        <?php
-            }
         ?>
+
+        <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><b> Administrar </b> <span class="caret"></span></a>
+
+            <ul id="login-dp" class="dropdown-menu">
+                
+                <?php if($this->AccesoAcl->tienePermiso('index', 'bloqueo')) { ?>
+                    <li class=""><a href="<?php print($this->url->get('bloqueo/')) ?>"> Bloqueo horas  </a></li>
+                <?php } ?>
+
+                <?php if($this->AccesoAcl->tienePermiso('index', 'permisos')) { ?>
+                    <li class=""><a href="<?php print($this->url->get('permisos/')) ?>"> Permisos  </a></li>
+                <?php } ?>
+
+                <?php if($this->AccesoAcl->tienePermiso('index', 'usuarios')) { ?>
+                    <li class=""><a href="<?php print($this->url->get('usuarios/')) ?>"> Usuarios  </a></li>
+                <?php } ?>
+
+            </ul>
+        </li>
 
 
         <li class=""><a href="javscript:void(0)" data-toggle="tooltip" data-placement="bottom" title="Proximamente"> Informes  </a></li>
