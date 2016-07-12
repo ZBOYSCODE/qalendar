@@ -140,6 +140,11 @@
 	                	foreach ($actividad->getMessages() as $message) {
 		                    $callback['msg'][] = $message->getMessage();
 		                }
+					} else {
+
+						$mail = new EnvioMail();
+						$mail->evento = $actividad->actv_id;
+						$mail->aviso_edicion();
 					}
 				}
 
@@ -376,6 +381,10 @@
 	                	foreach ($actividad->getMessages() as $message) {
 		                    $callback['msg'][] = $message->getMessage();
 		                }
+					} else {
+						$mail = new EnvioMail();
+						$mail->evento = $actividad->actv_id;
+						$mail->aviso_creacion();
 					}
 				}
 
@@ -787,6 +796,10 @@
 		    				$disp->edsp_id = 1;
 		    				$disp->save();
 		    			}
+
+		    			$mail = new EnvioMail();
+						$mail->evento = $actividad->actv_id;
+						$mail->aviso_cancelacion();
 		    		}
 
 	    		}else{
@@ -855,6 +868,10 @@
 				    		}else{
 				    			$data['estado'] = true;
 				    			$data['msg'] = "Evento activado correctamente.";
+
+				    			$mail = new EnvioMail();
+								$mail->evento = $actividad->actv_id;
+								$mail->aviso_activacion();
 				    		}
 
 						}

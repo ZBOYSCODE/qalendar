@@ -1,10 +1,10 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>Cancela evento</title>
+	<title>{{ titulo }}</title>
 </head>
 <body>
-	<p>Estimad@, se informa que el evento ha sido cancelado</p>
+	<p>Estimad@, {{ mensaje }}</p>
 
 	<p>Detalles del evento:
 
@@ -13,6 +13,7 @@
 		<tr><td>Lugar:</td><td>{{ lugar }}</td></tr>
 		<tr><td>Fecha:</td><td>{{ fecha }}</td></tr>
 		<tr><td>Hora:</td><td>{{ hora }}</td></tr>
+		<tr><td>Proyecto:</td><td>{{ proyecto }}</td></tr>
 	</table>
 
 	</p>

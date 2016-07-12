@@ -30,6 +30,8 @@ class UserActividad extends Model
     {
         $this->belongsTo('actv_id',  __NAMESPACE__.'\Actividad', 'actv_id', array('alias' => 'Actividad'));
         $this->belongsTo('user_id',  __NAMESPACE__.'\Users', 'id', array('alias' => 'Users'));
+
+        $this->hasOne('user_id',  __NAMESPACE__.'\Users', 'id', array('alias' => 'usuario'));
     }
 
     /**
