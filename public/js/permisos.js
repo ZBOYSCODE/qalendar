@@ -68,11 +68,13 @@ $(document).ready(function(){
 			{
 				$.log(data);
 
-				$.each(data.permisos, function(a, permiso){
-
-					$('input[type="checkbox"][value="'+permiso+'"]').prop('checked', true);
-
-				});
+				if(data.permisos){
+					$.each(data.permisos, function(a, permiso){
+						$('input[type="checkbox"][value="'+permiso+'"]').prop('checked', true);
+					});
+				}else{
+					$(".ck_permisos").prop('checked', false);
+				}
 
 			}else{
 				$.bootstrapGrowl(data.msg,{type:'danger'});
