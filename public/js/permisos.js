@@ -86,7 +86,7 @@ $(document).ready(function(){
 
 		var permisos = [];
 
-		$('.permisos').each(function(a, obj){
+		$('.ck_permisos').each(function(a, obj){
 
 			if( $(obj).prop('checked') ){
 
