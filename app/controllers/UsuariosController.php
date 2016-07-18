@@ -100,7 +100,7 @@
 
 		    	$users->name 		= $this->request->getPost("nombre", 'string');
 		    	$users->email		= $this->request->getPost("email", 'email');
-		    	$users->rol_id 		= $this->request->getPost("rol_id", 'int');
+		    	$users->rol_id 		= $this->request->getPost("rol", 'int');
 		    	$users->rut 		= $this->request->getPost("rut", 'string');
 		    	$users->profilesId	= 2;
 		    	$users->banned 		= 'N';
